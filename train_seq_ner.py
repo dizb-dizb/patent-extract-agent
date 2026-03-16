@@ -289,7 +289,9 @@ def main() -> None:
         (out_dir / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"[eval] ep={ep} P={prec:.4f} R={rec:.4f} F1={f1:.4f}")
 
-    model.save_pretrained(out_dir)
+    # Unwrap DataParallel before saving
+    _model = model.module if hasattr(model, "module") else model
+    _model.save_pretrained(out_dir)
     tokenizer.save_pretrained(out_dir)
     print(f"[ok] saved to {out_dir}")
 
