@@ -147,6 +147,8 @@ def process_episode(
     query_labels_t = torch.tensor(query_labels, device=device, dtype=torch.long)
 
     logits = _m.compute_logits(query_emb, prototypes)
+    # clamp labels to valid range (logits has n_classes+1 columns incl. NONE)
+    query_labels_t = query_labels_t.clamp(0, logits.size(-1) - 1)
     loss = torch.nn.functional.cross_entropy(logits, query_labels_t)
     if scl_weight > 0 and query_emb.size(0) >= 2:
         scl = _scl_loss(query_emb, query_labels_t, scl_temperature)
