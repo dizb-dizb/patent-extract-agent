@@ -19,6 +19,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
 
+# AutoDL 国内 HuggingFace 镜像（绕过境外网络限制）
+export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
+echo "[info] HF_ENDPOINT=${HF_ENDPOINT}"
+
 echo "=================================================="
 echo "  AutoDL 一键实验  $(date '+%Y-%m-%d %H:%M:%S')"
 echo "  ROOT: $ROOT"

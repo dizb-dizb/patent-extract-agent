@@ -8,6 +8,10 @@ set -euo pipefail
 ENV_NAME="${ENV_NAME:-patent-agent}"
 PY_VER="${PY_VER:-3.10}"
 
+# AutoDL 国内 HuggingFace 镜像（无GPU登录节点和有GPU计算节点均适用）
+export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
+echo "[info] HF_ENDPOINT=${HF_ENDPOINT}"
+
 echo "[info] creating conda env: ${ENV_NAME} (python=${PY_VER})"
 if ! command -v conda >/dev/null 2>&1; then
   echo "[fail] conda not found. Please use AutoDL image with conda."
