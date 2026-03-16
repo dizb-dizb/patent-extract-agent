@@ -31,11 +31,16 @@
 | 代号 | 模型底座 | 解码架构 | 数据策略 | 验证意图与预期表现 |
 |------|----------|----------|----------|--------------------|
 | **B1** | BiLSTM | CRF (BIO 序列) | 仅原始极小样本 | 最弱基线。证明传统模型在脱离海量标注且面对嵌套结构时的彻底失效 |
-| **B2** | RoBERTa-WWM | CRF (BIO 序列) | 仅原始极小样本 | 基础基线。证明引入预训练大模型后特征提取增强，但 BIO 机制仍是识别嵌套的理论瓶颈 |
+| **B2** | BERT-base (英文) | CRF (BIO 序列) | 仅原始极小样本 | 基础基线。证明引入预训练大模型后特征提取增强，但 BIO 机制仍是识别嵌套的理论瓶颈 |
+| **B2r** | RoBERTa-base (英文) | CRF (BIO 序列) | 仅原始极小样本 | B2 的 RoBERTa 对比版本，验证更充分预训练对 BIO 解码的提升幅度 |
 | **B3** | BiLSTM | Span (原型网络) | 仅原始极小样本 | 证明更换跨度解码后具备嵌套识别能力，但 BiLSTM 的表征能力无法支撑精准的空间距离度量 |
-| **B4** | RoBERTa-WWM | Span (原型网络) | 仅原始极小样本 | 强大对比基线。验证现代预训练模型 + 度量学习的基准实力 |
+| **B4** | BERT-base (英文) | Span (原型网络) | 仅原始极小样本 | 强大对比基线。验证现代预训练模型 + 度量学习的基准实力 |
+| **B4r** | RoBERTa-base (英文) | Span (原型网络) | 仅原始极小样本 | B4 的 RoBERTa 对比版本，进一步验证编码器质量对原型网络的影响 |
 | **B5** | BiLSTM | Span (原型网络) | + Agent 规则增强 | 反向论证。证明传统模型由于缺乏全局注意力，强行喂入 Agent 规则块会导致噪声干扰，性能不升反降 |
-| **Ours** | RoBERTa-WWM | Span (原型网络) | + Agent 规则增强 | 核心方法。大模型底座 + Span 解码 + Agent 规则增强，预期显著优于 B4 |
+| **Ours** | BERT-base (英文) | Span (原型网络) | + Agent 规则增强 | 核心方法（BERT 底座）。预训练编码器 + Span 解码 + Agent 规则增强 |
+| **Ours-r** | RoBERTa-base (英文) | Span (原型网络) | + Agent 规则增强 | 核心方法（RoBERTa 底座）。预期显著优于 B4r，验证 RoBERTa + Span + 增强的最优组合 |
+
+> **编码器说明**：三个基准数据集（Few-NERD、GENIA、CHEMDNER）均为英文数据集，使用英文预训练模型（`bert-base-cased` / `roberta-base`）。原实验设计中的 `RoBERTa-WWM` 为中文全词掩码模型，不适用于英文基准，已更正。
 
 ---
 
@@ -49,14 +54,17 @@
 
 ## 四、实现映射
 
-| 实验 | 训练脚本 | 数据路径 |
-|------|----------|----------|
-| B1 | train_bilstm_crf.py | data/benchmarks/{ds}/train.jsonl |
-| B2 | train_seq_ner.py | data/benchmarks/{ds}/train.jsonl |
-| B3 | train_fewshot_proto_span.py (encoder=bilstm) | data/benchmarks/{ds}/train.jsonl |
-| B4 | train_fewshot_proto_span.py | data/benchmarks/{ds}/train.jsonl |
-| B5 | train_fewshot_proto_span.py (encoder=bilstm) | data/dataset/split/{ds}_train_augmented.jsonl |
-| Ours | train_fewshot_proto_span.py | data/dataset/split/{ds}_train_augmented.jsonl |
+| 实验 | 训练脚本 | 编码器 | 数据路径 | artifacts 目录 |
+|------|----------|--------|----------|----------------|
+| B1 | train_bilstm_crf.py | — | data/benchmarks/{ds}/train.jsonl | run_bilstm_crf/{ds} |
+| B2 | train_seq_ner.py | bert-base-cased | data/benchmarks/{ds}/train.jsonl | run_seq_ner/{ds} |
+| B2r | train_seq_ner.py | roberta-base | data/benchmarks/{ds}/train.jsonl | run_seq_ner_roberta/{ds} |
+| B3 | train_fewshot_proto_span.py (encoder=bilstm) | — | data/benchmarks/{ds}/train.jsonl | run_proto_span_bilstm/{ds} |
+| B4 | train_fewshot_proto_span.py | bert-base-cased | data/benchmarks/{ds}/train.jsonl | run_proto_span/{ds} |
+| B4r | train_fewshot_proto_span.py | roberta-base | data/benchmarks/{ds}/train.jsonl | run_proto_span_roberta/{ds} |
+| B5 | train_fewshot_proto_span.py (encoder=bilstm) | — | data/dataset/split/{ds}_train_augmented.jsonl | run_proto_span_bilstm_aug/{ds} |
+| Ours | train_fewshot_proto_span.py | bert-base-cased | data/dataset/split/{ds}_train_augmented.jsonl | run_proto_span_aug/{ds} |
+| Ours-r | train_fewshot_proto_span.py | roberta-base | data/dataset/split/{ds}_train_augmented.jsonl | run_proto_span_roberta_aug/{ds} |
 
 ## 五、扩展能力（已实现）
 

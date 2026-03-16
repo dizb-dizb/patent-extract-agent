@@ -285,7 +285,7 @@ def main() -> None:
     ap.add_argument("--data", type=str, default="train_spans_augmented.jsonl")
     ap.add_argument("--val", type=str, default="", help="Optional separate val file")
     ap.add_argument("--config", type=str, default="configs/proto_default.json")
-    ap.add_argument("--encoder", type=str, default="hfl/chinese-roberta-wwm-ext")
+    ap.add_argument("--encoder", type=str, default="roberta-base")
     ap.add_argument("--output_dir", type=str, default="artifacts/run_proto_span")
     ap.add_argument("--n_way", type=int, default=5)
     ap.add_argument("--k_shot", type=int, default=5)

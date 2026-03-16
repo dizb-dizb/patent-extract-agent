@@ -109,7 +109,8 @@ def main() -> None:
         if args.multi_gpu:
             cmd.append("--multi_gpu")
     elif args.mode == "seq":
-        out_dir = ROOT / "artifacts" / "run_seq_ner" / args.dataset
+        roberta_sfx = "_roberta" if "roberta" in encoder.lower() else ""
+        out_dir = ROOT / "artifacts" / f"run_seq_ner{roberta_sfx}" / args.dataset
         cmd = [
             sys.executable,
             str(ROOT / "train_seq_ner.py"),
@@ -124,7 +125,12 @@ def main() -> None:
     else:
         # fewshot: proto_span, supports both transformer and bilstm encoder
         enc_type = getattr(args, "encoder_type", "transformer")
-        suffix = f"_bilstm" if enc_type == "bilstm" else ""
+        if enc_type == "bilstm":
+            suffix = "_bilstm"
+        elif "roberta" in encoder.lower():
+            suffix = "_roberta"
+        else:
+            suffix = ""
         out_dir = ROOT / "artifacts" / f"run_proto_span{suffix}" / args.dataset
         cmd = [
             sys.executable,

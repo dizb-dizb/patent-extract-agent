@@ -301,7 +301,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", type=str, default="train_spans_augmented.jsonl")
     ap.add_argument("--val", type=str, default="", help="Optional separate val file; if set, --train_ratio ignored")
-    ap.add_argument("--encoder", type=str, default="hfl/chinese-roberta-wwm-ext")
+    ap.add_argument("--encoder", type=str, default="roberta-base")
     ap.add_argument("--output_dir", type=str, default="artifacts/run_span_ner")
     ap.add_argument("--max_len", type=int, default=256)
     ap.add_argument("--max_span_width", type=int, default=12)

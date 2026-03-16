@@ -132,14 +132,26 @@ def run_baseline(
     desc = f"{dataset} {mode} encoder={encoder_type} data={data_strategy}"
     run(cmd, desc)
 
+    # Extract encoder name from extra args to determine correct artifacts path
+    encoder_name = ""
+    if extra:
+        for i, v in enumerate(extra):
+            if v == "--encoder" and i + 1 < len(extra):
+                encoder_name = extra[i + 1]
+    roberta_sfx = "_roberta" if "roberta" in encoder_name.lower() else ""
+
     # Determine metrics path
     if mode == "bilstm_crf":
         metrics_path = ROOT / "artifacts" / "run_bilstm_crf" / dataset / "metrics.json"
     elif mode == "seq":
-        metrics_path = ROOT / "artifacts" / "run_seq_ner" / dataset / "metrics.json"
+        metrics_path = ROOT / "artifacts" / f"run_seq_ner{roberta_sfx}" / dataset / "metrics.json"
     elif mode == "fewshot":
-        suffix = "_bilstm" if encoder_type == "bilstm" else ""
-        metrics_path = ROOT / "artifacts" / f"run_proto_span{suffix}" / dataset / "metrics.json"
+        aug_sfx = "_aug" if data_strategy == "augmented" else ""
+        if encoder_type == "bilstm":
+            base = f"run_proto_span_bilstm{aug_sfx}"
+        else:
+            base = f"run_proto_span{roberta_sfx}{aug_sfx}"
+        metrics_path = ROOT / "artifacts" / base / dataset / "metrics.json"
     else:
         metrics_path = ROOT / "artifacts" / "run_span_ner" / dataset / "metrics.json"
 
@@ -148,6 +160,7 @@ def run_baseline(
         m["_run"] = {
             "dataset": dataset, "mode": mode,
             "encoder_type": encoder_type, "data_strategy": data_strategy,
+            "encoder": encoder_name or encoder_type,
         }
     return m
 
@@ -196,7 +209,11 @@ def main() -> None:
     ap.add_argument("--k_shot", type=int, default=5)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--encoder", type=str, default="bert-base-cased",
-                    help="Transformer encoder for B2/B4/Ours")
+                    help="Transformer encoder for B2/B4/Ours (BERT group)")
+    ap.add_argument("--roberta-encoder", type=str, default="roberta-base",
+                    help="RoBERTa encoder for B2r/B4r/Ours-r baselines")
+    ap.add_argument("--skip-roberta", action="store_true",
+                    help="跳过 RoBERTa 基线，只跑 BERT 组")
     ap.add_argument("--skip-data", action="store_true",
                     help="跳过数据准备步骤 (已有数据)")
     ap.add_argument("--evidence-limit", type=int, default=0,
@@ -260,13 +277,39 @@ def main() -> None:
                 m["baseline"] = "B5"
                 results.append(m)
 
-            # Ours: RoBERTa + Span (Proto), augmented
+            # Ours: BERT + Span (Proto), augmented
             m = run_baseline(ds, "fewshot", data_strategy="augmented",
                              encoder_type="transformer",
                              extra=["--encoder", args.encoder], **kw)
             if m:
                 m["baseline"] = "Ours"
                 results.append(m)
+
+        # ── RoBERTa group ────────────────────────────────────────────────────
+        if not args.skip_roberta:
+            # B2r: RoBERTa + CRF (BIO)
+            m = run_baseline(ds, "seq", encoder_type="transformer",
+                             extra=["--encoder", args.roberta_encoder], **kw)
+            if m:
+                m["baseline"] = "B2r"
+                results.append(m)
+
+            # B4r: RoBERTa + Span (Proto), original
+            m = run_baseline(ds, "fewshot", encoder_type="transformer",
+                             extra=["--encoder", args.roberta_encoder], **kw)
+            if m:
+                m["baseline"] = "B4r"
+                results.append(m)
+
+            if not args.fast:
+                # Ours-r: RoBERTa + Span (Proto), augmented + SCL
+                m = run_baseline(ds, "fewshot", data_strategy="augmented",
+                                 encoder_type="transformer",
+                                 extra=["--encoder", args.roberta_encoder,
+                                        "--scl_weight", "0.1"], **kw)
+                if m:
+                    m["baseline"] = "Ours-r"
+                    results.append(m)
 
     # ── Step 5: Capability tests ─────────────────────────────────────────────
     print("\n[phase] 能力测试")
