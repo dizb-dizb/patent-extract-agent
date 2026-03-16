@@ -98,6 +98,9 @@ def process_episode(
     with torch.set_grad_enabled(model.training):
         hs = model(input_ids, attn)
 
+    # Unwrap DataParallel to access custom methods
+    _m = model.module if hasattr(model, "module") else model
+
     n_class = len(episode.label_names)
     support_spans: list[tuple[int, int, int]] = []
     support_labels: list[int] = []
@@ -117,12 +120,12 @@ def process_episode(
     span_emb_list = []
     for ctx_idx, ts, te in support_spans:
         h = hs[ctx_idx]
-        emb = model.span_embedding(h, torch.tensor([[ts, te]], device=device, dtype=torch.long))
+        emb = _m.span_embedding(h, torch.tensor([[ts, te]], device=device, dtype=torch.long))
         span_emb_list.append(emb.squeeze(0))
     support_emb = torch.stack(span_emb_list, dim=0)
     support_labels_t = torch.tensor(support_labels, device=device, dtype=torch.long)
 
-    prototypes = model.compute_prototypes(support_emb, support_labels_t)
+    prototypes = _m.compute_prototypes(support_emb, support_labels_t)
 
     query_emb_list = []
     query_labels = []
@@ -133,7 +136,7 @@ def process_episode(
             continue
         ts, te = ts_te
         h = hs[ctx_idx]
-        emb = model.span_embedding(h, torch.tensor([[ts, te]], device=device, dtype=torch.long))
+        emb = _m.span_embedding(h, torch.tensor([[ts, te]], device=device, dtype=torch.long))
         query_emb_list.append(emb.squeeze(0))
         query_labels.append(lab)
 
@@ -143,7 +146,7 @@ def process_episode(
     query_emb = torch.stack(query_emb_list, dim=0)
     query_labels_t = torch.tensor(query_labels, device=device, dtype=torch.long)
 
-    logits = model.compute_logits(query_emb, prototypes)
+    logits = _m.compute_logits(query_emb, prototypes)
     loss = torch.nn.functional.cross_entropy(logits, query_labels_t)
     if scl_weight > 0 and query_emb.size(0) >= 2:
         scl = _scl_loss(query_emb, query_labels_t, scl_temperature)
@@ -229,6 +232,7 @@ def eval_episodes(
             )
 
             hs = model(input_ids, attn)
+            _em = model.module if hasattr(model, "module") else model
             n_class = len(ep.label_names)
 
             support_emb_list = []
@@ -238,14 +242,14 @@ def eval_episodes(
                 if ts_te is None:
                     continue
                 ts, te = ts_te
-                emb = model.span_embedding(hs[ctx_idx], torch.tensor([[ts, te]], device=device, dtype=torch.long))
+                emb = _em.span_embedding(hs[ctx_idx], torch.tensor([[ts, te]], device=device, dtype=torch.long))
                 support_emb_list.append(emb.squeeze(0))
                 support_labels_list.append(lab)
             if not support_emb_list:
                 continue
             support_emb = torch.stack(support_emb_list, dim=0)
             support_labels_t = torch.tensor(support_labels_list, device=device, dtype=torch.long)
-            prototypes = model.compute_prototypes(support_emb, support_labels_t)
+            prototypes = _em.compute_prototypes(support_emb, support_labels_t)
 
             gold_set: set[tuple[int, int, int, int]] = set()
             for (ctx_idx, cs, ce), lab in zip(ep.query_spans, ep.query_labels):
@@ -258,8 +262,8 @@ def eval_episodes(
                 if ts_te is None:
                     continue
                 ts, te = ts_te
-                emb = model.span_embedding(hs[ctx_idx], torch.tensor([[ts, te]], device=device, dtype=torch.long))
-                logits = model.compute_logits(emb, prototypes)
+                emb = _em.span_embedding(hs[ctx_idx], torch.tensor([[ts, te]], device=device, dtype=torch.long))
+                logits = _em.compute_logits(emb, prototypes)
                 pred_id = logits.argmax(dim=-1).item()
                 if pred_id < n_class:
                     pred_set.add((ctx_idx, cs, ce, pred_id))

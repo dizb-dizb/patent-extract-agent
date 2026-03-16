@@ -234,7 +234,8 @@ def main() -> None:
             labels_t = batch["labels"].to(device)
             out = model(input_ids=input_ids, attention_mask=attn, labels=labels_t)
             opt.zero_grad()
-            out.loss.backward()
+            loss = out.loss if out.loss.dim() == 0 else out.loss.mean()
+            loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
 
