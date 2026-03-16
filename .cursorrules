@@ -1,0 +1,39 @@
+# 基于小样本学习的专利术语抽取算法设计与实现
+
+## 项目定位
+- 题目：专利术语抽取，Few-shot 场景，嵌套术语 + 跨领域
+- 核心约束（反幻觉）：大模型仅做**数据到数据的路由与校验**，不凭空生成训练事实
+
+## 数据表征
+- 以 **Span**（start/end/text/label）为核心，支持重叠与嵌套
+- 实体格式：`{"start","end","label","text"}`，允许父实体包含子实体
+- 训练样本：`{"context": "...", "spans": [...]}`
+
+## 端到端流程
+1. 原始文本 → 预处理（清洗、分句）
+2. 术语候选抽取（span）→ 嵌套展开（父+子实体）
+3. 领域路由（chem/bio/phy）→ 联网证据检索 → 校验 → 入库
+4. 数据增强（基于 evidence snippet）→ 训练/评测
+5. 云端训练回传 metrics.json，本地可视化
+
+## 模块职责
+- **patent_annotator**：标注 → train_ready.jsonl，输出仅允许原文子串
+- **nested_expand**：复合实体内补充子术语 span（词典+同句实体）
+- **patent_agent_pipeline**：领域路由、Wikipedia（主）+ DuckDuckGo（兜底）检索、SQLite 入库、导出 enhanced + knowledge_graph.json
+- **augment_from_evidence**：基于 snippet 做可控增强
+- **build_baseline_dataset**：一键构建 data_baseline/{train,val,test}.jsonl
+
+## Baselines（四类）
+1. BiLSTM-CRF（无预训练下限）
+2. BERT（bert-base-chinese）
+3. RoBERTa（hfl/chinese-roberta-wwm-ext）
+4. LLM Few-shot（记录 F1/Token 成本/时延）
+
+## Proposed 与消融
+- Proposed：Span + 嵌套展开 + 领域路由 + 证据块 + 可控增强
+- 消融：无嵌套 vs 有嵌套；无路由 vs 有路由；无证据增强 vs 有
+
+## 编码约定
+- 训练脚本输出 `metrics.json` 含 `dataset_version`
+- 云端训练：固定种子、容器化依赖，回传 artifacts/
+- 数据路径：input/ → train_ready.jsonl → train_spans.jsonl → train_spans_enhanced.jsonl → train_spans_augmented.jsonl → data_baseline/

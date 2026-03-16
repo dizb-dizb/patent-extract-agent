@@ -1,0 +1,269 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Knowledge Graph Viewer</title>
+<style>
+  :root { --bg:#0b0f14; --fg:#e7eef7; --muted:#9bb0c5; --card:#121923; --accent:#5eead4; --warn:#fbbf24; --bad:#fb7185; }
+  body { margin:0; font-family: ui-sans-serif, system-ui, Segoe UI, Arial; background:var(--bg); color:var(--fg); }
+  header { padding:16px 20px; border-bottom:1px solid #1f2a37; position:sticky; top:0; background:rgba(11,15,20,.92); backdrop-filter: blur(8px); }
+  main { display:grid; grid-template-columns: 1fr 340px; gap:16px; padding:16px 20px; min-height:calc(100vh - 70px); }
+  .card { background:var(--card); border:1px solid #1f2a37; border-radius:14px; padding:12px; }
+  .muted { color:var(--muted); }
+  button { background:linear-gradient(135deg, #0ea5e9, #14b8a6); border:none; color:#001018; padding:10px 12px; border-radius:12px; font-weight:700; cursor:pointer; }
+  button.secondary { background:#0f1622; color:var(--fg); border:1px solid #233042; }
+  #graphContainer { position:relative; min-height:500px; border-radius:12px; overflow:hidden; background:#0f1622; border:1px solid #233042; }
+  #graphCanvas { display:block; width:100%; height:100%; min-height:500px; cursor:grab; }
+  #graphCanvas:active { cursor:grabbing; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; margin-left:6px; border:1px solid #2a3b52; color:var(--muted); }
+  .detail { margin-top:12px; padding:12px; border-radius:12px; background:#0f1622; border:1px solid #233042; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .legend { display:flex; gap:16px; margin-top:8px; font-size:12px; }
+  .legend span { display:flex; align-items:center; gap:6px; }
+  .legend .dot { width:10px; height:10px; border-radius:50%; }
+</style>
+<header>
+  <div style="display:flex; gap:12px; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-weight:900; letter-spacing:.2px;">Knowledge Graph</div>
+      <div class="muted" style="font-size:13px;">Load <code>knowledge_graph.json</code> to view term–evidence network.</div>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <input type="file" id="fileInp" accept=".json" style="display:none">
+      <button id="loadBtn">Load JSON</button>
+      <button id="zoomIn" class="secondary" title="Zoom In">+</button>
+      <button id="zoomOut" class="secondary" title="Zoom Out">−</button>
+      <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#5eead4;"></span> term</span>
+    <span><span class="dot" style="background:#0ea5e9;"></span> wikipedia_zh</span>
+    <span><span class="dot" style="background:#f59e0b;"></span> duckduckgo</span>
+    <span><span class="dot" style="background:#8b5cf6;"></span> pubchem</span>
+    <span><span class="dot" style="background:#ec4899;"></span> europepmc</span>
+    <span><span class="dot" style="background:#06b6d4;"></span> arxiv</span>
+    <span><span class="dot" style="background:#22c55e;"></span> wikipedia_en / *_en</span>
+    <span><span class="dot" style="background:#a855f7;"></span> derivation_*</span>
+    <span><span class="dot" style="background:#6366f1;"></span> chain_derivation</span>
+  </div>
+</header>
+<main>
+  <section class="card" style="min-height:0;">
+    <div id="graphContainer">
+      <canvas id="graphCanvas"></canvas>
+    </div>
+  </section>
+  <section class="card">
+    <div style="font-weight:900; margin-bottom:8px;">Node Detail</div>
+    <div id="detail" class="muted" style="font-size:13px;">Click a node to view details.</div>
+    <div id="detailContent" class="detail" style="display:none;"></div>
+  </section>
+</main>
+<script>
+let graph = { nodes: [], links: [] };
+let nodes = [];
+let links = [];
+let zoom = 1, panX = 0, panY = 0;
+let selectedId = null;
+let isDragging = false, lastX = 0, lastY = 0;
+const canvas = document.getElementById('graphCanvas');
+const ctx = canvas.getContext('2d');
+const container = document.getElementById('graphContainer');
+
+function esc(s){ return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+function resize(){
+  const rect = container.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  render();
+}
+
+function initLayout(){
+  const n = graph.nodes.length;
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  const r = Math.min(cx, cy) * 0.7;
+  nodes = graph.nodes.map((n, i) => ({
+    ...n,
+    x: cx + r * Math.cos(2 * Math.PI * i / Math.max(1, n)),
+    y: cy + r * Math.sin(2 * Math.PI * i / Math.max(1, n)),
+    vx: 0, vy: 0
+  }));
+  links = graph.links.map(l => ({ ...l }));
+}
+
+function simulate(){
+  if (nodes.length === 0) return;
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[j].x - nodes[i].x, dy = nodes[j].y - nodes[i].y;
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      const force = 3000 / (dist * dist);
+      nodes[i].vx -= (dx/dist) * force * 0.02;
+      nodes[i].vy -= (dy/dist) * force * 0.02;
+      nodes[j].vx += (dx/dist) * force * 0.02;
+      nodes[j].vy += (dy/dist) * force * 0.02;
+    }
+  }
+  links.forEach(link => {
+    const s = nodes.find(n => n.id === link.source);
+    const t = nodes.find(n => n.id === link.target);
+    if (s && t) {
+      const dx = t.x - s.x, dy = t.y - s.y;
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      const force = (dist - 80) * 0.01 * (link.strength || 0.5);
+      s.vx += (dx/dist) * force;
+      s.vy += (dy/dist) * force;
+      t.vx -= (dx/dist) * force;
+      t.vy -= (dy/dist) * force;
+    }
+  });
+  nodes.forEach(n => {
+    n.vx *= 0.85;
+    n.vy *= 0.85;
+    n.x += n.vx;
+    n.y += n.vy;
+    n.x = Math.max(30, Math.min(canvas.width - 30, n.x));
+    n.y = Math.max(30, Math.min(canvas.height - 30, n.y));
+  });
+}
+
+function render(){
+  ctx.fillStyle = '#0f1622';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (nodes.length === 0) {
+    ctx.fillStyle = '#9bb0c5';
+    ctx.font = '16px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Load knowledge_graph.json', canvas.width/2, canvas.height/2);
+    return;
+  }
+  const minX = Math.min(...nodes.map(n=>n.x)), maxX = Math.max(...nodes.map(n=>n.x));
+  const minY = Math.min(...nodes.map(n=>n.y)), maxY = Math.max(...nodes.map(n=>n.y));
+  const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+  ctx.save();
+  ctx.translate(canvas.width/2 + panX, canvas.height/2 + panY);
+  ctx.scale(zoom, zoom);
+  ctx.translate(-cx, -cy);
+  links.forEach(link => {
+    const s = nodes.find(n => n.id === link.source);
+    const t = nodes.find(n => n.id === link.target);
+    if (s && t) {
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(t.x, t.y);
+      ctx.strokeStyle = 'rgba(94,234,212,0.25)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  });
+  const sourceColors = { wikipedia_zh:'#0ea5e9', duckduckgo:'#f59e0b', pubchem:'#8b5cf6', europepmc:'#ec4899', arxiv:'#06b6d4', wikipedia_en:'#22c55e', europepmc_en:'#22c55e', arxiv_en:'#06b6d4', pubchem_en:'#8b5cf6', chain_derivation:'#6366f1' };
+  const derivationColor = '#a855f7';
+  nodes.forEach(n => {
+    const r = n.type === 'term' ? 14 : 10;
+    const isSel = n.id === selectedId;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+    if (n.type === 'term') {
+      ctx.fillStyle = isSel ? '#5eead4' : '#0ea5e9';
+    } else {
+      ctx.fillStyle = (n.source && n.source.startsWith('derivation_') ? derivationColor : (sourceColors[n.source] || '#0ea5e9'));
+    }
+    ctx.fill();
+    ctx.strokeStyle = isSel ? '#5eead4' : '#233042';
+    ctx.lineWidth = isSel ? 3 : 1;
+    ctx.stroke();
+    ctx.fillStyle = '#e7eef7';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText((n.label||'').slice(0, 12), n.x, n.y + r + 14);
+  });
+  ctx.restore();
+}
+
+function nodeAt(x, y){
+  if (nodes.length === 0) return null;
+  const minX = Math.min(...nodes.map(n=>n.x)), maxX = Math.max(...nodes.map(n=>n.x));
+  const minY = Math.min(...nodes.map(n=>n.y)), maxY = Math.max(...nodes.map(n=>n.y));
+  const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+  const mx = (x - canvas.width/2 - panX) / zoom + cx;
+  const my = (y - canvas.height/2 - panY) / zoom + cy;
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    const n = nodes[i];
+    const r = n.type === 'term' ? 14 : 10;
+    const dx = n.x - mx, dy = n.y - my;
+    if (dx*dx + dy*dy <= r*r) return n;
+  }
+  return null;
+}
+
+function showDetail(n){
+  if (!n) {
+    document.getElementById('detail').textContent = 'Click a node to view details.';
+    document.getElementById('detailContent').style.display = 'none';
+    return;
+  }
+  selectedId = n.id;
+  document.getElementById('detail').textContent = n.label || n.id;
+  const div = document.getElementById('detailContent');
+  div.style.display = 'block';
+  if (n.type === 'term') {
+    div.innerHTML = `<div><span class="badge">term</span> ${esc(n.domain || '')}</div>`;
+  } else {
+    div.innerHTML = `<div><span class="badge">${esc(n.source||'')}</span></div>` +
+      (n.title ? `<div class="muted" style="margin-top:6px;">${esc(n.title)}</div>` : '') +
+      (n.snippet ? `<div style="margin-top:8px;font-size:12px;">${esc((n.snippet||'').slice(0,200))}…</div>` : '') +
+      (n.url ? `<div style="margin-top:8px;"><a href="${esc(n.url)}" target="_blank" rel="noreferrer">Open source</a></div>` : '');
+  }
+}
+
+document.getElementById('loadBtn').onclick = () => document.getElementById('fileInp').click();
+document.getElementById('fileInp').onchange = (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      graph = JSON.parse(r.result);
+      initLayout();
+      for (let i = 0; i < 80; i++) simulate();
+      render();
+    } catch (err) {
+      alert('Invalid JSON: ' + err.message);
+    }
+  };
+  r.readAsText(f);
+};
+
+document.getElementById('zoomIn').onclick = () => { zoom = Math.min(2, zoom + 0.2); render(); };
+document.getElementById('zoomOut').onclick = () => { zoom = Math.max(0.4, zoom - 0.2); render(); };
+document.getElementById('resetBtn').onclick = () => { zoom = 1; panX = 0; panY = 0; initLayout(); for (let i = 0; i < 80; i++) simulate(); render(); };
+
+canvas.onmousedown = (e) => {
+  const n = nodeAt(e.offsetX, e.offsetY);
+  if (n) {
+    showDetail(n);
+    render();
+  } else {
+    isDragging = true;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+  }
+};
+canvas.onmousemove = (e) => {
+  if (isDragging) {
+    panX += e.offsetX - lastX;
+    panY += e.offsetY - lastY;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+    render();
+  }
+};
+canvas.onmouseup = () => { isDragging = false; };
+canvas.onmouseleave = () => { isDragging = false; };
+canvas.onwheel = (e) => { e.preventDefault(); zoom *= e.deltaY > 0 ? 0.9 : 1.1; zoom = Math.max(0.3, Math.min(2, zoom)); render(); };
+
+window.addEventListener('resize', resize);
+resize();
+</script>

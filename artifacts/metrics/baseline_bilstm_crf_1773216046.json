@@ -1,0 +1,12 @@
+{
+  "name": "baseline_bilstm_crf",
+  "precision": null,
+  "recall": null,
+  "f1": null,
+  "latency_ms": null,
+  "cost_tokens": null,
+  "cost_cny": null,
+  "dataset": "E:\\algorithm\\Graduation Project\\train_spans_enhanced.jsonl",
+  "created_at": 1773216046,
+  "num_samples": 54
+}

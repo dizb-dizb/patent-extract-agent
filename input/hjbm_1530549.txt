@@ -1,0 +1,242 @@
+Hans Journal of Biomedicine 生物医学, 2026, 16(1), 187-194 
+Published Online January 2026 in Hans. https://www.hanspub.org/journal/hjbm 
+https://doi.org/10.12677/hjbm.2026.161020  
+文章引用: 张思, 邱景艺, 王圣植, 何萍, 王荷一, 陈铭晟. 放射性口腔黏膜炎及其致病机制的研究进展[J]. 生物医学, 
+2026, 16(1): 187-194. DOI: 10.12677/hjbm.2026.161020 
+ 
+ 
+放射性口腔黏膜炎及其致病机制的研究进展 
+张  思1,2*，邱景艺1,2，王圣植1,2，何  萍1,2，王荷一1,2，陈铭晟1,2,3,4# 
+1重庆医科大学附属口腔医院，重庆 
+2口腔疾病研究重庆市重点实验室，重庆 
+3口腔生物医学工程重庆市高校市级重点实验室，重庆 
+4重庆市卫生健康委口腔生物医学工程重点实验室，重庆 
+ 
+收稿日期：2025年12月15日；录用日期：2026年1月13日；发布日期：2026年1月22日 
+ 
+ 
+ 
+摘  要 
+放射性口腔黏膜炎是头颈部放射治疗中最常见且难以避免的并发症， 不仅导致患者口腔疼痛和进食困难，
+甚至可能中断放射治疗。临床上多以消炎、镇痛、抗感染等方式对症处理放射性口腔粘膜炎，有效的防
+治策略仍较少。目前关于放射性口腔黏膜炎致病机制的新研究较多，还需进一步系统性梳理。综合分析
+表明，过量的电离辐射会对正常细胞造成损伤，主要表现为细胞DNA双链断裂、大量活性氧以及相关炎
+症因子的释放。辐照剂量在机体内不断地累积，且受损的口腔黏膜组织、细胞难以及时、准确地修复，
+共同导致了放射性口腔黏膜炎的发生发展，而 NF-kB、Wnt/β-catenin等信号通路在此过程中被高度激
+活， 此外新的研究发现Keap1-Nrf2信号通路以及衰老细胞的存在也会影响放射性口腔黏膜炎的进程。 本
+文重点阐述了辐射损伤机制及放射性口腔粘膜炎的相关信号通路，这为后续研究放射性口腔黏膜炎致病
+机制及治疗方案提供了一定的新思路。 
+ 
+关键词 
+辐射损伤，放射性口腔黏膜炎，发病机制，信号通路 
+ 
+ 
+Research Progress on Radiation-Induced 
+Oral Mucositis and Its Pathogenic 
+Mechanism 
+Si Zhang1,2*, Jingyi Qiu1,2, Shengzhi Wang1,2, Ping He1,2, Heyi Wang1,2, Mingsheng Chen1,2,3,4# 
+1The Affiliated Stomatological Hospital of Chongqing Medical University, Chongqing 
+2Chongqing Key Laboratory of Oral Diseases, Chongqing 
+3Chongqing Municipal Key Laboratory of Oral Biomedical Engineering of Higher Education, Chongqing 
+ 
+ 
+*第一作者。 
+#通讯作者。 
+
+张思 等 
+ 
+ 
+DOI: 10.12677/hjbm.2026.161020 188 生物医学 
+ 
+4Chongqing Municipal Health Commission Key Laboratory of Oral Biomedical Engineering, Chongqing 
+ 
+Received: December 15, 2025; accepted: January 13, 2026; published: January 22, 2026 
+ 
+ 
+ 
+Abstract 
+Radiation-induced oral mucositis is the most common and unavoidable complication in head and 
+neck radiotherapy. It not only causes oral pain and difficulty in eating for patients, but may even 
+interrupt radiotherapy. Clinically, radiation-induced oral mucositis is mostly treated symptomati-
+cally with anti -inflammatory, analgesic and anti -infection methods, but effective prevention and 
+treatment strategies are still relatively few. At present , there are many new studies on the patho-
+genic mechanism of radiation-induced oral mucositis, and further systematic sorting is still needed. 
+Comprehensive analysis indicates that excessive ionizing radiation can cause damage to normal 
+cells, mainly manifested as double-strand breaks in cell DNA, the release of a large amount of reac-
+tive oxygen species, and related inflammatory factors. The continuous accumulation of irradiation 
+dose in the body and the difficulty in timely and accurate repair of damaged o ral mucosal tissues 
+and cells jointly lead to the occurrence and development of radiation -induced oral mucositis. Dur-
+ing this process, signaling pathways such as NF-kB and Wnt/β-catenin are highly activated. In addi-
+tion, new research has found that the Keap1-Nrf 2 signaling pathway and the presence of senescent 
+cells can also affect the progression of radiation-induced oral mucositis. This article focuses on elab-
+orating the mechanism of radiation damage and the related signaling pathways of  radiation-in-
+duced oral mucositis, which provides certain new ideas for the subsequent research on the patho-
+genic mechanism and treatment plan of radiation-induced oral mucositis. 
+ 
+Keywords 
+Radiation Injury, Radiation-Induced Oral Mucositis, Pathogenesis, Signaling Pathways 
+ 
+ 
+Copyright © 2026 by author(s) and Hans Publishers Inc. 
+This work is licensed under the Creative Commons Attribution International License (CC BY 4.0). 
+http://creativecommons.org/licenses/by/4.0/ 
+  
+ 
+1. 前言 
+放射性口腔黏膜炎(RIOM)是头颈部癌症患者在放射治疗(RT)过程中最常见且难以避免的并发症，不
+仅导致口腔疼痛和进食困难，甚至可能中断放疗等，极具破坏性和危害性[1]。RIOM 主要是辐射诱导的
+基底细胞损伤而引起的一种炎症性、溃疡性口腔黏膜病变，而不是对表层细胞的直接损伤[2]。流行病学
+统计资料显示， 接受RT 的头颈癌(HNC)患者中，RIOM 发病率高达 80%~90%，其 中60%~70%为重度[3]，
+即世界卫生组织(WHO)量表评分达 3~4 级。RIOM 发生的危险因素主要有机体营养不良、吸烟、慢性肾
+病、口腔卫生不良和唾液分泌减少等[3]。严重 RIOM 的溃疡经久不愈、且疼痛剧烈，导致患者进食、吞
+咽困难，麻醉镇痛以及管饲需求的增加，甚至癌症治疗的减少或停止，增加疾病治疗难度且大大降低患
+者生活质量(QOL) [4]。目前临床上仍无法完全避免常规放射治疗剂量下放射性口腔黏膜炎的发生，也难
+以治愈严重的 RIOM，这表明 RIOM 仍有许多难题等待我们去研究。本文就 RIOM 的临床表现、病理生
+理过程、防治策略等方面进行概述，重点阐述辐射损伤机制以及 RIOM 的相关信号通路、衰老细胞的存
+在，以期为 RIOM 的后续研究提供一定的参考价值。 
+Open Access
+
+张思 等 
+ 
+ 
+DOI: 10.12677/hjbm.2026.161020 189 生物医学 
+ 
+2. RIOM 概述 
+HNC 患者的经典放射治疗方案为 2 Gy/天，连续 5~7 周，机体中总累积剂量可达 60~70 Gy [5]，当患
+者体内射线剂量累加至 15~20 Gy 时，即可出现相关口腔黏膜炎(OM)表现。根据 RIOM 的病程及进展的
+不同， 临床上又分为急性和慢性RIOM， 前者主要临床表现是黏膜红斑、 萎缩和形状不规则的溃疡， 而溃
+疡周围常有红斑， 表面常有假膜形成。RT 诱导的重度 OM 会导致患者无法正常进食， 常常需要通过饲管
+进食，导致患者体重明显下降[6]。而在患者放疗完成后才出现的口腔黏膜出现萎缩、肿胀、溃疡病变，
+且持续 3 个月以上者， 即为慢性RIOM [7]。大 约8%的接受 RT 治疗的 HCN 患者将发展为慢性 OM，3.8%
+的患者将表现为溃疡[8]。 
+RIOM 的病理生理学过程可分为五个阶段[9]：(1) 细胞损伤的启动： 第一次放疗过程中即可出现[10]，
+电离射线直接损伤细胞的 DNA，导致其双链断裂后引发细胞凋亡；(2) 炎性细胞因子的持续升高：主要
+是由于电离辐射后细胞产生的大量活性氮、氧物质(即 ROS 和 RNS)，包括 DNA 损伤，导致了口腔黏膜
+基底细胞和基底上皮细胞死亡[11]，同时受损细胞也会释放大量促炎细胞因子，例如肿瘤坏死因子(TNF-
+α)、白细胞介素-1β (IL-1β)和白细胞介素-6 (IL-6))等[12]。同时，DNA 链断裂，细胞凋亡通路被激活，其
+中 p53 和核因子 κB (NF-κB)起主要作用[13]。(3) 原发性损伤：主要是正常组织损伤、细胞凋亡增加、大
+量酶被激活和血管通透性增加的结果，其中促炎因子发挥正反馈作用，导致更多的损伤[14]。(4) 炎症信
+号的传导和放大：此时，临床可检测到患者口内明显的溃疡，且其黏膜和黏膜下层的完整性被破坏，导
+致患者疼痛明显[15]。(5) 愈合：一般在 RT 结束后 6~8 周，主要是细胞外基质促进的上皮增殖、迁移和
+分化，促进了口腔黏膜组织修复。 
+许多研究基于 RIOM 发展的各个阶段，试图引入治疗口腔炎的有效疗法；然而，对于 RIOM 有效的
+治疗尚未达成共识， 目前临床上关于重度RIOM 的防治策略较少[16]， 多为对症治疗， 且疗效欠佳。 跨国
+癌症支持治疗协会和国际口腔肿瘤学(MASCC/ISOO)临床实践指南中， 放射性口腔黏膜炎的防疗方案[17]
+推荐保持良好的口腔卫生、限制放射治疗剂量及间隔时间等来预防 RIOM，一些比较严重的 RIOM 则推
+荐使用角质细胞生长因子、氨磷汀等药物治疗，但仍难以完全治愈 RIOM。近年来不少研究团队基于抗
+氧化、抗炎、镇痛、预防微生物感染等方面开发了新兴疗法，但仍未转化为可实践的临床治疗方案。 
+3. 辐射损伤机制 
+(1) 辐射直接损伤细胞 DNA 
+RIOM 始于电离辐射直接诱导的细胞毒性[18]，直接导致细胞 DNA 损伤，若不能及时且正确地修复
+断裂的 DNA 双链， 将会诱导程序性细胞死亡[19]。RT 过程中， 具有较高细胞更新率和DNA 修复基因突
+变的肿瘤细胞被杀死的比例较健康细胞更大， 但DNA 的反复损伤会抑制细胞转录和复制， 在数周的放疗
+中，很大可能会导致邻近正常组织死亡[20]。DNA 双链断裂时，细胞凋亡程序会被激活，其中 p53 基因
+和核因子 Κb (NF-κB)起主导作用。NF-κB 是一种在炎症中高度表达的转录因子，被激活后会产生大量的
+炎性细胞因子、趋化因子等，此时临床上可见黏膜的损伤[21]。 
+(2) 辐射导致活性氧大量释放 
+机体正常的生理状态下， 细胞中的线粒体氧化磷酸化后会产生适量的活性氧(ROS)， 并在细胞信号传
+导、细胞增殖和细胞代谢等过程中发挥重要的生理作用[22]。但在外源性刺激下(如电离辐射、感染等)，
+受损的细胞会产生过量的 ROS，并 与DNA 中的碱基和磷酸基团发生反应， 导致DNA 结构的改变，DNA
+单、双链断裂[23]，间接造成细胞 DNA 的损伤，这是公认的辐射诱导组织、细胞损伤的主要原因[24]。
+不仅如此，在辐射导致 ROS 大量积累以及持续性 DNA 损伤的双重作用下，细胞中 p53/p21 CIP 1 信号通
+路和 p16 INK 4a/Rb 调节通路会被相继激活[25]，进一步导致细胞周期停滞，诱导细胞衰老[26]，这说明
+
+张思 等 
+ 
+ 
+DOI: 10.12677/hjbm.2026.161020 190 生物医学 
+ 
+电离辐射也是细胞衰老的诱因之一[27]。 
+(3) 炎症因子的释放 
+在组织或细胞中，大量 ROS 堆积会导致炎症相关信号传导途径上调，并且释放大量炎症因子，导致
+其细胞毒性增大[28]。其中，TNF-α、IL-1β、NF-κβ 和 IL-6，已被证明与辐射后组织的损伤高度相关，可
+增强 RT 和 ROS 介导的损伤的机制，而且炎症细胞又会产生更多的 ROS 并攻击健康的上皮[3]。加之抗
+炎细胞因子(包括 IL-10 和 IL-11)在 OM 中表达水平较低[29]，又加重了 RIOM 的炎症反应。促炎因子的
+释放通过转录因子活化介导， 这会促进结缔组织和内皮损伤， 限制组织氧合并刺激上皮基底细胞死亡[30]。 
+(4) 感染 
+HCN 患者的 RT 过程中，不断累积的射线也会损伤唾液腺[31]，造成患者唾液量的减少、流速变缓、
+唾液黏度增加等[32]，这有利于口腔微生物的生存与繁殖[33]。而且，在头颈部 RT 最初的 1~2 周内，在
+电离辐射、炎症和 ROS 介导的 DNA 损伤的细胞毒性的共同作用下，口腔复层鳞状上皮和固有层内的上
+皮细胞逐渐走向细胞凋亡，而基底细胞的增殖能力下降，无法及时填补已凋亡上皮细胞的空缺，最终导
+致口腔黏膜的红肿、破损及溃疡等病变。受损的口腔黏膜屏障以及唾液的减少等因素，使得口腔软组织
+易受到细菌等微生物的感染，而这些病原体的侵袭又进一步加重炎症状态[3]。 
+(5) 免疫功能 
+根据细胞表面分化抗原以及功能的不同， 人体发挥细胞免疫功能的T 细胞可分为 CD4+和 CD8+两大
+亚群， 而CD4+/CD8+的比值可以反映机体的免疫状态， 正常状态下约为1.4~2.0 [34]， 此时机体免疫功能
+稳定，能抵御外来刺激。而RT 后的 HNC 患者全身免疫力及口腔局部免疫能力均明显下降，这进一步促
+进口腔黏膜炎症的形成与发展[35]。 
+4. RIOM 相关信号通路 
+(1) 转化生长因子-β 与 NF-κB 通路 
+转化生长因子(TGF)-β 与机体组织稳态、重塑及炎症等联系紧密，而 NF-κB 是炎症反应中被高度激
+活的信号通路[36]。 据报道，TGF-β 信号通路在辐射诱导的 OM 中高度活化， 从而抑制口腔角质形成细胞
+和基底上皮细胞增殖能力，并诱导其凋亡，从而导致口腔上皮组织再生能力减弱、伤口愈合延迟 [37]。
+Smad 7 是 TGF-β 超家族的信号传导拮抗剂，不仅可以阻断 TGF-β 介导的细胞停滞，还能抑制 NF-κB 活
+化，达到减轻炎症的效果[36]。有研究者利用 Smad 7 复合物治疗 OM，发现其能激活口腔角质形成细胞
+的迁移、 促进细胞增殖、 抑制细胞凋亡， 同时阻断TGF-β 和 NF-κB 信号传导， 对RIOM 有一定的防治作
+用[38]。 
+(2) ROS-雷帕霉素靶点 
+哺乳动物雷帕霉素靶点(mTOR)信号通路是机体组织、 细胞生长和器官发育所必需的， 能够维持组织
+和器官的稳态，该信号通路的过度激活可导致细胞的异常分化和衰老[39]。在氧化应激以及 ROS 诱导的
+细胞衰老和凋亡中，mTOR 信号通路高表达[40]。Iglesias 等人[41]在小鼠辐照模型中应用强效且特异性的
+mTOR 抑制剂雷帕霉素，发现其可以抑制辐射诱导的细胞衰老、凋亡等，显著减轻了小鼠 RIOM 的严重
+程度， 也进一步支持了ROS 可诱导上皮细胞衰老的观点。mTOR 抑制剂已在临床试验中应用， 它作为肿
+瘤药物治疗转移性乳腺癌患者，但多项临床研究中报告了 mTOR 抑制剂相关性口腔炎(mIAS)发生率为
+2%~78%，其中高达 9%的患者发生重度 OM [42]。因此，基于mTOR 靶点开发 RIOM 的干预药物还有待
+深入研究。 
+(3) Wnt/β-catenin 信号通路 
+在放化疗诱导的 OM 中，细胞周期的 G1/S 检查点和 DNA 损伤反应(DDR)高度活化，导致上皮干细
+
+张思 等 
+ 
+ 
+DOI: 10.12677/hjbm.2026.161020 191 生物医学 
+ 
+胞中凋亡依赖性细胞(PUMA)的 p53 上调[43]。 有研究表明， 通过遗传性PUMA 消融技术或者下调 Wnt/β-
+catenin 信号通路，可以增强受损的黏膜的细胞增殖能力和组织再生能力，这表明Wnt 信号传导激活剂可
+作为 RIOM 的治疗途径之一[44]。Zhao J 等人[45]发现 R-Spondin 1 (RSpo 1) 全身用药后可直接激活小鼠
+口腔黏膜组织中的经典 Wnt/β-catenin 信号传导，一定程度上可防治小鼠 RIOM。 
+(4) Keap 1-NF-E2 相关因子 2 信号通路 
+NF-E2 相关因子 2 (Nrf 2)响应于氧化应激过程，它是调节机体中抗氧化剂和促炎细胞因子基因表达
+的主转录因子，而 Keap 1 (ECH 相关蛋白 1)-Nrf 2 系统是人体抵御外源性刺激及环境压力的主要保护调
+节器[46]。Wakamori Shun 的团队[47]对 Nrf 2 敲除的小鼠进行头颈部区域单次 γ 射线辐照， 剂量为20 Gy，
+照射后第 8 天，小鼠辐射损伤舌上皮细胞显著凋亡，但到第 14 天在 Nrf 2 敲除小鼠也能恢复正常的舌上
+皮结构， 这表明Nrf 2 对于辐射后舌头的上皮再生不是必需的。 但是， 将小鼠中Keap 1 敲低可以激活 Nrf 
+2 并保护舌上皮，避免 RIOM 的发生，这表明 Keap1-Nrf2 信号通路有潜力作为 RIOM 的防治靶点。 
+(5) 小结 
+综合分析表明，电离辐射后，受损细胞首先出现 DNA 损伤及 ROS 的大量释放。DNA 损伤主要以
+DNA 双链断裂为主，未能正确、及时修复的受损细胞会上调TGF-β、NF-kB 以及 p53 等信号通路，共同
+诱导细胞凋亡，而高度激活 NF-kB 通路后，其下游通路也上调，释放大量炎症因子(TNF-α、IL-1β、IL-6
+等)及趋化因子， 导致炎性细胞的累积和上皮基底细胞死亡， 进一步加重黏膜损伤。ROS 的大量释放会激
+活 p53/p21 CIP 1、mTOR 信号通路和 p16 INK 4a/Rb 调节通路，诱导细胞周期停滞、细胞衰老，而炎性细
+胞的累积又会正反馈作用于 ROS 的释放。 
+5. RIOM 与细胞衰老 
+衰老细胞是由许多促衰老的应激因素(如辐射诱导的 DNA 损伤等)所诱导的一种细胞永久性周期停滞
+[48]状态，衰老细胞不再增殖、分化，但会分泌一系列的促炎细胞因子、趋化因子等其他信号分子(统称
+为衰老相关分泌表型(SASP) [49])， 并对周围健康细胞产生有害影响， 如诱导正常细胞衰老。Sandy [50]提
+出了细胞对电离辐射的反应：包括细胞有丝分裂灾难、细胞衰老、细胞凋亡以及铁依赖性细胞死亡。 
+Wang Huilan 等人[51]分析了 GSE103412 数据集[52]中，扁桃体鳞状细胞癌患者(RT 期间以及 RT 之
+后)和对照组(健康人群和放射治疗前的患者) 的基因表达差异，结果显示 RIOM 患者中衰老细胞标记物
+CDKN2A (p16)和 TP53 表达上调，IL-1β、IL-6 等 SASP 的表达也有所上调。 此外， 该团队还对小鼠RIOM
+的舌部进行了组织免疫化学分析等，证明了 RIOM 中衰老细胞的存在，以及 SASP 的高表达。 
+6. 总结 
+RIOM 是由放射疗法引起的正常口腔黏膜组织损伤，发病率高，虽然有一定的自限性，但在疾病发
+生的过程中， 患者往往十分痛苦， 甚至无法进食， 导致患者营养不良， 甚至会中断RT 等。 头颈部区域的
+放疗射线不仅会诱导肿瘤细胞死亡， 也对正常细胞产生不良影响， 造成正常细胞的DNA 断裂、 大量ROS
+以及炎症因子的释放，这促成了 RIOM。目前已经证明了 RIOM 中 NF-κB 信号通路、Wnt/β-catenin 信号
+通路被激活，衰老细胞的存在，也有研究表明抑制 mTOR 信号通路[41]可减轻小鼠 RIOM 的严重程度。
+在小鼠 RIOM 的实验模型中还发现了 Keap 1-Nrf 2 信号通路的存在，或许可以通过激活 Nrf 2 来防治
+RIOM。 尽管许多临床前和临床研究进行了大量的预防和治疗RIOM 相关实验， 但没有单一的药物或治疗
+方案能显著改善 RIOM 的临床相关症状或者治愈它。 
+总之，我们还需要更深入地了解 RIOM 的致病机制，从细胞、分子水平等积极探索，发掘出差异性
+表达的基因、蛋白，明确 RIOM 相关信号通路等。只有从细胞、分子水平全面认识 RIOM 的致病机制，
+
+张思 等 
+ 
+ 
+DOI: 10.12677/hjbm.2026.161020 192 生物医学 
+ 
+才能探索出最佳疗法。不少研究表明，口腔黏膜中的驻留干细胞的自我更新和控制健康的上皮稳态与损
+伤期间的组织再生密切相关[53]， 而功能性体细胞、 干细胞的耗竭与细胞衰老息息相关， 并与退行性表型
+联系紧密[54]。 此前的研究显示，RT 中产生的大量活性氧会导致细胞的衰老， 这表明细胞衰老可能是RIOM
+病理过程中重要的一环。HNC 患者放射治疗后，口腔黏膜上皮干细胞的衰老及其基因表达的差异值得深
+入研究，或许能为我们提供 RIOM 治疗的新思路。

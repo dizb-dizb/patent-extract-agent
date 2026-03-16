@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env.local
+
+# Secrets / API keys
+.env
+*.key
+*.pem
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data (large files not tracked)
+data/benchmarks/
+data/dataset/unified/
+data/dataset/split/
+train_spans*.jsonl
+train_ready.jsonl
+train.bio.txt
+
+# Model artifacts (binary weights)
+artifacts/**/*.pt
+artifacts/**/*.bin
+artifacts/**/*.safetensors
+
+# Logs and temp
+*.log
+*.tmp
+*.bak
+checkpoints/
+tmp/
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# SQLite DBs
+*.db
+*.sqlite3
+
+# Evidence chain caches
+evidence_chains/

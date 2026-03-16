@@ -1,0 +1,18 @@
+{
+  "n_way": 5,
+  "k_shot": 5,
+  "query_per_class": 5,
+  "neg_ratio": 0.3,
+  "max_span_width": 12,
+  "max_episodes": 500,
+  "max_len": 256,
+  "encoder": "hfl/chinese-roberta-wwm-ext",
+  "metric": "cosine",
+  "epochs": 2,
+  "lr": 2e-5,
+  "batch_episodes": 4,
+  "eval_span_limit": 2000,
+  "threshold": 0.5,
+  "seed": 42,
+  "train_ratio": 0.9
+}

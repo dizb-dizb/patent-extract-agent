@@ -1,0 +1,2946 @@
+{
+  "nodes": [
+    {
+      "id": "term:CD4+",
+      "label": "CD4+",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:CD4+/CD8+",
+      "label": "CD4+/CD8+",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:CD8+",
+      "label": "CD8+",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:CDKN2A",
+      "label": "CDKN2A",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:DDR",
+      "label": "DDR",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:DNA",
+      "label": "DNA",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:DNA 双链断裂",
+      "label": "DNA 双链断裂",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:DNA 损伤",
+      "label": "DNA 损伤",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:DNA 损伤反应",
+      "label": "DNA 损伤反应",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:DNA 断裂",
+      "label": "DNA 断裂",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:DOI",
+      "label": "DOI",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:ECH 相关蛋白 1",
+      "label": "ECH 相关蛋白 1",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:G1/S",
+      "label": "G1/S",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:GSE103412",
+      "label": "GSE103412",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Gy",
+      "label": "Gy",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:HCN",
+      "label": "HCN",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:HNC",
+      "label": "HNC",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:IL-10",
+      "label": "IL-10",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:IL-11",
+      "label": "IL-11",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:IL-1β",
+      "label": "IL-1β",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:IL-6",
+      "label": "IL-6",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Keap 1",
+      "label": "Keap 1",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Keap 1-NF-E2 相关因子 2 信号通路",
+      "label": "Keap 1-NF-E2 相关因子 2 信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:Keap 1-Nrf 2 信号通路",
+      "label": "Keap 1-Nrf 2 信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:Keap1-Nrf 2",
+      "label": "Keap1-Nrf 2",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Keap1-Nrf2 信号通路",
+      "label": "Keap1-Nrf2 信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:Keap1-Nrf2信号通路",
+      "label": "Keap1-Nrf2信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:MASCC/ISOO",
+      "label": "MASCC/ISOO",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:NF-E2 相关因子 2",
+      "label": "NF-E2 相关因子 2",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:NF-kB",
+      "label": "NF-kB",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:NF-kB 通路",
+      "label": "NF-kB 通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:NF-κB",
+      "label": "NF-κB",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:NF-κB 信号通路",
+      "label": "NF-κB 信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:NF-κβ",
+      "label": "NF-κβ",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Nrf 2",
+      "label": "Nrf 2",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:OM",
+      "label": "OM",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:PUMA",
+      "label": "PUMA",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Pathogenesis",
+      "label": "Pathogenesis",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:QOL",
+      "label": "QOL",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:R-Spondin 1",
+      "label": "R-Spondin 1",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:RIOM",
+      "label": "RIOM",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:RIOM 概述",
+      "label": "RIOM 概述",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:RNS",
+      "label": "RNS",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:ROS",
+      "label": "ROS",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:RSpo 1",
+      "label": "RSpo 1",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:RT",
+      "label": "RT",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Radiation Injury",
+      "label": "Radiation Injury",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Radiation-Induced Oral Mucositis",
+      "label": "Radiation-Induced Oral Mucositis",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Radiation-induced oral mucositis",
+      "label": "Radiation-induced oral mucositis",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:SASP",
+      "label": "SASP",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Signaling Pathways",
+      "label": "Signaling Pathways",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Smad 7",
+      "label": "Smad 7",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:T 细胞",
+      "label": "T 细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:TGF-β",
+      "label": "TGF-β",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:TNF-α",
+      "label": "TNF-α",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:TNFα",
+      "label": "TNFα",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:TP53",
+      "label": "TP53",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:WHO",
+      "label": "WHO",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Wnt",
+      "label": "Wnt",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Wnt/β-catenin",
+      "label": "Wnt/β-catenin",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:Wnt/β-catenin 信号通路",
+      "label": "Wnt/β-catenin 信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:Wnt/βcatenin",
+      "label": "Wnt/βcatenin",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:analgesic",
+      "label": "analgesic",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:anti -infection",
+      "label": "anti -infection",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:anti -inflammatory",
+      "label": "anti -inflammatory",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:complication",
+      "label": "complication",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:double-strand breaks",
+      "label": "double-strand breaks",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:head and neck radiotherapy",
+      "label": "head and neck radiotherapy",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:inflammatory factors",
+      "label": "inflammatory factors",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:ionizing radiation",
+      "label": "ionizing radiation",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:mIAS",
+      "label": "mIAS",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:mTOR",
+      "label": "mTOR",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:mTOR 信号通路",
+      "label": "mTOR 信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:oral pain",
+      "label": "oral pain",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:p16",
+      "label": "p16",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:p16 INK 4a/Rb",
+      "label": "p16 INK 4a/Rb",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:p16 INK 4a/Rb 调节通路",
+      "label": "p16 INK 4a/Rb 调节通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:p53",
+      "label": "p53",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:p53/p21 CIP 1",
+      "label": "p53/p21 CIP 1",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:radiation -induced oral mucositis",
+      "label": "radiation -induced oral mucositis",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:radiation-induced oral mucositis",
+      "label": "radiation-induced oral mucositis",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:radiotherapy",
+      "label": "radiotherapy",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:reactive oxygen species",
+      "label": "reactive oxygen species",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:γ 射线",
+      "label": "γ 射线",
+      "type": "term",
+      "domain": "phy"
+    },
+    {
+      "id": "term:上皮基底细胞",
+      "label": "上皮基底细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:世界卫生组织",
+      "label": "世界卫生组织",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:促炎细胞因子",
+      "label": "促炎细胞因子",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:信号通路",
+      "label": "信号通路",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:凋亡",
+      "label": "凋亡",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:发病机制",
+      "label": "发病机制",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:口腔黏膜炎",
+      "label": "口腔黏膜炎",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:口腔黏膜病变",
+      "label": "口腔黏膜病变",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:口腔黏膜组织",
+      "label": "口腔黏膜组织",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:口腔黏膜组织损伤",
+      "label": "口腔黏膜组织损伤",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:基底上皮细胞",
+      "label": "基底上皮细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:基底细胞",
+      "label": "基底细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:外源性刺激",
+      "label": "外源性刺激",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:头颈癌",
+      "label": "头颈癌",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:头颈部放射治疗",
+      "label": "头颈部放射治疗",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:头颈部癌症",
+      "label": "头颈部癌症",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:并发症",
+      "label": "并发症",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:扁桃体鳞状细胞癌",
+      "label": "扁桃体鳞状细胞癌",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:抗感染",
+      "label": "抗感染",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:抗氧化剂",
+      "label": "抗氧化剂",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:放射性口腔粘膜炎",
+      "label": "放射性口腔粘膜炎",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:放射性口腔黏膜炎",
+      "label": "放射性口腔黏膜炎",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:放射治疗",
+      "label": "放射治疗",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:放射疗法",
+      "label": "放射疗法",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:放疗射线",
+      "label": "放疗射线",
+      "type": "term",
+      "domain": "phy"
+    },
+    {
+      "id": "term:有丝分裂灾难",
+      "label": "有丝分裂灾难",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:核因子 Κb",
+      "label": "核因子 Κb",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:核因子 κB",
+      "label": "核因子 κB",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:氧化应激",
+      "label": "氧化应激",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:治疗方案",
+      "label": "治疗方案",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:活性氧",
+      "label": "活性氧",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:消炎",
+      "label": "消炎",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:炎性细胞",
+      "label": "炎性细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:炎症因子",
+      "label": "炎症因子",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:环境压力",
+      "label": "环境压力",
+      "type": "term",
+      "domain": "chem"
+    },
+    {
+      "id": "term:电离辐射",
+      "label": "电离辐射",
+      "type": "term",
+      "domain": "phy"
+    },
+    {
+      "id": "term:组织免疫化学分析",
+      "label": "组织免疫化学分析",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:细胞DNA双链断裂",
+      "label": "细胞DNA双链断裂",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:细胞凋亡",
+      "label": "细胞凋亡",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:细胞周期停滞",
+      "label": "细胞周期停滞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:细胞衰老",
+      "label": "细胞衰老",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:致病机制",
+      "label": "致病机制",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:舌上皮",
+      "label": "舌上皮",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:舌上皮细胞",
+      "label": "舌上皮细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:表层细胞",
+      "label": "表层细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:衰老相关分泌表型",
+      "label": "衰老相关分泌表型",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:衰老细胞",
+      "label": "衰老细胞",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:衰老细胞标记物",
+      "label": "衰老细胞标记物",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:趋化因子",
+      "label": "趋化因子",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:转录因子",
+      "label": "转录因子",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:辐射损伤",
+      "label": "辐射损伤",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:辐射损伤机制",
+      "label": "辐射损伤机制",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:辐照剂量",
+      "label": "辐照剂量",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:铁依赖性细胞死亡",
+      "label": "铁依赖性细胞死亡",
+      "type": "term",
+      "domain": "bio"
+    },
+    {
+      "id": "term:镇痛",
+      "label": "镇痛",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "term:黏膜损伤",
+      "label": "黏膜损伤",
+      "type": "term",
+      "domain": "unknown"
+    },
+    {
+      "id": "chunk:1",
+      "label": "wikipedia_zh: 併發症",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%BD%B5%E7%99%BC%E7%97%87",
+      "title": "併發症",
+      "snippet": "併發症 是指由一种疾病、操作或治疗所引起的另一种新的不良临床状况。并发症可能对疾病的预后或结果产生不利影响。并发症通常包括疾病严重程度恶化或出现新的体征、症状或病理变化，这些变化可能会在全身蔓延并影响其他器官系统。"
+    },
+    {
+      "id": "chunk:2",
+      "label": "wikipedia_zh: 抗炎",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%8A%97%E7%82%8E",
+      "title": "抗炎",
+      "snippet": "抗炎（anti-inflammatory），药物学又称消炎，是能减少或消除身体炎症过程的特性或作用，含盖某物質、某药物或某治療能减少炎症的特性。"
+    },
+    {
+      "id": "chunk:3",
+      "label": "wikipedia_zh: 镇痛药",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E9%95%87%E7%97%9B%E8%8D%AF",
+      "title": "镇痛药",
+      "snippet": "镇痛药（analgesic）又称止痛药，是指能提高痛阈且选择性地缓解疼痛的药物，但其不会影响神经传递，也不会影响感官认知或让人丧失意识。由于麻醉药或镇静药也有减轻疼痛的作用，所以前述镇痛药定义是为了表述与后两者有所区别。"
+    },
+    {
+      "id": "chunk:4",
+      "label": "wikipedia_zh: 感染",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%84%9F%E6%9F%93",
+      "title": "感染",
+      "snippet": "感染 指的是疾病的病原體侵入生物的組織後，開始繁殖，以及宿主的組織對這些病原體，及病原體產生毒素的反應。感染性疾病 是由感染而引起的疾病。"
+    },
+    {
+      "id": "chunk:5",
+      "label": "wikipedia_zh: 游離輻射",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%B8%B8%E9%9B%A2%E8%BC%BB%E5%B0%84",
+      "title": "游離輻射",
+      "snippet": "电离辐射 又稱游离辐射，是指波長短、頻率高、能量高的射線（粒子或波的双重形式）。輻射可分為游離輻射和非游離輻射，游離輻射可以從原子或分子裡面電離過程（Ionization）中作用出至少一個電子。反之，非游離輻射則不行。游離能力，決定於射線（粒子或波）所帶的能量，而不是射線的數量。如果射線沒有帶有足夠游離能量的話，大量的射線並不能夠導致游離。"
+    },
+    {
+      "id": "chunk:6",
+      "label": "wikipedia_zh: 活性氧类",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%B4%BB%E6%80%A7%E6%B0%A7%E7%B1%BB",
+      "title": "活性氧类",
+      "snippet": "活性氧类（英語：Reactive oxygen species，ROS），是生物有氧代谢过程中的一种副产品，包括氧离子、过氧化物和含氧自由基等。这些粒子相当微小，且由于存在未配对的自由电子而十分活跃。过高的活性氧水平会对细胞和基因结构造成损坏。活性氧，为含氧的，具有化学活性的分子，包括氧离子（oxygen ion）、过氧化氢（peroxide）、次氯酸、羥基自由基（hydroxyl radical"
+    },
+    {
+      "id": "chunk:7",
+      "label": "wikipedia_zh: 炎症",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%82%8E%E7%97%87",
+      "title": "炎症",
+      "snippet": "炎症（inflammation）又稱发炎、炎症反應、炎性反應，是一种涉及免疫细胞、血管和分子介质的保护性反应，属身体组织对有害刺激（如病原、受损细胞、刺激物）的复杂生物反应的一部分。炎症反应是机体感染或损伤时，组织为对抗危险信号而发起宿主免疫反应，通过隔离感染损伤部位，尝试恢复机体平衡，涉及伤口愈合、抵御病原体等体内平衡再生过程。"
+    },
+    {
+      "id": "chunk:8",
+      "label": "wikipedia_zh: 口腔黏膜吸收",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%8F%A3%E8%85%94%E9%BB%8F%E8%86%9C%E5%90%B8%E6%94%B6",
+      "title": "口腔黏膜吸收",
+      "snippet": "口腔黏膜吸收，是一種透過口腔內擴散作用的吸收方式。藥物或是營養物質可透過口腔黏膜滲透到微血管，再將其帶入體內循環，如此一來，可避免肝臟、胃腸道、酵素的破壞，增強效果。口腔黏膜吸收雖然被發現的很早，但僅侷限在醫療產業，所以關於口腔黏膜吸收的相關知識與市面上可見到的民生商品也非常罕見。"
+    },
+    {
+      "id": "chunk:9",
+      "label": "wikipedia_zh: 發動機制動",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%99%BC%E5%8B%95%E6%A9%9F%E5%88%B6%E5%8B%95",
+      "title": "發動機制動",
+      "snippet": "发动机制动是指人們利用发动机内的阻滯力使機動車輛减速，而不是使用外部制动机制如摩擦制动（煞車）來制動。發動機制動可以在較長時間內發揮制動作用。"
+    },
+    {
+      "id": "chunk:10",
+      "label": "wikipedia_zh: 併發症",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%BD%B5%E7%99%BC%E7%97%87",
+      "title": "併發症",
+      "snippet": "併發症 是指由一种疾病、操作或治疗所引起的另一种新的不良临床状况。并发症可能对疾病的预后或结果产生不利影响。并发症通常包括疾病严重程度恶化或出现新的体征、症状或病理变化，这些变化可能会在全身蔓延并影响其他器官系统。"
+    },
+    {
+      "id": "chunk:11",
+      "label": "wikipedia_zh: 慾海醫心",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%85%BE%E6%B5%B7%E9%86%AB%E5%BF%83",
+      "title": "慾海醫心",
+      "snippet": "《慾海醫心》 是USA電視台于2009年6月4日開始首播的一部電視劇。由馬克·菲爾斯汀、保羅·寇斯當佐、吉兒·弗蘭特、蘿希瑪·雪蒂、布蘿可·多爾賽、愷姆普柏·斯科特和班·雪恩克曼主演。《慾海醫心》為有線電視頻道播出的節目中收視較高的。"
+    },
+    {
+      "id": "chunk:12",
+      "label": "wikipedia_zh: 輻射劑量",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%BC%BB%E5%B0%84%E5%8A%91%E9%87%8F",
+      "title": "輻射劑量",
+      "snippet": "輻射劑量是指由光子的电离辐射引起的空气电离的程度， 在特定体积的空气中輻射劑量大小取決於辐射释放的電荷除以特定體積的空气的质量。包括X射线、计算机体层成像、乳房攝影術、肺通气和灌注扫描、骨扫描、心脏灌注扫描、血管攝影、放射治療等在內的不同的放射性医学检查和治療手段的輻射劑量都有所不同。"
+    },
+    {
+      "id": "chunk:13",
+      "label": "wikipedia_zh: 口腔黏膜吸收",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%8F%A3%E8%85%94%E9%BB%8F%E8%86%9C%E5%90%B8%E6%94%B6",
+      "title": "口腔黏膜吸收",
+      "snippet": "口腔黏膜吸收，是一種透過口腔內擴散作用的吸收方式。藥物或是營養物質可透過口腔黏膜滲透到微血管，再將其帶入體內循環，如此一來，可避免肝臟、胃腸道、酵素的破壞，增強效果。口腔黏膜吸收雖然被發現的很早，但僅侷限在醫療產業，所以關於口腔黏膜吸收的相關知識與市面上可見到的民生商品也非常罕見。"
+    },
+    {
+      "id": "chunk:14",
+      "label": "wikipedia_zh: NF-κB",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/NF-%CE%BAB",
+      "title": "NF-κB",
+      "snippet": "核因子活化B细胞κ轻链增强子 是一种控制DNA转录的蛋白复合体。NF-κB几乎存在于所有类型的动物细胞中并参与细胞对诸多刺激的响应，这些刺激包括应激、细胞因子、自由基、紫外线照射、氧化LDL及细菌或病毒抗原。在针对感染的免疫反应中，NF-κB起到了重要的调节作用（κ轻链是免疫球蛋白的重要组成部分）。NF-κB的调控失常与癌症、炎症和自體免疫病、感染性休克、病毒感染以及免疫发育异常有关。NF-κB亦"
+    },
+    {
+      "id": "chunk:15",
+      "label": "wikipedia_zh: Wnt信号通路",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Wnt%E4%BF%A1%E5%8F%B7%E9%80%9A%E8%B7%AF",
+      "title": "Wnt信号通路",
+      "snippet": "Wnt信号通路是一个复杂的蛋白质作用网络，其功能最常见于胚胎發育和癌症，但也参与成年动物的正常生理过程。\n现在已鉴别出三种Wnt信号通路：经典Wnt通路 、非经典Wnt/平面细胞极化通路 和非经典Wnt/钙离子通路。所有这三种Wnt信号通路都由Wnt蛋白配体与其受体卷曲受体的结合来活化，将信号传给胞内的散乱蛋白。经典Wnt信号通路参与基因表达的调控，非经典平面细胞极化通路调控细胞骨架控制细胞形状，"
+    },
+    {
+      "id": "chunk:16",
+      "label": "wikipedia_zh: 抗炎",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%8A%97%E7%82%8E",
+      "title": "抗炎",
+      "snippet": "抗炎（anti-inflammatory），药物学又称消炎，是能减少或消除身体炎症过程的特性或作用，含盖某物質、某药物或某治療能减少炎症的特性。"
+    },
+    {
+      "id": "chunk:17",
+      "label": "wikipedia_zh: 镇痛药",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E9%95%87%E7%97%9B%E8%8D%AF",
+      "title": "镇痛药",
+      "snippet": "镇痛药（analgesic）又称止痛药，是指能提高痛阈且选择性地缓解疼痛的药物，但其不会影响神经传递，也不会影响感官认知或让人丧失意识。由于麻醉药或镇静药也有减轻疼痛的作用，所以前述镇痛药定义是为了表述与后两者有所区别。"
+    },
+    {
+      "id": "chunk:18",
+      "label": "wikipedia_zh: 脱氧核糖核酸",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%84%B1%E6%B0%A7%E6%A0%B8%E7%B3%96%E6%A0%B8%E9%85%B8",
+      "title": "脱氧核糖核酸",
+      "snippet": "脱氧核糖核酸 是一種生物大分子，可組成遺傳指令，引導生物發育與生命機能運作。主要功能是資訊儲存，可比喻為「藍圖」或「配方」。其中包含的指令，是建構細胞內其他的化合物，如蛋白質與核醣核酸所需。帶有蛋白質編碼的DNA片段稱為基因。其他的DNA序列，有些直接以本身構造發揮作用，有些則參與調控遺傳訊息的表現。"
+    },
+    {
+      "id": "chunk:19",
+      "label": "wikipedia_zh: 病原相关分子模式",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%97%85%E5%8E%9F%E7%9B%B8%E5%85%B3%E5%88%86%E5%AD%90%E6%A8%A1%E5%BC%8F",
+      "title": "病原相关分子模式",
+      "snippet": "病原相关分子模式 是与病原体相关的小分子序列。它们可被類鐸受體和其它模式识别受体 识别。细菌内毒素脂多糖（LPS）被认为是原型的病原相关分子模式。 其他的病原相关分子模式包括细菌鞭毛，革兰氏阳性菌脂磷壁酸（LTA），肽聚糖和病毒的核酸如双链RNA或非甲基化的CpG特征序列。尽管病原相关分子模式的概念比较新，但病原体的分子必须被多细胞生物上的受体识别的概念已经有几十年了。在一些旧的文献中可以见到“内"
+    },
+    {
+      "id": "chunk:20",
+      "label": "wikipedia_zh: 里永埃斯蒙塔涅",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E9%87%8C%E6%B0%B8%E5%9F%83%E6%96%AF%E8%92%99%E5%A1%94%E6%B6%85",
+      "title": "里永埃斯蒙塔涅",
+      "snippet": "里永埃斯蒙塔涅 是法国康塔尔省的一个市镇，位于该省北部，属于莫里亚克区。"
+    },
+    {
+      "id": "chunk:21",
+      "label": "wikipedia_zh: OM",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/OM",
+      "title": "OM",
+      "snippet": "OM或om可以指：\n唵，宗教符号。\n阿曼\nOm River，俄羅斯的一條河流\n功績勳章\n創意思維活動\n東急電鐵大井町線的編號\n奧羅莫語的ISO 639-1語言代碼"
+    },
+    {
+      "id": "chunk:22",
+      "label": "wikipedia_zh: 頭頸癌",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E9%A0%AD%E9%A0%B8%E7%99%8C",
+      "title": "頭頸癌",
+      "snippet": "頭頸癌 是指位於頭頸部位，除了腦癌以外的其他惡性腫瘤。較常見有口腔癌、鼻咽癌，另外還有口咽癌、下咽癌、喉癌、鼻竇癌、唾液腺癌以及甲狀腺癌等。頭頸癌的常見部份包括口腔、鼻、喉嚨、鼻竇、唾液腺、喉頭等。頭頸癌的症狀包括有無法醫好的瘡或是硬塊、持續出現的喉嚨痛、吞嚥困難或是聲音的變化，若是有異常出血、面部腫脹、呼吸困難，也有可能是頭頸癌。"
+    },
+    {
+      "id": "chunk:23",
+      "label": "wikipedia_zh: 放射治療",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%94%BE%E5%B0%84%E6%B2%BB%E7%99%82",
+      "title": "放射治療",
+      "snippet": "放射治療 簡稱放療，港澳又稱電療，是一種治療癌症的方式，原理為使用由直线加速器或放射性核種制造的高能游離輻射來控制或破壞恶性細胞。放射治疗可以治愈一些仅在特定身体部分内存在的癌症，也可以用作辅助治疗，在手术切除原发恶性肿瘤后防止肿瘤复发（例如治疗早期阶段的乳腺癌）。放射治疗与化疗之间可以协同使用，易感癌症的化疗之前、期间和之后都可能使用放射治疗。肿瘤学中与放射治疗有关的亚专业被称为放射肿瘤学。从事"
+    },
+    {
+      "id": "chunk:24",
+      "label": "wikipedia_zh: RT",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/RT",
+      "title": "RT",
+      "snippet": "RT可以指：\n反應時間，心理學上的反應時間 Reaction Time\nRT電視台，全称今日俄罗斯电视台，俄羅斯一家英语国际电视台\nWindows RT，电脑操作系统\n瑞利－泰勒不穩定性，流体力学原理\n船底座RT，位於船底座中的變星\nRetweet的简写，转发Twitter上的一则推文\n中国大陆网络用语，汉语拼音首字母简写，如题、如图等\n冷凍噸，描述冷凍及空調能力的功率單位 Refrigerati"
+    },
+    {
+      "id": "chunk:25",
+      "label": "wikipedia_zh: 基底細胞癌",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%9F%BA%E5%BA%95%E7%B4%B0%E8%83%9E%E7%99%8C",
+      "title": "基底細胞癌",
+      "snippet": "基底細胞癌 或稱基底細胞瘤，是最常見的皮膚癌。患者的皮膚通常會先長出一塊無痛的隆起部分，其上可能佈有具光澤的蛛網紋或是潰瘍。此種癌症的生長速度緩慢，並會損傷其周邊的組織，但不太可能出現遠端轉移，也不太會直接導致死亡。"
+    },
+    {
+      "id": "chunk:26",
+      "label": "wikipedia_zh: 口腔黏膜吸收",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%8F%A3%E8%85%94%E9%BB%8F%E8%86%9C%E5%90%B8%E6%94%B6",
+      "title": "口腔黏膜吸收",
+      "snippet": "口腔黏膜吸收，是一種透過口腔內擴散作用的吸收方式。藥物或是營養物質可透過口腔黏膜滲透到微血管，再將其帶入體內循環，如此一來，可避免肝臟、胃腸道、酵素的破壞，增強效果。口腔黏膜吸收雖然被發現的很早，但僅侷限在醫療產業，所以關於口腔黏膜吸收的相關知識與市面上可見到的民生商品也非常罕見。"
+    },
+    {
+      "id": "chunk:27",
+      "label": "wikipedia_zh: 頭頸癌",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E9%A0%AD%E9%A0%B8%E7%99%8C",
+      "title": "頭頸癌",
+      "snippet": "頭頸癌 是指位於頭頸部位，除了腦癌以外的其他惡性腫瘤。較常見有口腔癌、鼻咽癌，另外還有口咽癌、下咽癌、喉癌、鼻竇癌、唾液腺癌以及甲狀腺癌等。頭頸癌的常見部份包括口腔、鼻、喉嚨、鼻竇、唾液腺、喉頭等。頭頸癌的症狀包括有無法醫好的瘡或是硬塊、持續出現的喉嚨痛、吞嚥困難或是聲音的變化，若是有異常出血、面部腫脹、呼吸困難，也有可能是頭頸癌。"
+    },
+    {
+      "id": "chunk:28",
+      "label": "wikipedia_zh: Hackintosh",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Hackintosh",
+      "title": "Hackintosh",
+      "snippet": "OSx86是把蘋果公司出品的macOS操作系統在x86架构的非蘋果電腦上运行的駭客协作計劃。此計劃的構思始於2005年6月的蘋果全球開發者大會，當時蘋果宣佈他們將把其個人電腦從PowerPC架構轉向英特爾架構。"
+    },
+    {
+      "id": "chunk:29",
+      "label": "wikipedia_zh: 世界卫生组织",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%B8%96%E7%95%8C%E5%8D%AB%E7%94%9F%E7%BB%84%E7%BB%87",
+      "title": "世界卫生组织",
+      "snippet": "世界衛生組織，中文簡稱为世衛組織或世衛，是联合国专门机构之一，為世界最大的政府間公共衛生組織，總部設於瑞士日內瓦。根據《世界卫生组织组织法》，世界衛生組織的宗旨是「使世界各地的人们盡可能獲得高水平的健康。」該組織給健康下的定義為“身體、精神及社會生活中的完美狀態”。世界衛生組織的主要職能包括：促進流行病和地方病的防治；提供和改進公共衛生，疾病醫療和有關事項的教學與訓練；推動確定生物製品的國際標準。"
+    },
+    {
+      "id": "chunk:30",
+      "label": "wikipedia_zh: WHO",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/WHO",
+      "title": "WHO",
+      "snippet": "WHO可以指：\n世界卫生组织，聯合國專門機構之一，1948年成立於瑞士日內瓦。\n白宫办公厅，美國總統日常辦工機構，在白宮西側。\nWHO!，韓國男子團體BOYNEXTDOOR出道的首張韓語單曲專輯，於2023年5月30日推出。\n何許人合唱團，1964年成立的英國搖滾樂團。\n“who”，顯示登入電腦使用者列表的Unix指令。"
+    },
+    {
+      "id": "chunk:31",
+      "label": "wikipedia_zh: Qoos",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Qoos",
+      "title": "Qoos",
+      "snippet": "澳門互聯網站（Qoos.com）曾為澳門的網上討論區，成立於2001年9月。該網站的核心服務為討論區服務。除此之外，還提供澳門新聞、線上遊戲、二手市場、網誌等服務，2019年8月轉為「酷思網」，為億亮傳媒集團旗下網站，2025年終止運作。"
+    },
+    {
+      "id": "chunk:32",
+      "label": "wikipedia_zh: 里永埃斯蒙塔涅",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E9%87%8C%E6%B0%B8%E5%9F%83%E6%96%AF%E8%92%99%E5%A1%94%E6%B6%85",
+      "title": "里永埃斯蒙塔涅",
+      "snippet": "里永埃斯蒙塔涅 是法国康塔尔省的一个市镇，位于该省北部，属于莫里亚克区。"
+    },
+    {
+      "id": "chunk:33",
+      "label": "wikipedia_zh: Gyatt",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Gyatt",
+      "title": "Gyatt",
+      "snippet": "Gyatt 最初是一非洲裔美国人白话英语的感嘆詞，為「God」（上帝）的變體，例子有「Gyatt Damn」（該死）。到了2020年代，該詞在語義變化下又指「擁有豐滿肥臀，甚至沙漏形身材的異性（通常為女性）」。"
+    },
+    {
+      "id": "chunk:34",
+      "label": "wikipedia_zh: ROS",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/ROS",
+      "title": "ROS",
+      "snippet": "Ros/ROS可能指以下事物："
+    },
+    {
+      "id": "chunk:35",
+      "label": "wikipedia_zh: RNG电子竞技俱乐部",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/RNG%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8",
+      "title": "RNG电子竞技俱乐部",
+      "snippet": "皇族电子竞技俱乐部 是一家成立于2012年5月的中国电子竞技俱乐部，该俱乐部当前以《英雄联盟》为主要项目，并有《Dota 2》、《王者荣耀》、《绝地求生》、《QQ飛車》等分部。其英雄联盟分部获得过五次英雄联盟职业联赛冠军，三次英雄联盟季中邀请赛冠军，并曾在2013与2014年获得英雄联盟全球总决赛亞軍。2018年RNG四名英雄联盟选手代表中国队登上雅加达亚运会并获得英雄联盟表演赛冠军。"
+    },
+    {
+      "id": "chunk:36",
+      "label": "wikipedia_zh: 角质形成细胞",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%A7%92%E8%B4%A8%E5%BD%A2%E6%88%90%E7%BB%86%E8%83%9E",
+      "title": "角质形成细胞",
+      "snippet": "角质形成细胞，是构成表皮的主要细胞成分，分层排列，也是皮肤的最外层，占人类表皮细胞90%。角质形成细胞除了可以合成角蛋白，也可作为非专职抗原提呈细胞，可产生多种细胞因子，参与固有免疫应答及皮肤炎症反应。"
+    },
+    {
+      "id": "chunk:37",
+      "label": "wikipedia_zh: 肿瘤坏死因子",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%82%BF%E7%98%A4%E5%9D%8F%E6%AD%BB%E5%9B%A0%E5%AD%90",
+      "title": "肿瘤坏死因子",
+      "snippet": "肿瘤坏死因子（TNF）旧称肿瘤坏死因子-α（TNF-α）以区别肿瘤坏死因子-β，属肿瘤坏死因子超家族一员，是一种涉及到系统性炎症的细胞因子，同时也是属于引起急相反应的众多细胞因子中的一员。主要由巨噬细胞分泌，不过有一些其它类型的细胞也能生产。"
+    },
+    {
+      "id": "chunk:38",
+      "label": "wikipedia_zh: IL-10家族",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/IL-10%E5%AE%B6%E6%97%8F",
+      "title": "IL-10家族",
+      "snippet": "IL-10家族 是一个白细胞介素家族名称来自于白细胞介素-10（IL-10），除此之外还包括白细胞介素-19、20、22、24和26，有些文献将白细胞介素-28、29也列入。"
+    },
+    {
+      "id": "chunk:39",
+      "label": "wikipedia_zh: IL-6",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/IL-6",
+      "title": "IL-6",
+      "snippet": "IL-6可能是指：\n白细胞介素-6（IL-6），一种细胞因子。\n伊爾-6，一种苏联轰炸机。"
+    },
+    {
+      "id": "chunk:40",
+      "label": "wikipedia_zh: P53",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/P53",
+      "title": "P53",
+      "snippet": "p53或p53蛋白、肿瘤蛋白p53（tumor protein p53）化学式为：C1911H3006O592N548S22(包含甲基化)，是一种调节性转录因子和肿瘤抑制因子，在细胞应激反应时被激活，通过修复或清除受损细胞，从而防止细胞发生癌变。p53蛋白在脊椎动物中具有重要功能，其通过预防基因组突变来维持稳定性、抑制肿瘤形成，因此p53被称为“基因组守护者”。TP53基因是位于人类染色体17p1"
+    },
+    {
+      "id": "chunk:41",
+      "label": "wikipedia_zh: RANKL",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/RANKL",
+      "title": "RANKL",
+      "snippet": "核因子κ-B配體受體致活劑 又称NF-κB受体激活蛋白配体，是一種在人體中由「TNFSF基因」轉譯出來的蛋白質。"
+    },
+    {
+      "id": "chunk:42",
+      "label": "wikipedia_zh: 氰化氢",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%B0%B0%E5%8C%96%E6%B0%A2",
+      "title": "氰化氢",
+      "snippet": "氰化氫，又稱氫氰酸，化学式HCN，相当擬鹵素氰的擬鹵化氫。标准状态下为液體，剧毒且致命，無色而苦，並有淡淡的杏仁氣味，能否嗅出視乎個人基因。氰化氫是一种弱酸，沸點26℃（79°F）。氰化氫是一個線性分子，碳和氮之間具有三鍵。"
+    },
+    {
+      "id": "chunk:43",
+      "label": "wikipedia_zh: NF-κB",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/NF-%CE%BAB",
+      "title": "NF-κB",
+      "snippet": "核因子活化B细胞κ轻链增强子 是一种控制DNA转录的蛋白复合体。NF-κB几乎存在于所有类型的动物细胞中并参与细胞对诸多刺激的响应，这些刺激包括应激、细胞因子、自由基、紫外线照射、氧化LDL及细菌或病毒抗原。在针对感染的免疫反应中，NF-κB起到了重要的调节作用（κ轻链是免疫球蛋白的重要组成部分）。NF-κB的调控失常与癌症、炎症和自體免疫病、感染性休克、病毒感染以及免疫发育异常有关。NF-κB亦"
+    },
+    {
+      "id": "chunk:44",
+      "label": "wikipedia_zh: RANKL",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/RANKL",
+      "title": "RANKL",
+      "snippet": "核因子κ-B配體受體致活劑 又称NF-κB受体激活蛋白配体，是一種在人體中由「TNFSF基因」轉譯出來的蛋白質。"
+    },
+    {
+      "id": "chunk:45",
+      "label": "wikipedia_zh: 肿瘤坏死因子",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%82%BF%E7%98%A4%E5%9D%8F%E6%AD%BB%E5%9B%A0%E5%AD%90",
+      "title": "肿瘤坏死因子",
+      "snippet": "肿瘤坏死因子（TNF）旧称肿瘤坏死因子-α（TNF-α）以区别肿瘤坏死因子-β，属肿瘤坏死因子超家族一员，是一种涉及到系统性炎症的细胞因子，同时也是属于引起急相反应的众多细胞因子中的一员。主要由巨噬细胞分泌，不过有一些其它类型的细胞也能生产。"
+    },
+    {
+      "id": "chunk:46",
+      "label": "wikipedia_zh: NF-κB",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/NF-%CE%BAB",
+      "title": "NF-κB",
+      "snippet": "核因子活化B细胞κ轻链增强子 是一种控制DNA转录的蛋白复合体。NF-κB几乎存在于所有类型的动物细胞中并参与细胞对诸多刺激的响应，这些刺激包括应激、细胞因子、自由基、紫外线照射、氧化LDL及细菌或病毒抗原。在针对感染的免疫反应中，NF-κB起到了重要的调节作用（κ轻链是免疫球蛋白的重要组成部分）。NF-κB的调控失常与癌症、炎症和自體免疫病、感染性休克、病毒感染以及免疫发育异常有关。NF-κB亦"
+    },
+    {
+      "id": "chunk:47",
+      "label": "wikipedia_zh: 伊爾-10攻擊機",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%BC%8A%E7%88%BE-10%E6%94%BB%E6%93%8A%E6%A9%9F",
+      "title": "伊爾-10攻擊機",
+      "snippet": "伊留申伊尔-10 型攻擊機，是二次大戰後期蘇聯由伊尔-2（IL-2）發展出來的攻擊機。"
+    },
+    {
+      "id": "chunk:48",
+      "label": "wikipedia_zh: IL-10家族",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/IL-10%E5%AE%B6%E6%97%8F",
+      "title": "IL-10家族",
+      "snippet": "IL-10家族 是一个白细胞介素家族名称来自于白细胞介素-10（IL-10），除此之外还包括白细胞介素-19、20、22、24和26，有些文献将白细胞介素-28、29也列入。"
+    },
+    {
+      "id": "chunk:49",
+      "label": "wikipedia_zh: T细胞",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/T%E7%BB%86%E8%83%9E",
+      "title": "T细胞",
+      "snippet": "T细胞 是淋巴细胞的一种，在免疫反應中扮演着重要的角色，T是胸腺（thymus）的英文缩写。T细胞在骨髓被製造出來之後，在胸腺内進行「新兵訓練」分化成熟為不同亚型的效应T細胞，成熟后就移居于周围淋巴组织中開始工作。"
+    },
+    {
+      "id": "chunk:50",
+      "label": "wikipedia_zh: 分化群4",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%88%86%E5%8C%96%E7%BE%A44",
+      "title": "分化群4",
+      "snippet": "分化群4 又称表面抗原分化簇4，在分子生物中，CD4是免疫細胞(例如:輔助T細胞、單核球、巨噬細胞和樹突細胞)表面的醣蛋白分子。它在1970年代晚期被發現，在1984年以前被稱為leu-3和T4。人類的CD4蛋白質是由CD4基因所製造。"
+    },
+    {
+      "id": "chunk:51",
+      "label": "wikipedia_zh: 细胞毒性T细胞",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%BB%86%E8%83%9E%E6%AF%92%E6%80%A7T%E7%BB%86%E8%83%9E",
+      "title": "细胞毒性T细胞",
+      "snippet": "细胞毒性T细胞 又称杀手T细胞 、TC细胞、胞殺T細胞、效應T細胞或CD8+ T細胞，屬於T細胞的一種，可以殺死癌細胞、受病毒感染的細胞，以及其他受損細胞。胞毒T细胞属于后天免疫系統的成员，当其杀伤活性开始表现时，属于先天免疫系统的NK细胞活性就会逐步降低。執行清除被感染細胞。 分泌穿孔素使被感染細胞穿孔，導致細胞凋亡。"
+    },
+    {
+      "id": "chunk:52",
+      "label": "wikipedia_zh: 分化群4",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%88%86%E5%8C%96%E7%BE%A44",
+      "title": "分化群4",
+      "snippet": "分化群4 又称表面抗原分化簇4，在分子生物中，CD4是免疫細胞(例如:輔助T細胞、單核球、巨噬細胞和樹突細胞)表面的醣蛋白分子。它在1970年代晚期被發現，在1984年以前被稱為leu-3和T4。人類的CD4蛋白質是由CD4基因所製造。"
+    },
+    {
+      "id": "chunk:53",
+      "label": "wikipedia_zh: 转化生长因子-β",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%BD%AC%E5%8C%96%E7%94%9F%E9%95%BF%E5%9B%A0%E5%AD%90-%CE%B2",
+      "title": "转化生长因子-β",
+      "snippet": "转化生长因子-β 是一多功能蛋白质，可以影响多种细胞的生长，分化、细胞凋亡及免疫调节等功能，转化生长因子-β包括三个亚型，转化生长因子-β1，转化生长因子-β2和转化生长因子-β3。转化生长因子-β属于转化生长因子-β超家族蛋白。"
+    },
+    {
+      "id": "chunk:54",
+      "label": "wikipedia_zh: SMAP 25 YEARS",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/SMAP_25_YEARS",
+      "title": "SMAP 25 YEARS",
+      "snippet": "《SMAP 25 YEARS》是于2016年12月21日在日本正式发行的SMAP第六张精选专辑，其发行公司为JVC建伍胜利娱乐株式会社。"
+    },
+    {
+      "id": "chunk:55",
+      "label": "wikipedia_zh: Morfonica",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Morfonica",
+      "title": "Morfonica",
+      "snippet": "Morfonica是跨媒体作品《BanG Dream!》中登场的虚构五人组女子樂團，同时也是由为该角色配音的声优组成以乐队形式活动的五人组合，组建于2020年。主题色为■天空蓝。简称“Monica”。现实世界中所属的公司为武士道株式会社。"
+    },
+    {
+      "id": "chunk:56",
+      "label": "wikipedia_zh: G1/2次列车",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/G1%2F2%E6%AC%A1%E5%88%97%E8%BD%A6",
+      "title": "G1/2次列车",
+      "snippet": "G1/2次列车是中国铁路运行于首都北京市和最大城市上海市之间的高速动车组列车，自2011年6月30日起开行，是京沪高速铁路所开行的第一对列车，全程1325公里，曾是京沪高铁上最快速的班次之一，最初为9:00分别从北京南站和上海虹橋站对开的班次，2021年6月25日改为7:00分别从北京南站和上海站对开的班次。其中北京南站至上海虹桥站运行4小时54分，使用车次为G1次，上海虹桥站至北京南站运行4小时"
+    },
+    {
+      "id": "chunk:57",
+      "label": "wikipedia_zh: DNA修復",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/DNA%E4%BF%AE%E5%BE%A9",
+      "title": "DNA修復",
+      "snippet": "DNA修复是细胞中经常运行的一种进程。它使基因组免受损伤和突变，因此对细胞的生存是很重要的。在人的细胞中，一般的代谢活动和环境因素 都能造成DNA损伤，导致每个细胞每天多达1,000,000处的分子损害。这些损害给DNA分子造成结构上的破坏，由此可大大的改变细胞阅读信息和基因编码的方式，其餘的損害引發在細胞基因體中的潛在有害突變，進而影響子細胞在進行有絲分裂後的存活。因此，DNA修复必须经常运作，"
+    },
+    {
+      "id": "chunk:58",
+      "label": "wikipedia_zh: Miss A",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Miss_A",
+      "title": "Miss A",
+      "snippet": "miss A 是韓國JYP娛樂於2010年推出的四人女子音樂團體，由兩名中國籍成員Fei、Jia以及兩名韓國籍成員Min、Suzy所組成。2010年7月1日推出首張單曲專輯《Bad But Good》，同天於Mnet《M! Countdown》上正式出道。"
+    },
+    {
+      "id": "chunk:59",
+      "label": "wikipedia_zh: DDR",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/DDR",
+      "title": "DDR",
+      "snippet": "DDR可以指：\n德意志民主共和國，1949年至1990年間存在的社會主義國家東德的國號\n勁爆熱舞，一款由科樂美製作的電玩音樂遊戲系列\n双倍数据速率，一種計算機總線的數據傳輸策略\nDDR SDRAM，一種使用雙倍數據率傳輸的計算機內存標準\n移动DDR，專門用於移動式電子產品的計算機內存標準\nDNA損傷反應，用於修復受損的DNA"
+    },
+    {
+      "id": "chunk:60",
+      "label": "wikipedia_zh: PUMA",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/PUMA",
+      "title": "PUMA",
+      "snippet": "PUMA（中文名彪马）是一間德國體育用品製造商，前身是1924年由鲁道夫·達斯勒和阿道夫·達斯勒兩兄弟共同建立的「達斯勒兄弟鞋廠」，1948年以「魯道夫·達斯勒」名和姓的首音節命名為「RUDA」，後來改名為「PUMA」（意為美洲獅）服裝及運動鞋設計，通常都可見到美洲獅和跑道流線標誌。\nPUMA與愛迪達同為1970與1980年代嘻哈文化代表物之一。"
+    },
+    {
+      "id": "chunk:61",
+      "label": "wikipedia_zh: RSh-12.7左轮手枪",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/RSh-12.7%E5%B7%A6%E8%BD%AE%E6%89%8B%E6%9E%AA",
+      "title": "RSh-12.7左轮手枪",
+      "snippet": "RSh-12.7 是一款由俄罗斯圖拉KBP儀器設計局旗下的運動及狩獵武器中央設計研究局 研發生产的12.7毫米（.50英吋）大口徑左轮手枪，是一種適用於近身距離作戰及城市作戰的武器，发射12.7×55毫米俄羅斯口徑步枪子彈。"
+    },
+    {
+      "id": "chunk:62",
+      "label": "wikipedia_zh: Kep1er",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Kep1er",
+      "title": "Kep1er",
+      "snippet": "Kep1er，韓國女子團體，曾为活動期2年6個月的期間限定团体，現為永久團，由WAKEONE管理，由Mnet選秀節目《Girls Planet 999》選出。2022年1月3日，發行迷你專輯《FIRST IMPACT》出道。2026年3月6日起成員為崔有眞、沈小婷、金采炫、金多娟、休寧巴伊葉、江崎光，2024年7月3日坂本舞白、姜睿序不續約；2026年3月6日徐永恩退團，此團體也成為韓國流行音樂史"
+    },
+    {
+      "id": "chunk:63",
+      "label": "wikipedia_zh: NR-23機炮",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/NR-23%E6%A9%9F%E7%82%AE",
+      "title": "NR-23機炮",
+      "snippet": "NR-23機炮為蘇聯在第二次世界大戰後開發的空用機炮，相較它的前代製品，NR-23重量更輕、射速更快，所以很快的配置在蘇聯各型噴射戰鬥機與轟炸機上成為它們的主要武器。在1950年代中期被更大口徑的NR-30機炮給取代。"
+    },
+    {
+      "id": "chunk:64",
+      "label": "wikipedia_zh: 氧化应激",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%B0%A7%E5%8C%96%E5%BA%94%E6%BF%80",
+      "title": "氧化应激",
+      "snippet": "氧化壓力，又称氧化逆境、氧化應激，为机体活性氧成分与抗氧化系统之间平衡失调引起的一系列适应性的反应。干擾細胞正常的氧化還原狀態，會製造出過氧化物與自由基導致毒性作用，因此損害細胞的蛋白質、脂類和DNA。"
+    },
+    {
+      "id": "chunk:65",
+      "label": "wikipedia_zh: 抗氧化剂",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%8A%97%E6%B0%A7%E5%8C%96%E5%89%82",
+      "title": "抗氧化剂",
+      "snippet": "抗氧化剂是指能减缓或防止氧化作用的分子（常专指生物体中）。氧化是一种使电子自物质转移至氧化剂的化学反应，过程中可生成自由基，进而启动链反应。当链反应发生在细胞中，细胞便會受到破坏或凋亡。抗氧化剂则能去除自由基，终止连锁反应并且抑制其他氧化反应，同时其本身被氧化。抗氧化剂通常是还原剂，例如硫醇、抗坏血酸、多酚类。"
+    },
+    {
+      "id": "chunk:66",
+      "label": "wikipedia_zh: 促炎性细胞因子",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%BF%83%E7%82%8E%E6%80%A7%E7%BB%86%E8%83%9E%E5%9B%A0%E5%AD%90",
+      "title": "促炎性细胞因子",
+      "snippet": "促炎性细胞因子 是一系列可以促進炎症的细胞因子的總稱，其透過活化的巨噬細胞參與炎症反應，如急性炎症和慢性炎症等。"
+    },
+    {
+      "id": "chunk:67",
+      "label": "wikipedia_zh: 转录因子",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%BD%AC%E5%BD%95%E5%9B%A0%E5%AD%90",
+      "title": "转录因子",
+      "snippet": "在分子生物学中，转录因子 是指能够结合在某基因上游特异核苷酸序列上的蛋白质，这些蛋白质能调控其基因的转录，具体是通过调控核糖核酸聚合酶 与DNA模板股的结合。"
+    },
+    {
+      "id": "chunk:68",
+      "label": "wikipedia_zh: 环境应力筛选",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%8E%AF%E5%A2%83%E5%BA%94%E5%8A%9B%E7%AD%9B%E9%80%89",
+      "title": "环境应力筛选",
+      "snippet": "環境應力篩選 是指對產品施加環境與工作應力，如溫度、振動等，使得利用一般功能檢驗所無法測得之潛在疵病提前暴露出來，從而即早發現瑕疵而將之剔除，以達到品質管制的目的。"
+    },
+    {
+      "id": "chunk:69",
+      "label": "wikipedia_zh: 伽玛射线暴",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%BC%BD%E7%8E%9B%E5%B0%84%E7%BA%BF%E6%9A%B4",
+      "title": "伽玛射线暴",
+      "snippet": "伽瑪射線暴，又稱伽瑪暴，是宇宙中自大爆炸以來能量和光度都最高的電磁脈衝事件。爆發可持續十毫秒至數小時。最初的伽瑪射線閃光過後，還會留下時間更長、波長更長的「餘輝」（X光、紫外光、可見光、紅外光、微波乃至無線電波）。"
+    },
+    {
+      "id": "chunk:70",
+      "label": "wikipedia_zh: 口內射精",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E5%8F%A3%E5%85%A7%E5%B0%84%E7%B2%BE",
+      "title": "口內射精",
+      "snippet": "口內射精，俗稱口爆或射在嘴裡，是指男性在性高潮射精時將精液射入他人口腔中的一種射精行為。口內射精是一種廣義的體內射精，但通常體內射精指的是陰道或肛門內的射精行為。"
+    },
+    {
+      "id": "chunk:71",
+      "label": "wikipedia_zh: 细胞凋亡",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%BB%86%E8%83%9E%E5%87%8B%E4%BA%A1",
+      "title": "细胞凋亡",
+      "snippet": "细胞凋亡，是一种程序性细胞死亡，发生在多细胞生物和一些真核单细胞微生物（如酵母）中。在细胞凋亡过程中，一些生化事件导致特征性的细胞形态变化，包括起泡、细胞收缩、核碎裂、染色质凝聚、DNA 碎裂和 mRNA 衰变，并最终导致细胞死亡。由于细胞凋亡，成年人平均每天会失去 500 亿至 700 亿个细胞，而8 至 14 岁的普通儿童每天大约会失去 200 亿至 300 亿个细胞。"
+    },
+    {
+      "id": "chunk:72",
+      "label": "wikipedia_zh: DNA修復",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/DNA%E4%BF%AE%E5%BE%A9",
+      "title": "DNA修復",
+      "snippet": "DNA修复是细胞中经常运行的一种进程。它使基因组免受损伤和突变，因此对细胞的生存是很重要的。在人的细胞中，一般的代谢活动和环境因素 都能造成DNA损伤，导致每个细胞每天多达1,000,000处的分子损害。这些损害给DNA分子造成结构上的破坏，由此可大大的改变细胞阅读信息和基因编码的方式，其餘的損害引發在細胞基因體中的潛在有害突變，進而影響子細胞在進行有絲分裂後的存活。因此，DNA修复必须经常运作，"
+    },
+    {
+      "id": "chunk:73",
+      "label": "wikipedia_zh: 细胞凋亡",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%BB%86%E8%83%9E%E5%87%8B%E4%BA%A1",
+      "title": "细胞凋亡",
+      "snippet": "细胞凋亡，是一种程序性细胞死亡，发生在多细胞生物和一些真核单细胞微生物（如酵母）中。在细胞凋亡过程中，一些生化事件导致特征性的细胞形态变化，包括起泡、细胞收缩、核碎裂、染色质凝聚、DNA 碎裂和 mRNA 衰变，并最终导致细胞死亡。由于细胞凋亡，成年人平均每天会失去 500 亿至 700 亿个细胞，而8 至 14 岁的普通儿童每天大约会失去 200 亿至 300 亿个细胞。"
+    },
+    {
+      "id": "chunk:74",
+      "label": "wikipedia_zh: NF-κB",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/NF-%CE%BAB",
+      "title": "NF-κB",
+      "snippet": "核因子活化B细胞κ轻链增强子 是一种控制DNA转录的蛋白复合体。NF-κB几乎存在于所有类型的动物细胞中并参与细胞对诸多刺激的响应，这些刺激包括应激、细胞因子、自由基、紫外线照射、氧化LDL及细菌或病毒抗原。在针对感染的免疫反应中，NF-κB起到了重要的调节作用（κ轻链是免疫球蛋白的重要组成部分）。NF-κB的调控失常与癌症、炎症和自體免疫病、感染性休克、病毒感染以及免疫发育异常有关。NF-κB亦"
+    },
+    {
+      "id": "chunk:75",
+      "label": "wikipedia_zh: 趋化因子",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E8%B6%8B%E5%8C%96%E5%9B%A0%E5%AD%90",
+      "title": "趋化因子",
+      "snippet": "趋化因子（chemokines）也稱趨化激素、趨化素或化學激素，是由细胞分泌的信号传送蛋白，属于小型细胞因子家族成员，因具有诱导附近应答细胞定向趋化的能力而得名。趋化因子蛋白的共同结构特征包括：分子量小，有四个位置保守的半胱氨酸残基以保证其三级结构。"
+    },
+    {
+      "id": "chunk:76",
+      "label": "wikipedia_zh: 白血球",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%99%BD%E8%A1%80%E7%90%83",
+      "title": "白血球",
+      "snippet": "白血球 又稱白細胞（leukocyte）、免疫细胞，是免疫系统的细胞，参与保护身体抵抗传染病和外来入侵者。“白血球”最早在血液中发现而得名，是血液中重要的血细胞之一；其后在淋巴组织及其他组织中都有发现，而称“白細胞”。除白血球外，人体血液中还含有紅血球、血小板和血浆。白血球雖命名「白」，但其實際上是无色的。白血球存在于血液、淋巴系统、脾，扁桃体以及身体的其他组织。"
+    },
+    {
+      "id": "chunk:77",
+      "label": "wikipedia_zh: 上皮细胞黏附分子",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E4%B8%8A%E7%9A%AE%E7%BB%86%E8%83%9E%E9%BB%8F%E9%99%84%E5%88%86%E5%AD%90",
+      "title": "上皮细胞黏附分子",
+      "snippet": "上皮细胞黏附分子 是一种细胞表面跨膜醣蛋白，由人类2号染色体上的基因 EPCAM 编码，属于非钙依赖类细胞黏附分子，是上皮细胞的主要标志物。"
+    },
+    {
+      "id": "chunk:78",
+      "label": "wikipedia_zh: P1Harmony",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/P1Harmony",
+      "title": "P1Harmony",
+      "snippet": "P1Harmony 是韓國FNC娛樂於2020年推出的六人男子音樂團體，由四位韓國成員THEO、JIUNG、INTAK、JONG SEOB，一位日本成員SOUL，及一位加拿大成員KEEHO組成，並由KEEHO擔任隊長。團體於2020年10月28日以迷你專輯《DISHARMONY : STAND OUT》出道。"
+    },
+    {
+      "id": "chunk:79",
+      "label": "wikipedia_zh: 細胞週期",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%B4%B0%E8%83%9E%E9%80%B1%E6%9C%9F",
+      "title": "細胞週期",
+      "snippet": "細胞週期，是指能持续分裂的真核细胞从一次有丝分裂结束后生长，再到下一次分裂结束的循环过程(準確來說只要有DNA複製，不管是不是有絲分裂它都有細胞週期。生殖細胞無細胞週期。)。細胞週期的长短反映了细胞所处状态，这是一个细胞物质积累与细胞分裂的循环过程。癌变的细胞以及特定阶段的胚胎细胞常常有异常的分裂週期。"
+    },
+    {
+      "id": "chunk:80",
+      "label": "wikipedia_zh: 细胞衰老",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E7%BB%86%E8%83%9E%E8%A1%B0%E8%80%81",
+      "title": "细胞衰老",
+      "snippet": "细胞衰老是一种以细胞分裂停止为特征的现象。在20世纪60年代初的实验中，Leonard Hayflick和Paul Moorhead发现，正常的人类胎儿成纤维细胞在最多达到大约50次细胞群倍增期就会变得衰老。这个过程被称为 \"复制性衰老\"，或海佛烈克極限。细胞衰老可以由各种因素引發。这些因素包括环境和内部损害、细胞异常生长、氧化应激、自噬因素，以及其他因素。"
+    },
+    {
+      "id": "chunk:81",
+      "label": "wikipedia_zh: Sass",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/Sass",
+      "title": "Sass",
+      "snippet": "Sass 是一个最初由Hampton Catlin设计并由Natalie Weizenbaum开发的层叠样式表语言。在开发最初版本之后，Weizenbaum和Chris Eppstein继续通过SassScript来继续扩充Sass的功能。SassScript是一个在Sass文件中使用的小型脚本语言。"
+    },
+    {
+      "id": "chunk:82",
+      "label": "wikipedia_zh: 有絲分裂",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%9C%89%E7%B5%B2%E5%88%86%E8%A3%82",
+      "title": "有絲分裂",
+      "snippet": "有丝分裂 是真核细胞将其细胞核中染色体分配到两个子核之中的过程。细胞核分裂后通常伴随着细胞质分裂，将细胞质、细胞器与细胞膜等细胞结构均等分配至子细胞中。有丝分裂与细胞质分裂被定义为细胞周期的分裂期，或M期；该过程产生两个与母细胞基因相同的子细胞。这个过程一般约占整个细胞周期的10％。"
+    },
+    {
+      "id": "chunk:83",
+      "label": "wikipedia_zh: CDKN2BAS",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/CDKN2BAS",
+      "title": "CDKN2BAS",
+      "snippet": "CDKN2B-AS亦被称为ANRIL 是一条由19个外显子组成的长链非编码RNA，在基因组中横跨12.63万个碱基对，转录产物被剪接为长3834个碱基的RNA。该长链位于p15CDKN2B-p16CDKN2A-p14ARF基因座中且与蛋白编码基因呈反义方向转录。一些位于CDKN2B-AS的單核苷酸多態性位点（SNPs）改变其表达量，并与冠狀動脈性心臟病、糖尿病及多种癌症在内的许多疾病呈关联性。该条"
+    },
+    {
+      "id": "chunk:84",
+      "label": "wikipedia_zh: P53",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/P53",
+      "title": "P53",
+      "snippet": "p53或p53蛋白、肿瘤蛋白p53（tumor protein p53）化学式为：C1911H3006O592N548S22(包含甲基化)，是一种调节性转录因子和肿瘤抑制因子，在细胞应激反应时被激活，通过修复或清除受损细胞，从而防止细胞发生癌变。p53蛋白在脊椎动物中具有重要功能，其通过预防基因组突变来维持稳定性、抑制肿瘤形成，因此p53被称为“基因组守护者”。TP53基因是位于人类染色体17p1"
+    },
+    {
+      "id": "chunk:85",
+      "label": "wikipedia_zh: 放射治療",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%94%BE%E5%B0%84%E6%B2%BB%E7%99%82",
+      "title": "放射治療",
+      "snippet": "放射治療 簡稱放療，港澳又稱電療，是一種治療癌症的方式，原理為使用由直线加速器或放射性核種制造的高能游離輻射來控制或破壞恶性細胞。放射治疗可以治愈一些仅在特定身体部分内存在的癌症，也可以用作辅助治疗，在手术切除原发恶性肿瘤后防止肿瘤复发（例如治疗早期阶段的乳腺癌）。放射治疗与化疗之间可以协同使用，易感癌症的化疗之前、期间和之后都可能使用放射治疗。肿瘤学中与放射治疗有关的亚专业被称为放射肿瘤学。从事"
+    },
+    {
+      "id": "chunk:86",
+      "label": "wikipedia_zh: 放射线 (交通)",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/%E6%94%BE%E5%B0%84%E7%BA%BF_(%E4%BA%A4%E9%80%9A)",
+      "title": "放射线 (交通)",
+      "snippet": "放射线 是连接城镇中心（通常是中央商务区）与该城镇的郊区（或衛星城市）的公共交通路线。这种路线可以通过各种形式的公共交通工具来运行，包括通勤铁路、地鐵、有軌電車、無軌電車或公共汽車。"
+    },
+    {
+      "id": "chunk:87",
+      "label": "wikipedia_zh: DNA Lover",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/DNA_Lover",
+      "title": "DNA Lover",
+      "snippet": "《DNA Lover》 是一部由郑秀美编剧、成治昱執演，並由崔始源、鄭仁仙、李泰煥、鄭釉珍主演的韓國電視劇。该剧于2024年8月17日在TV朝鮮首播，每周六、日21:10（韩国标准时间）在週末迷你劇時段播出。"
+    },
+    {
+      "id": "chunk:88",
+      "label": "wikipedia_zh: DOI",
+      "type": "knowledge",
+      "source": "wikipedia_zh",
+      "url": "https://zh.wikipedia.org/wiki/DOI",
+      "title": "DOI",
+      "snippet": "数字对象唯一标识符 又称数字对象标识符（台湾作數位物件識別碼），是用于针对数字资源的标准，对各种对象提供唯一的持久性标识符或句柄，具有对资源进行永久命名标志、动态解析链接的特性。由国际标准化组织（ISO）制定。DOl也适用于统一资源标识符（URI）系统。它们被广泛用于识别学术、专业和政府信息，例如期刊文章、研究报告、数据集和官方出版物。"
+    },
+    {
+      "id": "chunk:89",
+      "label": "duckduckgo: 放射性口腔黏膜炎 - 丁香园用药助手",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://drugs.dxy.cn/pc/clinicalDecision/p3Ns0Hz-k5aPZaxSeEx310g?ky=放射肿瘤科",
+      "title": "放射性口腔黏膜炎 - 丁香园用药助手",
+      "snippet": "定义放射性口腔黏膜炎（radiotherapy-induced oral mucositis，RIOM）是电离辐射干扰口腔上皮细胞的正常更新而导致的急性黏膜损伤，是头颈部肿瘤放射治疗中最常见的不良反应之一 1，表现为口腔黏膜充血、红斑、糜烂、溃疡及纤维化等，患者出现疼痛、进食困难、口干、味觉障碍等 2-4。"
+    },
+    {
+      "id": "chunk:90",
+      "label": "duckduckgo: 病毒 - 维基百科，自由的百科全书",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zh.wikipedia.org/zh-hans/病毒",
+      "title": "病毒 - 维基百科，自由的百科全书",
+      "snippet": "November 9, 2025 -不同的病毒有着不同的致病机制，主要取决于病毒的种类。在细胞水平上，病毒主要的破坏作用是导致细胞裂解，进而引起细胞死亡。在多细胞生物中，一旦机体内有足够多的细胞死亡，就会对机体的健康产生影响。虽然病毒可以引发疾病，却也可以无害地存在于机体内。例如，能够引起唇疱疹的单纯疱疹病毒可以在人体内保持休眠状态；这种状态又称为“潜伏”（latency），这也是所有疱疹病毒（包"
+    },
+    {
+      "id": "chunk:91",
+      "label": "duckduckgo: 头颈部放射治疗解剖图谱 - 罗京伟 罗德红 - 微信读书",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://weread.qq.com/web/reader/0a8329d071a5555d0a866c9",
+      "title": "头颈部放射治疗解剖图谱 - 罗京伟 罗德红 - 微信读书",
+      "snippet": "是头颈部放疗的重要工具书，特别是本书作者曾主编《头颈部肿瘤放射治疗图谱》的品牌延伸姊妹篇，对指导头颈部放射治疗的标准实践有着重要的学术. 价值和临床指导意义。"
+    },
+    {
+      "id": "chunk:100",
+      "label": "duckduckgo: 辐射损伤机制及防护制剂研究团队-成都医学院公共卫生学院",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://ggwsx.cmc.edu.cn/info/1141/3137.htm",
+      "title": "辐射损伤机制及防护制剂研究团队-成都医学院公共卫生学院",
+      "snippet": "3.炎症性肠病发生发展机制及干预研究 4.电离辐射的遗传毒性研究 核心成果： 1.研发辐射损伤药物及制剂、开发辐射损伤防护新材料； 2.辐射损伤机制及防护制剂研究团队共主持国家级、省部级等科各级研项目11项，在研经费120万，发表SCI论文21篇，其中IF大于10 ..."
+    },
+    {
+      "id": "chunk:101",
+      "label": "duckduckgo: 2025最新肝癌治疗指南：各分期治疗方案与靶向药选择全解析 - MedFind",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://medfind.link/info/28928",
+      "title": "2025最新肝癌治疗指南：各分期治疗方案与靶向药选择全解析 - MedFind",
+      "snippet": "本文深度解读2025年中国肝癌多学科综合治疗专家共识，详细介绍基于CNLC分期的最新治疗方案，涵盖手术、介入、靶向及免疫治疗。了解各阶段肝癌治疗策略，包括仑伐替尼等药物的选择，为患者提供权威参考。"
+    },
+    {
+      "id": "chunk:102",
+      "label": "duckduckgo: 电磁辐射与健康 - 维基百科，自由的百科全书",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zh.wikipedia.org/zh-hans/电磁辐射对健康的危害",
+      "title": "电磁辐射与健康 - 维基百科，自由的百科全书",
+      "snippet": "December 17, 2024 -电磁辐射可根据其电离原子及破坏化学键的能力分为两类: 电离辐射和非电离辐射。紫外线及更高频率的射线（如X射线、γ射线等）属于电离辐射，它们有其特殊的危害性，具体可参见辐射、急性辐射综合症和慢性辐射综合症等条目。就目前而言，生活中最为常见的一类辐射损伤是晒伤，该损伤每年导致超过一百万人患上皮肤癌。"
+    },
+    {
+      "id": "chunk:106",
+      "label": "duckduckgo: Radiotherapy",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://en.wikipedia.org/wiki/Radiotherapy",
+      "title": "Radiotherapy",
+      "snippet": "Radiation therapy or radiotherapy (RT, RTx, or XRT) is a treatment using ionizing radiation, generally provided as part of cancer therapy to either kill or control the growth of malignant cells. It is"
+    },
+    {
+      "id": "chunk:111",
+      "label": "duckduckgo: Wnt signaling pathway - Wikipedia",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://en.wikipedia.org/wiki/Wnt_signaling_pathway",
+      "title": "Wnt signaling pathway - Wikipedia",
+      "snippet": "2 weeks ago -The canonical Wnt pathway (or Wnt/β-catenin pathway) isthe Wnt pathway that causes an accumulation of β-catenin in the cytoplasmand its eventual translocation into the nucleus to act as a"
+    },
+    {
+      "id": "chunk:112",
+      "label": "duckduckgo: 有救了!Mapk、Pi3k、Nf-κb等8大常见信号通路总结!（内附信号通路资料",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zhuanlan.zhihu.com/p/3186333406",
+      "title": "有救了!Mapk、Pi3k、Nf-κb等8大常见信号通路总结!（内附信号通路资料包）",
+      "snippet": "很多小伙伴对信号通路都是知其然而不知其所以然，看了那么多信号通路，你知道信号通路到底有什么用吗？ 今天小N就带大家先一起了解下信号通路到底是什么，再对常见信号通路的进行总结! 信号通路的意义 看文献：更…"
+    },
+    {
+      "id": "chunk:113",
+      "label": "duckduckgo: Cell子刊重磅：借铁死亡之力清除衰老细胞，助力健康寿命延长",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zhuanlan.zhihu.com/p/2014655113231365632",
+      "title": "Cell子刊重磅：借铁死亡之力清除衰老细胞，助力健康寿命延长",
+      "snippet": "这项研究的关键成果如下： 1、共轭多不饱和脂肪酸中的α - ESA以及其甲酯衍生物具备选择性清除多种衰老细胞的能力； 2、这类脂质类的衰老细胞清除剂（Senolytics）能够降低老年小鼠体内组织的衰老程度，同时延长它们的健康寿命； 3、α - ESA并非通过引发细胞凋亡或坏死，而是借助铁死亡机制来 ..."
+    },
+    {
+      "id": "chunk:116",
+      "label": "duckduckgo: Ionizing radiation",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://en.wikipedia.org/wiki/Ionizing_radiation",
+      "title": "Ionizing radiation",
+      "snippet": "Ionizing radiation, also spelled ionising radiation, consists of subatomic particles or electromagnetic waves that have enough energy per individual photon or particle to ionize atoms or molecules by "
+    },
+    {
+      "id": "chunk:118",
+      "label": "duckduckgo: Reactive oxygen species",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://en.wikipedia.org/wiki/Reactive_oxygen_species",
+      "title": "Reactive oxygen species",
+      "snippet": "In chemistry and biology, reactive oxygen species (ROS) are highly reactive chemicals formed from diatomic oxygen (O2), water, and hydrogen peroxide. Some prominent ROS are the hydroperoxide radical o"
+    },
+    {
+      "id": "chunk:144",
+      "label": "duckduckgo: Welcome to the MASCC/ISOO 2026 Annual Me",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://isoo.world/conferences.php",
+      "title": "Welcome to the MASCC/ISOO 2026 Annual Meeting",
+      "snippet": "On behalf of the Multinational Association of Supportive Care in Cancer (MASCC) and the International Society of Oral Oncology (ISOO), I warmly invite you to join us at the 2026MASCC/ISOOAnnual Meetin"
+    },
+    {
+      "id": "chunk:172",
+      "label": "duckduckgo: 类器官大揭秘—口腔类器官（5）之舌源类器官 - 知乎",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zhuanlan.zhihu.com/p/49314750527",
+      "title": "类器官大揭秘—口腔类器官（5）之舌源类器官 - 知乎",
+      "snippet": "舌黏膜覆盖整个舌头的表面，舌上皮则是舌头表面的上皮组织，是舌黏膜的最外层结构。舌上皮主要分为两种类型，覆盖在舌头的不同区域，舌背（舌体上部）主要是角化的复层扁平上皮，而舌腹（舌下表面）和舌侧缘是非角化的复层扁平上皮。正常情况下，舌上皮有轻度的角质化和脱落现象，舌上皮细胞则持续从基底层分裂、分化并向上迁移，以更新不断脱落的角化上皮，它们约3-7天更新一次。"
+    },
+    {
+      "id": "chunk:180",
+      "label": "duckduckgo: a-hospital.com/w/食管黏膜损伤",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.a-hospital.com/w/食管黏膜损伤",
+      "title": "a-hospital.com/w/食管黏膜损伤",
+      "snippet": "4 食管黏膜损伤的并发症. 5 食管黏膜损伤的预防和治疗方法. 5.1 食管黏膜损伤的西医治疗."
+    },
+    {
+      "id": "chunk:184",
+      "label": "duckduckgo: 从基础机制到疾病关联与基金申请视角——衰老相关分泌表型（Sasp）研究 - 知乎",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zhuanlan.zhihu.com/p/1890335236820301350",
+      "title": "从基础机制到疾病关联与基金申请视角——衰老相关分泌表型（Sasp）研究 - 知乎",
+      "snippet": "衰老相关分泌表型（Senescence-Associated Secretory Phenotype, SASP）是衰老细胞通过分泌多种生物活性因子（如细胞因子、趋化因子、生长因子、蛋白酶等），重塑局部微环境并影响组织稳态的病理现象。 其核心特征包括： ① 促炎性因子：IL-6、IL-8、TNF-α、CXCL家族等；"
+    },
+    {
+      "id": "chunk:186",
+      "label": "duckduckgo: Oral mucosa tissue gene expression profi",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0190709",
+      "title": "Oral mucosa tissue gene expression profiling before, during, and after radiation therapy for tonsil squamous cell carcinoma | PLOS One",
+      "snippet": "January 16, 2018 -Gene expression was evaluated with the methods described previously in detail [20]. Briefly, for both mononuclear cells and mucosa, we used the Affymetrix GeneChip Human Exon 1.0 ST "
+    },
+    {
+      "id": "chunk:187",
+      "label": "duckduckgo: 什么是扁桃体癌？ | 班台医院",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.pantai.com.my/zh-cn/medical-specialties/oncology/tonsil-cancer",
+      "title": "什么是扁桃体癌？ | 班台医院",
+      "snippet": "妙佑医疗国际（2021年1月29日）扁桃体癌，见 https://www.mayoclinic.org/diseases-conditions/tonsil-cancer/symptoms-causes/syc-20367939#:~:text=Tonsil cancer is an abnormal,is caught in your throat. [Accessed 21 March 202"
+    },
+    {
+      "id": "chunk:194",
+      "label": "duckduckgo: NFkB 通路 | Cell Signaling Technology",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.cellsignal.cn/pathways/nfkb-signaling-pathway",
+      "title": "NFkB 通路 | Cell Signaling Technology",
+      "snippet": "本网页介绍了 NF-κB/Rel 蛋白的结构、功能和信号通路，以及它们在免疫、炎症、应激反应等生物学过程中的作用。网页还提供了NF-κB 信号通路的图示、文献引用和相关产品信息。"
+    },
+    {
+      "id": "chunk:197",
+      "label": "duckduckgo: 致病机制是什么全文免费阅读_春风无邪_41小说网",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://41xs.net/books/7102332/",
+      "title": "致病机制是什么全文免费阅读_春风无邪_41小说网",
+      "snippet": "《致病机制是什么》选择. 司越珩被无视得很彻底，蹲在那里动作僵得关节窝里都出汗了，穆从白还是没有理他的意思，仿佛他根本不存在。"
+    },
+    {
+      "id": "chunk:198",
+      "label": "duckduckgo: 头颈部放射治疗 |Waterloo Regional Health Networ",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.wrhn.ca/zh/resources/radiation-therapy-to-the-head-and-neck",
+      "title": "头颈部放射治疗 |Waterloo Regional Health Network",
+      "snippet": "头颈部放射治疗放射治疗能杀死癌细胞，并阻止它们扩散到身体其他部位。在接受治疗的部位，您可能会出现副作用（身体变化）。 放射治疗的副作用可能： 从治疗中途开始 在治疗结束后暂停数周 若您出现任何副作用或有疑问，请咨询您的医疗团队成员： 医生 护士 放射治疗师 营养师"
+    },
+    {
+      "id": "chunk:203",
+      "label": "duckduckgo: 放射性口腔黏膜炎模型 - 四川格林泰科格林泰科-新药临床前研究服务平台",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.greentech-bio.com/autoimmune-disease/RIOM.html",
+      "title": "放射性口腔黏膜炎模型 - 四川格林泰科格林泰科-新药临床前研究服务平台",
+      "snippet": "四川格林泰科在炎症与自身免疫系统疾病研究领域具有丰富经验，提供多种经过多方验证的大鼠和金黄地鼠放射性口腔黏膜炎模型，我们可根据客户的需求为您选择、构建适合的动物模型，并参照GLP管理标准进行体内药理学研究。 · 放射治疗是肿瘤常见的治疗方法，但在杀死癌细胞的同时，正常组织也会由于辐射导致急性或慢性毒性。放射性口腔粘膜炎（radiation-induced oral mucositis，ROM或者R"
+    },
+    {
+      "id": "chunk:205",
+      "label": "europepmc: [Mechanistic research progress on radiot",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41656818",
+      "title": "[Mechanistic research progress on radiotherapy resistance of cancer stem cells].",
+      "snippet": "Radiotherapy is an important treatment modality for tumors and is involved in the treatment course of more than 50% of cancer patients. However, resistance to ionizing radiation results in suboptimal "
+    },
+    {
+      "id": "chunk:209",
+      "label": "derivation_unknown: 辐射损伤机制",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "辐射损伤机制",
+      "snippet": "符合unknown领域命名规范，构词拆解: 辐射损伤机制。"
+    },
+    {
+      "id": "chunk:210",
+      "label": "duckduckgo: 肝癌治疗方案_美国肝癌治疗_NCI指南-盛诺一家",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://m.stluciabj.cn/nci/treatment/8/",
+      "title": "肝癌治疗方案_美国肝癌治疗_NCI指南-盛诺一家",
+      "snippet": "0期，A期和B期的成人原发性肝癌 0期，A期和B期的成人原发性肝癌的治疗方案包括以下几点： •部分肝切除 • 全肝切除和肝移植 • 利用以下方法消融肿瘤 ◦ 射频消融 ◦ 微波治疗."
+    },
+    {
+      "id": "chunk:211",
+      "label": "duckduckgo: 辐射损伤_百度百科",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://baike.baidu.com/item/辐射损伤/8451712",
+      "title": "辐射损伤_百度百科",
+      "snippet": "辐射损伤是由电离辐射引发的急性、迟发性或慢性机体组织损害，常见于核事故、医疗放射及职业性暴露。损伤类型包括急性放射病、造血系统损伤、胚胎畸形及远期致癌效应，其程度与辐射剂量、类型及暴露时间相关。电离辐射通过破坏细胞DNA结构和诱发氧化应激反应导致组织坏死，常用戈瑞（Gy ..."
+    },
+    {
+      "id": "chunk:213",
+      "label": "duckduckgo: Radiation-Induced Oral Mucositis - PMC",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5439125/",
+      "title": "Radiation-Induced Oral Mucositis - PMC",
+      "snippet": "Radiation-induced oral mucositis (RIOM) isa major dose-limiting toxicity in head and neck cancer patients. It is a normal tissue injury caused by radiation/radiotherapy (RT), which has marked adverse "
+    },
+    {
+      "id": "chunk:214",
+      "label": "derivation_unknown: head and neck radiotherapy",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "head and neck radiotherapy",
+      "snippet": "符合unknown领域命名规范，构词拆解: head and neck radiotherapy。"
+    },
+    {
+      "id": "chunk:224",
+      "label": "europepmc: [Biejiajian Pill Regulates Ferroptosis i",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40109469",
+      "title": "[Biejiajian Pill Regulates Ferroptosis in Hepatocellular Carcinoma Cells via p62/Keap1/NRF2 Signaling Pathway: A Mechanism Study].",
+      "snippet": "<h4>Objective</h4>To investigate the mechanism by which Biejiajian Pill (BJJP) regulates ferroptosis in hepatocellular carcinoma (HCC) cells through the p62/Keap1/NRF2 pathway and to provide an experi"
+    },
+    {
+      "id": "chunk:226",
+      "label": "derivation_unknown: radiation-induced oral mucositis",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "radiation-induced oral mucositis",
+      "snippet": "符合unknown领域命名规范，构词拆解: radiation-induced oral mucositis。"
+    },
+    {
+      "id": "chunk:229",
+      "label": "derivation_unknown: anti -infection",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "anti -infection",
+      "snippet": "符合unknown领域命名规范，构词拆解: anti -infection。"
+    },
+    {
+      "id": "chunk:231",
+      "label": "derivation_unknown: double-strand breaks",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "double-strand breaks",
+      "snippet": "符合unknown领域命名规范，构词拆解: double-strand breaks。"
+    },
+    {
+      "id": "chunk:233",
+      "label": "derivation_unknown: radiation -induced oral mucositis",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "radiation -induced oral mucositis",
+      "snippet": "符合unknown领域命名规范，构词拆解: radiation -induced oral mucositis。"
+    },
+    {
+      "id": "chunk:235",
+      "label": "derivation_unknown: inflammatory factors",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "inflammatory factors",
+      "snippet": "符合unknown领域命名规范，构词拆解: inflammatory factors。"
+    },
+    {
+      "id": "chunk:236",
+      "label": "derivation_unknown: Keap1-Nrf 2",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "Keap1-Nrf 2",
+      "snippet": "符合unknown领域命名规范，构词拆解: Keap1-Nrf 2。"
+    },
+    {
+      "id": "chunk:237",
+      "label": "derivation_unknown: Radiation Injury",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "Radiation Injury",
+      "snippet": "符合unknown领域命名规范，构词拆解: Radiation Injury。"
+    },
+    {
+      "id": "chunk:238",
+      "label": "derivation_unknown: Radiation-Induced Oral Mucositis",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "Radiation-Induced Oral Mucositis",
+      "snippet": "符合unknown领域命名规范，构词拆解: Radiation-Induced Oral Mucositis。"
+    },
+    {
+      "id": "chunk:240",
+      "label": "derivation_unknown: Signaling Pathways",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "Signaling Pathways",
+      "snippet": "符合unknown领域命名规范，构词拆解: Signaling Pathways。"
+    },
+    {
+      "id": "chunk:248",
+      "label": "europepmc: 新生儿坏死性小肠结肠炎肠组织中性粒细胞趋化因子及外周血相关受体表达的临床意义 C",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/PMC12950973",
+      "title": "新生儿坏死性小肠结肠炎肠组织中性粒细胞趋化因子及外周血相关受体表达的临床意义 Clinical significance of neutrophil chemokines in intestinal tissue and related receptor expression in peripheral blood in neonatal necrotizing enterocolitis",
+      "snippet": "新生儿坏死性小肠结肠炎肠组织中性粒细胞趋化因子及外周血相关受体表达的临床意义 Clinical significance of neutrophil chemokines in intestinal tissue and related receptor expression in peripheral blood in neonatal necrotizing enterocolitis"
+    },
+    {
+      "id": "chunk:268",
+      "label": "derivation_unknown: p53/p21 CIP 1",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "p53/p21 CIP 1",
+      "snippet": "符合unknown领域命名规范，构词拆解: p53/p21 CIP 1。"
+    },
+    {
+      "id": "chunk:269",
+      "label": "derivation_unknown: p16 INK 4a/Rb",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "p16 INK 4a/Rb",
+      "snippet": "符合unknown领域命名规范，构词拆解: p16 INK 4a/Rb。"
+    },
+    {
+      "id": "chunk:286",
+      "label": "derivation_unknown: Wnt/βcatenin",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "Wnt/βcatenin",
+      "snippet": "符合unknown领域命名规范，构词拆解: Wnt/βcatenin。"
+    },
+    {
+      "id": "chunk:287",
+      "label": "derivation_unknown: R-Spondin 1",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "R-Spondin 1",
+      "snippet": "符合unknown领域命名规范，构词拆解: R-Spondin 1。"
+    },
+    {
+      "id": "chunk:290",
+      "label": "europepmc: [Sanguinarine alleviates ulcerative coli",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39276042",
+      "title": "[Sanguinarine alleviates ulcerative colitis in mice by regulating the Nrf2/NF-κB pathway].",
+      "snippet": "<h4>Objective</h4>To investigate the mechanism of sanguinarine (SA) for alleviating ulcerative colitis (UC) induced by dextran sodium sulfate (DSS) in mice.<h4>Methods</h4>Male C57BL/6 mouse models of"
+    },
+    {
+      "id": "chunk:291",
+      "label": "derivation_unknown: NF-E2 相关因子 2",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "NF-E2 相关因子 2",
+      "snippet": "符合unknown领域命名规范，构词拆解: NF-E2 相关因子 2。"
+    },
+    {
+      "id": "chunk:297",
+      "label": "europepmc: [Research progress on the quercetin targ",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41795978",
+      "title": "[Research progress on the quercetin target role and signaling pathway in anti-liver fibrosis].",
+      "snippet": "Hepatic fibrosis is a common chronic liver disease, and its pathogenesis and influencing factors exhibit diverse characteristics. Pharmacological intervention is currently the main therapeutic approac"
+    },
+    {
+      "id": "chunk:298",
+      "label": "derivation_unknown: 外源性刺激",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "外源性刺激",
+      "snippet": "符合unknown领域命名规范，构词拆解: 外源性刺激。"
+    },
+    {
+      "id": "chunk:302",
+      "label": "duckduckgo: XX平台科技资源开放共享目录",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.most.gov.cn/ztzl/kjzykfgx/kjzygjjctjpt/kjzyptml/201407/W020140716586288758649.pdf",
+      "title": "XX平台科技资源开放共享目录",
+      "snippet": "舌癌是起源于舌上皮细胞的恶舌癌在组织学上多为鳞癌.40 肺上皮细胞. 肺上皮指肺实质中肺泡上皮细肺泡上皮分为Ⅰ型肺泡上皮和Ⅱ型肺泡上皮."
+    },
+    {
+      "id": "chunk:304",
+      "label": "europepmc: [Biejiajian Pill Regulates Ferroptosis i",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40109469",
+      "title": "[Biejiajian Pill Regulates Ferroptosis in Hepatocellular Carcinoma Cells via p62/Keap1/NRF2 Signaling Pathway: A Mechanism Study].",
+      "snippet": "<h4>Objective</h4>To investigate the mechanism by which Biejiajian Pill (BJJP) regulates ferroptosis in hepatocellular carcinoma (HCC) cells through the p62/Keap1/NRF2 pathway and to provide an experi"
+    },
+    {
+      "id": "chunk:306",
+      "label": "europepmc: [Mechanistic research progress on radiot",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41656818",
+      "title": "[Mechanistic research progress on radiotherapy resistance of cancer stem cells].",
+      "snippet": "Radiotherapy is an important treatment modality for tumors and is involved in the treatment course of more than 50% of cancer patients. However, resistance to ionizing radiation results in suboptimal "
+    },
+    {
+      "id": "chunk:312",
+      "label": "duckduckgo: 每一次感染都在破坏您的「黏膜」，4个方法修复黏膜损伤！",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zhuanlan.zhihu.com/p/686835652",
+      "title": "每一次感染都在破坏您的「黏膜」，4个方法修复黏膜损伤！",
+      "snippet": "Mar 13, 2024 ·避免刺激：减少黏膜损伤黏膜非常脆弱，容易受到各种因素的刺激而受损。 应避免摄入辛辣、过热、过冷等刺激性食物和饮料，戒烟限酒，减少对黏膜的刺激作用，避免对黏膜的直接损伤。"
+    },
+    {
+      "id": "chunk:313",
+      "label": "europepmc: [&lt;i&gt;Didang&lt;/i&gt; Decoction-med",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40159960",
+      "title": "[&lt;i&gt;Didang&lt;/i&gt; Decoction-medicated serum enhances autophagy in high glucose-induced rat glomerular endothelial cells &lt;i&gt;via&lt;/i&gt; the PI3K/Akt/mTOR signaling pathway].",
+      "snippet": "<h4>Objectives</h4>To investigate the effect of <i>Didang</i> Decoction-medicated serum on autophagy in high glucose (HG)-induced rat glomerular endothelial cells (RGECs) and explore the pathway that "
+    },
+    {
+      "id": "chunk:315",
+      "label": "derivation_bio: p16 INK 4a/Rb 调节通路",
+      "type": "knowledge",
+      "source": "derivation_bio",
+      "url": "",
+      "title": "p16 INK 4a/Rb 调节通路",
+      "snippet": "符合bio领域命名规范，构词拆解: p16 INK 4a/Rb 调节通路。"
+    },
+    {
+      "id": "chunk:318",
+      "label": "duckduckgo: 细胞衰老和衰老相关分泌表型(SASP)... | SciDraw Gallery",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://sci-draw.com/zh/gallery/gal_1771623965874_30kk1qg",
+      "title": "细胞衰老和衰老相关分泌表型(SASP)... | SciDraw Gallery",
+      "snippet": "细胞衰老和衰老相关分泌表型(SASP) 是炎症衰老的重要因素，并且代表着具有治疗潜力的靶点。衰老细胞表现出不可逆的细胞周期停滞、凋亡抵抗和显著的代谢改变。虽然衰老最初的功能是作为一种肿瘤抑制机制，但与年龄相关..."
+    },
+    {
+      "id": "chunk:320",
+      "label": "duckduckgo: GEO Accession viewer",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2770812",
+      "title": "GEO Accession viewer",
+      "snippet": "GSE103412. Mucositis in patients with tonsil squamous cell carcinoma: gene expression profile of oral mucosa before, during, and after radiation therapy."
+    },
+    {
+      "id": "chunk:323",
+      "label": "europepmc: [Research Advances on the Autophagy and ",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41500782",
+      "title": "[Research Advances on the Autophagy and Ferroptosis  in the Development and Treatment of Lung Cancer].",
+      "snippet": "Lung cancer remains a life-threatening malignancy with complex pathogenesis. This paper provides a systematic review of autophagy and ferroptosis-related signaling pathways, key regulatory factors, an"
+    },
+    {
+      "id": "chunk:324",
+      "label": "europepmc: [Astragaloside IV alleviates D-GAL-induc",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41311084",
+      "title": "[Astragaloside IV alleviates D-GAL-induced endothelial cell senescence by promoting mitochondrial autophagy <i>via</i> inhibiting the PINK1/Parkin pathway].",
+      "snippet": "<h4>Objectives</h4>To explore the mechanism by which astragaloside IV (AS-IV) alleviates D-galactose (D-GAL)-induced senescence in human umbilical vein endothelial cells (HUVECs).<h4>Methods</h4>Cultu"
+    },
+    {
+      "id": "chunk:326",
+      "label": "europepmc: [Positive antinuclear antibodies suggest",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41795975",
+      "title": "[Positive antinuclear antibodies suggest a high inflammatory burden phenotype: a multicenter retrospective analysis of patients with primary biliary cholangitis].",
+      "snippet": "<b>Objective:</b> To investigate the effect of antinuclear antibodies on the clinicopathological characteristics, short-term treatment response, and long-term prognosis of primary biliary cholangitis."
+    },
+    {
+      "id": "chunk:329",
+      "label": "derivation_unknown: 口腔黏膜组织损伤",
+      "type": "knowledge",
+      "source": "derivation_unknown",
+      "url": "",
+      "title": "口腔黏膜组织损伤",
+      "snippet": "符合unknown领域命名规范，构词拆解: 口腔黏膜组织损伤。"
+    },
+    {
+      "id": "chunk:332",
+      "label": "europepmc: [Role of &lt;i&gt;Brg1&lt;/i&gt; in regu",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40583714",
+      "title": "[Role of &lt;i&gt;Brg1&lt;/i&gt; in regulating the Wnt/β-catenin signaling pathway in a bronchopulmonary dysplasia model].",
+      "snippet": "<h4>Objectives</h4>To investigate the role and mechanism of Brahma-related gene 1 (<i>Brg1</i>) in regulating the Wnt/β-catenin signaling pathway in a bronchopulmonary dysplasia (BPD) model.<h4>Method"
+    },
+    {
+      "id": "chunk:333",
+      "label": "duckduckgo: 信号通路是什么鬼？先给你们讲讲难啃的 NF-κB 信号通路…… - 知乎",
+      "type": "knowledge",
+      "source": "duckduckgo",
+      "url": "https://zhuanlan.zhihu.com/p/599712434",
+      "title": "信号通路是什么鬼？先给你们讲讲难啃的 NF-κB 信号通路…… - 知乎",
+      "snippet": "图 2. 经典和非经典NF-κB 信号通路[2]左：经典途径由许多信号触发，涉及 TAK1 激活 IKK 复合物、IKK 介导 IκBα 磷酸化和随后的降解，导致 NF-κB 异二聚体 RelA/p50 的瞬时核易位；右：非经典 NF-κB 通路，依赖于 NIK 和 IKKα，并介导 RelB/p52 复合物的持续激活。 ■ 经典的 NF-κB 通路激活"
+    },
+    {
+      "id": "chunk:334",
+      "label": "europepmc: [n-butanol fraction of ethanol extract o",
+      "type": "knowledge",
+      "source": "europepmc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40294929",
+      "title": "[n-butanol fraction of ethanol extract of &lt;i&gt;Periploca forrestii&lt;/i&gt; Schltr.: its active components, targets and pathways for treating Alcheimer's disease in rats].",
+      "snippet": "<h4>Objectives</h4>To investigate the active components and possible mechanisms of n-butanol fraction of <i>Periploca forrestii</i> Schltr. ethanol extract for treating Alzheimer's disease (AD).<h4>Me"
+    }
+  ],
+  "links": [
+    {
+      "source": "term:并发症",
+      "target": "chunk:1",
+      "strength": 0.6
+    },
+    {
+      "source": "term:消炎",
+      "target": "chunk:2",
+      "strength": 0.6
+    },
+    {
+      "source": "term:镇痛",
+      "target": "chunk:3",
+      "strength": 0.6
+    },
+    {
+      "source": "term:抗感染",
+      "target": "chunk:4",
+      "strength": 0.6
+    },
+    {
+      "source": "term:电离辐射",
+      "target": "chunk:5",
+      "strength": 0.6
+    },
+    {
+      "source": "term:活性氧",
+      "target": "chunk:6",
+      "strength": 0.6
+    },
+    {
+      "source": "term:炎症因子",
+      "target": "chunk:7",
+      "strength": 0.6
+    },
+    {
+      "source": "term:口腔黏膜炎",
+      "target": "chunk:8",
+      "strength": 0.6
+    },
+    {
+      "source": "term:发病机制",
+      "target": "chunk:9",
+      "strength": 0.6
+    },
+    {
+      "source": "term:complication",
+      "target": "chunk:10",
+      "strength": 0.6
+    },
+    {
+      "source": "term:oral pain",
+      "target": "chunk:11",
+      "strength": 0.6
+    },
+    {
+      "source": "term:辐照剂量",
+      "target": "chunk:12",
+      "strength": 0.6
+    },
+    {
+      "source": "term:口腔黏膜组织",
+      "target": "chunk:13",
+      "strength": 0.6
+    },
+    {
+      "source": "term:NF-kB",
+      "target": "chunk:14",
+      "strength": 0.6
+    },
+    {
+      "source": "term:Wnt",
+      "target": "chunk:15",
+      "strength": 0.6
+    },
+    {
+      "source": "term:anti -inflammatory",
+      "target": "chunk:16",
+      "strength": 0.6
+    },
+    {
+      "source": "term:analgesic",
+      "target": "chunk:17",
+      "strength": 0.6
+    },
+    {
+      "source": "term:DNA",
+      "target": "chunk:18",
+      "strength": 0.6
+    },
+    {
+      "source": "term:Pathogenesis",
+      "target": "chunk:19",
+      "strength": 0.6
+    },
+    {
+      "source": "term:RIOM",
+      "target": "chunk:20",
+      "strength": 0.6
+    },
+    {
+      "source": "term:OM",
+      "target": "chunk:21",
+      "strength": 0.6
+    },
+    {
+      "source": "term:头颈部癌症",
+      "target": "chunk:22",
+      "strength": 0.6
+    },
+    {
+      "source": "term:放射治疗",
+      "target": "chunk:23",
+      "strength": 0.6
+    },
+    {
+      "source": "term:RT",
+      "target": "chunk:24",
+      "strength": 0.6
+    },
+    {
+      "source": "term:基底细胞",
+      "target": "chunk:25",
+      "strength": 0.6
+    },
+    {
+      "source": "term:口腔黏膜病变",
+      "target": "chunk:26",
+      "strength": 0.6
+    },
+    {
+      "source": "term:头颈癌",
+      "target": "chunk:27",
+      "strength": 0.6
+    },
+    {
+      "source": "term:HNC",
+      "target": "chunk:28",
+      "strength": 0.6
+    },
+    {
+      "source": "term:世界卫生组织",
+      "target": "chunk:29",
+      "strength": 0.6
+    },
+    {
+      "source": "term:WHO",
+      "target": "chunk:30",
+      "strength": 0.6
+    },
+    {
+      "source": "term:QOL",
+      "target": "chunk:31",
+      "strength": 0.6
+    },
+    {
+      "source": "term:RIOM 概述",
+      "target": "chunk:32",
+      "strength": 0.6
+    },
+    {
+      "source": "term:Gy",
+      "target": "chunk:33",
+      "strength": 0.6
+    },
+    {
+      "source": "term:ROS",
+      "target": "chunk:34",
+      "strength": 0.6
+    },
+    {
+      "source": "term:RNS",
+      "target": "chunk:35",
+      "strength": 0.6
+    },
+    {
+      "source": "term:基底上皮细胞",
+      "target": "chunk:36",
+      "strength": 0.6
+    },
+    {
+      "source": "term:TNFα",
+      "target": "chunk:37",
+      "strength": 0.6
+    },
+    {
+      "source": "term:IL-1β",
+      "target": "chunk:38",
+      "strength": 0.6
+    },
+    {
+      "source": "term:IL-6",
+      "target": "chunk:39",
+      "strength": 0.6
+    },
+    {
+      "source": "term:p53",
+      "target": "chunk:40",
+      "strength": 0.6
+    },
+    {
+      "source": "term:核因子 κB",
+      "target": "chunk:41",
+      "strength": 0.6
+    },
+    {
+      "source": "term:HCN",
+      "target": "chunk:42",
+      "strength": 0.6
+    },
+    {
+      "source": "term:NF-κB",
+      "target": "chunk:43",
+      "strength": 0.6
+    },
+    {
+      "source": "term:核因子 Κb",
+      "target": "chunk:44",
+      "strength": 0.6
+    },
+    {
+      "source": "term:TNF-α",
+      "target": "chunk:45",
+      "strength": 0.6
+    },
+    {
+      "source": "term:NF-κβ",
+      "target": "chunk:46",
+      "strength": 0.6
+    },
+    {
+      "source": "term:IL-10",
+      "target": "chunk:47",
+      "strength": 0.6
+    },
+    {
+      "source": "term:IL-11",
+      "target": "chunk:48",
+      "strength": 0.6
+    },
+    {
+      "source": "term:T 细胞",
+      "target": "chunk:49",
+      "strength": 0.6
+    },
+    {
+      "source": "term:CD4+",
+      "target": "chunk:50",
+      "strength": 0.6
+    },
+    {
+      "source": "term:CD8+",
+      "target": "chunk:51",
+      "strength": 0.6
+    },
+    {
+      "source": "term:CD4+/CD8+",
+      "target": "chunk:52",
+      "strength": 0.6
+    },
+    {
+      "source": "term:TGF-β",
+      "target": "chunk:53",
+      "strength": 0.6
+    },
+    {
+      "source": "term:Smad 7",
+      "target": "chunk:54",
+      "strength": 0.6
+    },
+    {
+      "source": "term:mTOR",
+      "target": "chunk:55",
+      "strength": 0.6
+    },
+    {
+      "source": "term:G1/S",
+      "target": "chunk:56",
+      "strength": 0.6
+    },
+    {
+      "source": "term:DNA 损伤反应",
+      "target": "chunk:57",
+      "strength": 0.6
+    },
+    {
+      "source": "term:mIAS",
+      "target": "chunk:58",
+      "strength": 0.6
+    },
+    {
+      "source": "term:DDR",
+      "target": "chunk:59",
+      "strength": 0.6
+    },
+    {
+      "source": "term:PUMA",
+      "target": "chunk:60",
+      "strength": 0.6
+    },
+    {
+      "source": "term:RSpo 1",
+      "target": "chunk:61",
+      "strength": 0.6
+    },
+    {
+      "source": "term:Keap 1",
+      "target": "chunk:62",
+      "strength": 0.6
+    },
+    {
+      "source": "term:Nrf 2",
+      "target": "chunk:63",
+      "strength": 0.6
+    },
+    {
+      "source": "term:氧化应激",
+      "target": "chunk:64",
+      "strength": 0.6
+    },
+    {
+      "source": "term:抗氧化剂",
+      "target": "chunk:65",
+      "strength": 0.6
+    },
+    {
+      "source": "term:促炎细胞因子",
+      "target": "chunk:66",
+      "strength": 0.6
+    },
+    {
+      "source": "term:转录因子",
+      "target": "chunk:67",
+      "strength": 0.6
+    },
+    {
+      "source": "term:环境压力",
+      "target": "chunk:68",
+      "strength": 0.6
+    },
+    {
+      "source": "term:γ 射线",
+      "target": "chunk:69",
+      "strength": 0.6
+    },
+    {
+      "source": "term:舌上皮",
+      "target": "chunk:70",
+      "strength": 0.6
+    },
+    {
+      "source": "term:凋亡",
+      "target": "chunk:71",
+      "strength": 0.6
+    },
+    {
+      "source": "term:DNA 损伤",
+      "target": "chunk:72",
+      "strength": 0.6
+    },
+    {
+      "source": "term:细胞凋亡",
+      "target": "chunk:73",
+      "strength": 0.6
+    },
+    {
+      "source": "term:NF-kB 通路",
+      "target": "chunk:74",
+      "strength": 0.6
+    },
+    {
+      "source": "term:趋化因子",
+      "target": "chunk:75",
+      "strength": 0.6
+    },
+    {
+      "source": "term:炎性细胞",
+      "target": "chunk:76",
+      "strength": 0.6
+    },
+    {
+      "source": "term:上皮基底细胞",
+      "target": "chunk:77",
+      "strength": 0.6
+    },
+    {
+      "source": "term:p16",
+      "target": "chunk:78",
+      "strength": 0.6
+    },
+    {
+      "source": "term:细胞周期停滞",
+      "target": "chunk:79",
+      "strength": 0.6
+    },
+    {
+      "source": "term:细胞衰老",
+      "target": "chunk:80",
+      "strength": 0.6
+    },
+    {
+      "source": "term:SASP",
+      "target": "chunk:81",
+      "strength": 0.6
+    },
+    {
+      "source": "term:有丝分裂灾难",
+      "target": "chunk:82",
+      "strength": 0.6
+    },
+    {
+      "source": "term:CDKN2A",
+      "target": "chunk:83",
+      "strength": 0.6
+    },
+    {
+      "source": "term:TP53",
+      "target": "chunk:84",
+      "strength": 0.6
+    },
+    {
+      "source": "term:放射疗法",
+      "target": "chunk:85",
+      "strength": 0.6
+    },
+    {
+      "source": "term:放疗射线",
+      "target": "chunk:86",
+      "strength": 0.6
+    },
+    {
+      "source": "term:DNA 断裂",
+      "target": "chunk:87",
+      "strength": 0.6
+    },
+    {
+      "source": "term:DOI",
+      "target": "chunk:88",
+      "strength": 0.6
+    },
+    {
+      "source": "term:放射性口腔黏膜炎",
+      "target": "chunk:89",
+      "strength": 0.45
+    },
+    {
+      "source": "term:致病机制",
+      "target": "chunk:90",
+      "strength": 0.45
+    },
+    {
+      "source": "term:头颈部放射治疗",
+      "target": "chunk:91",
+      "strength": 0.45
+    },
+    {
+      "source": "term:辐射损伤机制",
+      "target": "chunk:100",
+      "strength": 0.45
+    },
+    {
+      "source": "term:治疗方案",
+      "target": "chunk:101",
+      "strength": 0.45
+    },
+    {
+      "source": "term:辐射损伤",
+      "target": "chunk:102",
+      "strength": 0.45
+    },
+    {
+      "source": "term:radiotherapy",
+      "target": "chunk:106",
+      "strength": 0.45
+    },
+    {
+      "source": "term:Wnt/β-catenin",
+      "target": "chunk:111",
+      "strength": 0.45
+    },
+    {
+      "source": "term:信号通路",
+      "target": "chunk:112",
+      "strength": 0.45
+    },
+    {
+      "source": "term:衰老细胞",
+      "target": "chunk:113",
+      "strength": 0.45
+    },
+    {
+      "source": "term:ionizing radiation",
+      "target": "chunk:116",
+      "strength": 0.45
+    },
+    {
+      "source": "term:reactive oxygen species",
+      "target": "chunk:118",
+      "strength": 0.45
+    },
+    {
+      "source": "term:MASCC/ISOO",
+      "target": "chunk:144",
+      "strength": 0.45
+    },
+    {
+      "source": "term:舌上皮细胞",
+      "target": "chunk:172",
+      "strength": 0.45
+    },
+    {
+      "source": "term:黏膜损伤",
+      "target": "chunk:180",
+      "strength": 0.45
+    },
+    {
+      "source": "term:衰老相关分泌表型",
+      "target": "chunk:184",
+      "strength": 0.45
+    },
+    {
+      "source": "term:GSE103412",
+      "target": "chunk:186",
+      "strength": 0.45
+    },
+    {
+      "source": "term:扁桃体鳞状细胞癌",
+      "target": "chunk:187",
+      "strength": 0.45
+    },
+    {
+      "source": "term:NF-κB 信号通路",
+      "target": "chunk:194",
+      "strength": 0.45
+    },
+    {
+      "source": "term:致病机制",
+      "target": "chunk:197",
+      "strength": 0.45
+    },
+    {
+      "source": "term:头颈部放射治疗",
+      "target": "chunk:198",
+      "strength": 0.45
+    },
+    {
+      "source": "term:放射性口腔粘膜炎",
+      "target": "chunk:203",
+      "strength": 0.45
+    },
+    {
+      "source": "term:细胞DNA双链断裂",
+      "target": "chunk:205",
+      "strength": 0.5
+    },
+    {
+      "source": "term:辐射损伤机制",
+      "target": "chunk:209",
+      "strength": 0.35
+    },
+    {
+      "source": "term:治疗方案",
+      "target": "chunk:210",
+      "strength": 0.45
+    },
+    {
+      "source": "term:辐射损伤",
+      "target": "chunk:211",
+      "strength": 0.45
+    },
+    {
+      "source": "term:Radiation-induced oral mucositis",
+      "target": "chunk:213",
+      "strength": 0.45
+    },
+    {
+      "source": "term:head and neck radiotherapy",
+      "target": "chunk:214",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Keap1-Nrf2信号通路",
+      "target": "chunk:224",
+      "strength": 0.5
+    },
+    {
+      "source": "term:radiation-induced oral mucositis",
+      "target": "chunk:226",
+      "strength": 0.35
+    },
+    {
+      "source": "term:anti -infection",
+      "target": "chunk:229",
+      "strength": 0.35
+    },
+    {
+      "source": "term:double-strand breaks",
+      "target": "chunk:231",
+      "strength": 0.35
+    },
+    {
+      "source": "term:radiation -induced oral mucositis",
+      "target": "chunk:233",
+      "strength": 0.35
+    },
+    {
+      "source": "term:inflammatory factors",
+      "target": "chunk:235",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Keap1-Nrf 2",
+      "target": "chunk:236",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Radiation Injury",
+      "target": "chunk:237",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Radiation-Induced Oral Mucositis",
+      "target": "chunk:238",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Signaling Pathways",
+      "target": "chunk:240",
+      "strength": 0.35
+    },
+    {
+      "source": "term:表层细胞",
+      "target": "chunk:248",
+      "strength": 0.5
+    },
+    {
+      "source": "term:p53/p21 CIP 1",
+      "target": "chunk:268",
+      "strength": 0.35
+    },
+    {
+      "source": "term:p16 INK 4a/Rb",
+      "target": "chunk:269",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Wnt/βcatenin",
+      "target": "chunk:286",
+      "strength": 0.35
+    },
+    {
+      "source": "term:R-Spondin 1",
+      "target": "chunk:287",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Keap 1-NF-E2 相关因子 2 信号通路",
+      "target": "chunk:290",
+      "strength": 0.5
+    },
+    {
+      "source": "term:NF-E2 相关因子 2",
+      "target": "chunk:291",
+      "strength": 0.35
+    },
+    {
+      "source": "term:ECH 相关蛋白 1",
+      "target": "chunk:297",
+      "strength": 0.5
+    },
+    {
+      "source": "term:外源性刺激",
+      "target": "chunk:298",
+      "strength": 0.35
+    },
+    {
+      "source": "term:舌上皮细胞",
+      "target": "chunk:302",
+      "strength": 0.45
+    },
+    {
+      "source": "term:Keap1-Nrf2 信号通路",
+      "target": "chunk:304",
+      "strength": 0.5
+    },
+    {
+      "source": "term:DNA 双链断裂",
+      "target": "chunk:306",
+      "strength": 0.5
+    },
+    {
+      "source": "term:黏膜损伤",
+      "target": "chunk:312",
+      "strength": 0.45
+    },
+    {
+      "source": "term:mTOR 信号通路",
+      "target": "chunk:313",
+      "strength": 0.5
+    },
+    {
+      "source": "term:p16 INK 4a/Rb 调节通路",
+      "target": "chunk:315",
+      "strength": 0.35
+    },
+    {
+      "source": "term:衰老相关分泌表型",
+      "target": "chunk:318",
+      "strength": 0.45
+    },
+    {
+      "source": "term:GSE103412",
+      "target": "chunk:320",
+      "strength": 0.45
+    },
+    {
+      "source": "term:铁依赖性细胞死亡",
+      "target": "chunk:323",
+      "strength": 0.5
+    },
+    {
+      "source": "term:衰老细胞标记物",
+      "target": "chunk:324",
+      "strength": 0.5
+    },
+    {
+      "source": "term:组织免疫化学分析",
+      "target": "chunk:326",
+      "strength": 0.5
+    },
+    {
+      "source": "term:口腔黏膜组织损伤",
+      "target": "chunk:329",
+      "strength": 0.35
+    },
+    {
+      "source": "term:Wnt/β-catenin 信号通路",
+      "target": "chunk:332",
+      "strength": 0.5
+    },
+    {
+      "source": "term:NF-κB 信号通路",
+      "target": "chunk:333",
+      "strength": 0.45
+    },
+    {
+      "source": "term:Keap 1-Nrf 2 信号通路",
+      "target": "chunk:334",
+      "strength": 0.5
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+## PyTorch 由 setup_autodl.sh 按 CUDA_VER 安装（默认 cu124）
+## 可选: CUDA_VER=cu121 或 cu118 或 cu124
+
+transformers>=4.45.0
+accelerate>=0.33.0
+tokenizers>=0.20.0
+
+numpy>=1.26
+scikit-learn>=1.4
+tqdm>=4.66
+
+seqeval>=1.2.2
+pytorch-crf>=0.7.2
+
+## optional (debug/plot)
+matplotlib>=3.8
+
+## Milestone 1: rule_mining_agent 图谱
+networkx>=3.0
+
+## evidence retrieval fallback (patent_agent_pipeline)
+ddgs>=9.0
+
+## benchmark datasets (Few-NERD, GENIA, CHEMDNER)
+datasets>=2.14.0
+bioc>=2.0.0
+
+## LLM API (Gemini / DeepSeek / OpenAI 兼容)
+google-generativeai>=0.8.0
+openai>=1.0.0
