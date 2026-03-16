@@ -38,6 +38,15 @@ ARTIFACTS = ROOT / "artifacts" / "experiments"
 
 DATASETS = ["fewnerd", "genia", "chemdner"]
 
+# 收敛导向超参：保证模型充分训练
+EPOCHS_B1 = {"fewnerd": 8, "genia": 12, "chemdner": 15}   # BiLSTM 随机初始化，小数据集需更多 epochs
+EPOCHS_B2 = 5                                             # RoBERTa 预训练，5 epochs 足够
+EPOCHS_PROTO = 8                                           # Proto-Span  episodic，需充分曝光
+MAX_EPISODES_PROTO = {"fewnerd": 1000, "genia": 800, "chemdner": 800}
+N_EVAL = 80
+EPOCHS_BWT = 3
+MAX_EPISODES_BWT = 300
+
 
 def run(cmd: list[str], desc: str) -> int:
     print(f"\n{'='*60}")
@@ -115,6 +124,8 @@ def run_baseline(
     k_shot: int = 5,
     seed: int = 42,
     extra: list[str] | None = None,
+    max_episodes: int = 0,
+    n_eval: int = 0,
 ) -> dict | None:
     cmd = [
         sys.executable, "scripts/run_baseline.py",
@@ -127,6 +138,10 @@ def run_baseline(
         "--k_shot", str(k_shot),
         "--seed", str(seed),
     ]
+    if max_episodes > 0:
+        cmd.extend(["--max-episodes", str(max_episodes)])
+    if n_eval > 0:
+        cmd.extend(["--n-eval", str(n_eval)])
     if extra:
         cmd.extend(extra)
     desc = f"{dataset} {mode} encoder={encoder_type} data={data_strategy}"
@@ -165,11 +180,12 @@ def run_baseline(
     return m
 
 
-def run_continual(encoder: str = "bert-base-cased", epochs: int = 1) -> dict | None:
+def run_continual(encoder: str = "bert-base-cased", epochs: int = 1, max_episodes: int = 200) -> dict | None:
     cmd = [
         sys.executable, "scripts/run_continual.py",
         "--encoder", encoder,
         "--epochs_per_task", str(epochs),
+        "--max_episodes", str(max_episodes),
     ]
     run(cmd, "战役三: BWT 持续学习")
     return load_metrics(ROOT / "artifacts" / "continual" / "metrics.json")
@@ -204,7 +220,8 @@ def main() -> None:
                     help="快速模式: 跳过 evidence 步骤, 只跑 B1-B4 (original data)")
     ap.add_argument("--datasets", type=str, default="fewnerd,genia,chemdner",
                     help="逗号分隔数据集, 如 fewnerd 或 fewnerd,genia")
-    ap.add_argument("--epochs", type=int, default=2)
+    ap.add_argument("--epochs", type=int, default=0,
+                    help="统一 epochs 覆盖 (0=使用收敛配置)")
     ap.add_argument("--n_way", type=int, default=5)
     ap.add_argument("--k_shot", type=int, default=5)
     ap.add_argument("--seed", type=int, default=42)
@@ -214,16 +231,38 @@ def main() -> None:
                     help="RoBERTa encoder for B2r/B4r/Ours-r baselines")
     ap.add_argument("--skip-roberta", action="store_true",
                     help="跳过 RoBERTa 基线，只跑 BERT 组")
+    ap.add_argument("--multi-gpu", action="store_true",
+                    help="B2/B4/Ours 使用 DataParallel 多卡")
     ap.add_argument("--skip-data", action="store_true",
                     help="跳过数据准备步骤 (已有数据)")
+    ap.add_argument("--reset", action="store_true",
+                    help="清空 artifacts 后重新运行 (慎用)")
     ap.add_argument("--evidence-limit", type=int, default=0,
                     help="convert_with_evidence --limit N (0=不限制)")
     args = ap.parse_args()
 
     datasets = [d.strip() for d in args.datasets.split(",") if d.strip()]
-    ARTIFACTS.mkdir(parents=True, exist_ok=True)
     results: list[dict] = []
     t0 = time.time()
+
+    # 收敛配置 vs 统一 epochs
+    use_convergence = args.epochs == 0
+    if use_convergence:
+        print("[config] 使用收敛导向超参 (EPOCHS_B1/B2/PROTO, MAX_EPISODES)")
+
+    # ── Reset: 清空 artifacts ───────────────────────────────────────────────
+    if args.reset:
+        import shutil
+        arts = ROOT / "artifacts"
+        if arts.exists():
+            print(f"\n[reset] 清空 {arts}")
+            for d in arts.iterdir():
+                if d.is_dir():
+                    shutil.rmtree(d, ignore_errors=True)
+                    print(f"  removed {d.name}")
+        arts.mkdir(parents=True, exist_ok=True)
+
+    ARTIFACTS.mkdir(parents=True, exist_ok=True)
 
     # ── Step 1-3: Data preparation ──────────────────────────────────────────
     if not args.skip_data:
@@ -240,31 +279,45 @@ def main() -> None:
 
     # ── Step 4: Baselines ────────────────────────────────────────────────────
     print("\n[phase] 基线实验")
-    kw = dict(epochs=args.epochs, n_way=args.n_way, k_shot=args.k_shot, seed=args.seed)
+    kw_base = dict(n_way=args.n_way, k_shot=args.k_shot, seed=args.seed)
 
     for ds in datasets:
+        ep_b1 = EPOCHS_B1.get(ds, 8) if use_convergence else args.epochs
+        ep_b2 = EPOCHS_B2 if use_convergence else args.epochs
+        ep_proto = EPOCHS_PROTO if use_convergence else args.epochs
+        max_ep = MAX_EPISODES_PROTO.get(ds, 800) if use_convergence else 0
+        n_ev = N_EVAL if use_convergence else 0
+
         # B1: BiLSTM + CRF
-        m = run_baseline(ds, "bilstm_crf", **kw)
+        m = run_baseline(ds, "bilstm_crf", epochs=ep_b1, **kw_base)
         if m:
             m["baseline"] = "B1"
             results.append(m)
 
         # B2: RoBERTa + CRF (BIO)
-        m = run_baseline(ds, "seq", encoder_type="transformer",
-                         extra=["--encoder", args.encoder], **kw)
+        extra_b2 = ["--encoder", args.encoder]
+        if args.multi_gpu:
+            extra_b2.append("--multi-gpu")
+        m = run_baseline(ds, "seq", encoder_type="transformer", epochs=ep_b2,
+                         extra=extra_b2, **kw_base)
         if m:
             m["baseline"] = "B2"
             results.append(m)
 
         # B3: BiLSTM + Span (Proto), original
-        m = run_baseline(ds, "fewshot", encoder_type="bilstm", **kw)
+        m = run_baseline(ds, "fewshot", encoder_type="bilstm", epochs=ep_proto,
+                         max_episodes=max_ep, n_eval=n_ev, **kw_base)
         if m:
             m["baseline"] = "B3"
             results.append(m)
 
         # B4: RoBERTa + Span (Proto), original
-        m = run_baseline(ds, "fewshot", encoder_type="transformer",
-                         extra=["--encoder", args.encoder], **kw)
+        extra_b4 = ["--encoder", args.encoder]
+        if args.multi_gpu:
+            extra_b4.append("--multi-gpu")
+        m = run_baseline(ds, "fewshot", encoder_type="transformer", epochs=ep_proto,
+                         max_episodes=max_ep, n_eval=n_ev,
+                         extra=extra_b4, **kw_base)
         if m:
             m["baseline"] = "B4"
             results.append(m)
@@ -272,15 +325,20 @@ def main() -> None:
         if not args.fast:
             # B5: BiLSTM + Span (Proto), augmented
             m = run_baseline(ds, "fewshot", data_strategy="augmented",
-                             encoder_type="bilstm", **kw)
+                             encoder_type="bilstm", epochs=ep_proto,
+                             max_episodes=max_ep, n_eval=n_ev, **kw_base)
             if m:
                 m["baseline"] = "B5"
                 results.append(m)
 
             # Ours: BERT + Span (Proto), augmented
+            extra_ours = ["--encoder", args.encoder]
+            if args.multi_gpu:
+                extra_ours.append("--multi-gpu")
             m = run_baseline(ds, "fewshot", data_strategy="augmented",
-                             encoder_type="transformer",
-                             extra=["--encoder", args.encoder], **kw)
+                             encoder_type="transformer", epochs=ep_proto,
+                             max_episodes=max_ep, n_eval=n_ev,
+                             extra=extra_ours, **kw_base)
             if m:
                 m["baseline"] = "Ours"
                 results.append(m)
@@ -288,25 +346,35 @@ def main() -> None:
         # ── RoBERTa group ────────────────────────────────────────────────────
         if not args.skip_roberta:
             # B2r: RoBERTa + CRF (BIO)
-            m = run_baseline(ds, "seq", encoder_type="transformer",
-                             extra=["--encoder", args.roberta_encoder], **kw)
+            extra_b2r = ["--encoder", args.roberta_encoder]
+            if args.multi_gpu:
+                extra_b2r.append("--multi-gpu")
+            m = run_baseline(ds, "seq", encoder_type="transformer", epochs=ep_b2,
+                             extra=extra_b2r, **kw_base)
             if m:
                 m["baseline"] = "B2r"
                 results.append(m)
 
             # B4r: RoBERTa + Span (Proto), original
-            m = run_baseline(ds, "fewshot", encoder_type="transformer",
-                             extra=["--encoder", args.roberta_encoder], **kw)
+            extra_b4r = ["--encoder", args.roberta_encoder]
+            if args.multi_gpu:
+                extra_b4r.append("--multi-gpu")
+            m = run_baseline(ds, "fewshot", encoder_type="transformer", epochs=ep_proto,
+                             max_episodes=max_ep, n_eval=n_ev,
+                             extra=extra_b4r, **kw_base)
             if m:
                 m["baseline"] = "B4r"
                 results.append(m)
 
             if not args.fast:
                 # Ours-r: RoBERTa + Span (Proto), augmented + SCL
+                extra_oursr = ["--encoder", args.roberta_encoder, "--scl_weight", "0.1"]
+                if args.multi_gpu:
+                    extra_oursr.append("--multi-gpu")
                 m = run_baseline(ds, "fewshot", data_strategy="augmented",
-                                 encoder_type="transformer",
-                                 extra=["--encoder", args.roberta_encoder,
-                                        "--scl_weight", "0.1"], **kw)
+                                 encoder_type="transformer", epochs=ep_proto,
+                                 max_episodes=max_ep, n_eval=n_ev,
+                                 extra=extra_oursr, **kw_base)
                 if m:
                     m["baseline"] = "Ours-r"
                     results.append(m)
@@ -315,7 +383,8 @@ def main() -> None:
     print("\n[phase] 能力测试")
 
     # 战役三: BWT
-    bwt = run_continual(encoder=args.encoder, epochs=args.epochs)
+    ep_bwt = EPOCHS_BWT if use_convergence else max(1, args.epochs)
+    bwt = run_continual(encoder=args.encoder, epochs=ep_bwt, max_episodes=MAX_EPISODES_BWT)
     if bwt:
         bwt["capability"] = "BWT"
         results.append(bwt)

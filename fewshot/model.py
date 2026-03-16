@@ -189,18 +189,20 @@ class PrototypicalSpanNER(nn.Module):
         query_emb: (Q, H)
         prototypes: (N, H)
         returns: (Q, N+1) logits, last dim is NONE.
-        NONE wins when query is far from all prototypes (min dist large).
+        NONE wins when query is far from all prototypes (max sim < threshold).
         """
         if self.metric == "cosine":
             qn = nn.functional.normalize(query_emb, dim=-1)
             pn = nn.functional.normalize(prototypes, dim=-1)
             sim = torch.mm(qn, pn.t())
-            dist = 1 - sim
+            class_logits = sim
+            # NONE when max sim < 0.5 (far from all prototypes)
+            none_logit = torch.full((query_emb.size(0), 1), 0.5, device=query_emb.device, dtype=query_emb.dtype)
         else:
             q = query_emb.unsqueeze(1)
             p = prototypes.unsqueeze(0)
             dist = (q - p).pow(2).sum(dim=-1).sqrt()
-        class_logits = -dist
-        min_dist = dist.min(dim=-1, keepdim=True).values
-        none_logit = min_dist
+            class_logits = -dist
+            # NONE when best class score (-min_dist) < -1.0 (far from all prototypes)
+            none_logit = torch.full((query_emb.size(0), 1), -1.0, device=query_emb.device, dtype=query_emb.dtype)
         return torch.cat([class_logits, none_logit], dim=-1)

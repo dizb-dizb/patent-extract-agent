@@ -42,6 +42,8 @@ def main() -> None:
     ap.add_argument("--k_shot", type=int, default=5)
     ap.add_argument("--encoder", type=str, default="")
     ap.add_argument("--epochs", type=int, default=2)
+    ap.add_argument("--max-episodes", type=int, default=0, help="Fewshot only: episodes per epoch (0=use default 500)")
+    ap.add_argument("--n-eval", type=int, default=0, help="Fewshot only: eval episodes (0=use default 50)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--multi-gpu", action="store_true", help="Use DataParallel for multi-GPU")
     ap.add_argument("--scl-weight", type=float, default=0.0, help="Supervised contrastive loss weight")
@@ -147,6 +149,10 @@ def main() -> None:
             "--bilstm_hidden", str(args.bilstm_hidden),
             "--bilstm_layers", str(args.bilstm_layers),
         ]
+        if args.max_episodes > 0:
+            cmd.extend(["--max_episodes", str(args.max_episodes)])
+        if args.n_eval > 0:
+            cmd.extend(["--n_eval", str(args.n_eval)])
         if val_path.exists():
             cmd.extend(["--val", str(val_path)])
         if args.multi_gpu:
