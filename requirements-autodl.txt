@@ -21,6 +21,9 @@ networkx>=3.0
 ## evidence retrieval fallback (patent_agent_pipeline)
 ddgs>=9.0
 
+## ModelScope (替代 HuggingFace 下载，解决国内网络)
+modelscope>=1.9.0
+
 ## benchmark datasets (Few-NERD, GENIA, CHEMDNER)
 datasets>=2.14.0
 bioc>=2.0.0

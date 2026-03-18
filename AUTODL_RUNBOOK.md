@@ -78,9 +78,41 @@ python cloud_ssh_runner.py
 python report_generator.py
 ```
 
-### 4. 直接在 AutoDL 上本地训练（不走 SSH runner）
+### 4. 补充实验（本地一键上传 + AutoDL 运行）
 
-如果你把数据文件也传到 AutoDL（例如 `scp` 上传），可直接运行：
+在**本地**执行，自动上传更新代码、终止旧进程、在 AutoDL 后台启动剩余实验：
+
+```powershell
+cd "e:\algorithm\Graduation Project"
+python upload_and_run_autodl.py
+```
+
+可选参数：
+- `--env .env`：从 .env 读取 CLOUD_SSH_HOST/PORT/USER/PASSWORD
+- `--host connect.xx.seetacloud.com --port 38815`：覆盖连接
+- `--mode all`（默认）：剩余主实验 → `run_gradient_isolate_unified.py`（含 n=10/100/1000 隔离 + fewnerd/genia 上 n=10/100 **无隔离** Proto 对照）
+- `--mode remaining`：仅剩余主实验；`--mode gradient_isolate`：仅梯度+隔离
+- `--no-run`：仅上传，不运行
+- `--foreground`：前台运行（不 nohup）
+
+启动前会自动：释放历史 `artifacts` 大权重、若有数据盘则挂载 `data/artifacts/logs/models`。
+
+**进度**：本地 `python _progress.py`（SSH 读远端 `artifacts`）。
+
+### 5. 直接在 AutoDL 上运行（SSH 登录后）
+
+```bash
+cd /root/patent-extract-agent   # 或你的项目目录
+conda activate base
+
+# 补充实验：终止旧进程 + B2r/B4r/B5/B-Span+Aug/Ours/Ours-r
+bash scripts/autodl_run_supplementary.sh
+
+# 或仅运行剩余实验（不杀进程）
+python scripts/run_remaining_experiments.py --multi-gpu
+```
+
+### 6. 单次训练示例
 
 ```bash
 conda activate patent-agent
@@ -93,4 +125,14 @@ python train_span_ner.py --data train_spans_augmented.jsonl --encoder hfl/chines
 
 cat run_out/metrics.json
 ```
+
+### 7. 梯度+隔离统一实验（仅远端或经 upload 触发）
+
+```bash
+bash scripts/autodl_run_gradient_isolate.sh
+# 或持续跑完剩余+梯度+隔离：
+bash scripts/autodl_run_all_until_done.sh
+```
+
+日志：`logs/run_gradient_isolate.log`、`logs/run_all_until_done.log`。
 

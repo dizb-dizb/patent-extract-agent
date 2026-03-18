@@ -311,9 +311,12 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=2)
     ap.add_argument("--lr", type=float, default=2e-5)
     ap.add_argument("--batch_size", type=int, default=4)
+    ap.add_argument("--num_workers", type=int, default=0, help="DataLoader workers (4-8 for max GPU)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--train_ratio", type=float, default=0.9)
     ap.add_argument("--multi_gpu", action="store_true", help="Use DataParallel for multi-GPU")
+    ap.add_argument("--max_train_samples", type=int, default=0,
+                    help="限制训练样本数 (0=不限制)，用于 10/100/1000 梯度实验")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -326,6 +329,10 @@ def main() -> None:
     samples = load_jsonl(data_path)
     if not samples:
         raise RuntimeError("empty dataset")
+    if args.max_train_samples > 0:
+        random.shuffle(samples)
+        samples = samples[: args.max_train_samples]
+        print(f"[data] 限制训练样本数: {len(samples)}")
 
     val_path = Path(args.val) if args.val else None
     if val_path and not val_path.is_absolute():
@@ -349,10 +356,18 @@ def main() -> None:
     train_ds = SpanDataset(train_s, tok, label_to_id, max_len=args.max_len)
     val_ds = SpanDataset(val_s, tok, label_to_id, max_len=args.max_len)
 
-    dl_train = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, collate_fn=lambda b: collate(b, pad_id))
+    # num_workers>0 预取数据，避免 GPU 等待；pin_memory 加速 CPU->GPU 传输
+    kw = dict(batch_size=args.batch_size, shuffle=True, collate_fn=lambda b: collate(b, pad_id))
+    if args.num_workers > 0:
+        kw.update(num_workers=args.num_workers, pin_memory=True)
+    elif device.type == "cuda":
+        kw.update(pin_memory=True)
+    dl_train = DataLoader(train_ds, **kw)
     dl_val = DataLoader(val_ds, batch_size=1, shuffle=False, collate_fn=lambda b: collate(b, pad_id))
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if device.type == "cuda":
+        torch.backends.cudnn.benchmark = True
     model = SpanNER(args.encoder, num_labels=len(labels)).to(device)
     if args.multi_gpu and torch.cuda.device_count() > 1:
         model = nn.DataParallel(model)
@@ -362,7 +377,8 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "labels.json").write_text(json.dumps(labels, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # training
+    # training (DataParallel 包装后需通过 .module 访问自定义方法)
+    _model = model.module if hasattr(model, "module") else model
     model.train()
     for ep in range(1, args.epochs + 1):
         pbar = tqdm(dl_train, desc=f"train ep{ep}", leave=False)
@@ -391,7 +407,7 @@ def main() -> None:
                 spans = pos_spans + neg_spans
                 y = pos_labels + [0] * len(neg_spans)  # 0 = NONE
                 spans_t = torch.tensor(spans, dtype=torch.long, device=device)
-                logits = model.span_logits(tok_emb, spans_t)
+                logits = _model.span_logits(tok_emb, spans_t)
                 y_t = torch.tensor(y, dtype=torch.long, device=device)
                 loss = nn.functional.cross_entropy(logits, y_t)
                 loss_all.append(loss)
@@ -412,7 +428,10 @@ def main() -> None:
             for batch in tqdm(dl_val, desc=f"eval ep{ep}", leave=False):
                 input_ids = batch["input_ids"].to(device)
                 attn = batch["attention_mask"].to(device)
-                hs = model(input_ids, attn)[0]  # (T,H)
+                out = model(input_ids, attn)
+                hs = out[0] if isinstance(out, tuple) else out
+                if hs.dim() == 3:
+                    hs = hs[0]  # (T,H)
                 offsets = batch["offsets"][0]
                 valid_mask = [(a, b) not in SPECIAL_OFFSETS and b > a for (a, b) in offsets]
                 cand = enumerate_candidate_spans(hs.size(0), args.max_span_width, valid_mask, limit=args.eval_span_limit)
@@ -421,7 +440,7 @@ def main() -> None:
                     golds.append(set(batch["gold_char"][0]))
                     continue
                 spans_t = torch.tensor(cand, dtype=torch.long, device=device)
-                logits = model.span_logits(hs, spans_t)
+                logits = _model.span_logits(hs, spans_t)
                 prob = torch.softmax(logits, dim=-1)
                 conf, lid = torch.max(prob, dim=-1)
                 chosen: list[tuple[int, int, int]] = []
@@ -455,10 +474,12 @@ def main() -> None:
         print(f"[eval] ep={ep} P={prec:.4f} R={rec:.4f} F1={f1:.4f}")
         model.train()
 
-    # save model
-    torch.save(model.state_dict(), out_dir / "model.pt")
+    # save model (DataParallel 需保存 .module)，得到实验数据后释放以省磁盘
+    model_pt = out_dir / "model.pt"
+    torch.save(_model.state_dict(), model_pt)
     (out_dir / "config.json").write_text(json.dumps(vars(args), ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[ok] saved to {out_dir}")
+    model_pt.unlink(missing_ok=True)
+    print(f"[ok] saved to {out_dir} (已释放 model.pt，保留 metrics.json)")
 
 
 if __name__ == "__main__":

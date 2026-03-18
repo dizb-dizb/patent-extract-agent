@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import time
 from pathlib import Path
@@ -170,12 +171,15 @@ def main() -> None:
     ap.add_argument("--encoder", type=str, default="roberta-base")
     ap.add_argument("--output_dir", type=str, default="artifacts/run_seq_ner")
     ap.add_argument("--max_len", type=int, default=256)
-    ap.add_argument("--epochs", type=int, default=2)
+    ap.add_argument("--epochs", type=int, default=20, help="Total training epochs")
+    ap.add_argument("--warmup_ratio", type=float, default=0.1, help="Fraction of total steps for linear LR warmup")
     ap.add_argument("--lr", type=float, default=2e-5)
-    ap.add_argument("--batch_size", type=int, default=8)
+    ap.add_argument("--batch_size", type=int, default=32)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--train_ratio", type=float, default=0.9)
     ap.add_argument("--multi_gpu", action="store_true", help="Use DataParallel for multi-GPU")
+    ap.add_argument("--max_train_samples", type=int, default=0,
+                    help="限制训练样本数 (0=不限制)，用于 10/100/1000 梯度实验")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -187,6 +191,10 @@ def main() -> None:
     samples = load_jsonl(data_path)
     if not samples:
         raise RuntimeError("empty dataset")
+    if args.max_train_samples > 0:
+        random.shuffle(samples)
+        samples = samples[: args.max_train_samples]
+        print(f"[data] 限制训练样本数: {len(samples)}")
 
     random.shuffle(samples)
     n_train = int(len(samples) * args.train_ratio)
@@ -211,7 +219,15 @@ def main() -> None:
     model = model.to(device)
     if args.multi_gpu and torch.cuda.device_count() > 1:
         model = torch.nn.DataParallel(model)
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    total_steps = args.epochs * max(1, len(train_ds) // args.batch_size)
+    warmup_steps = int(total_steps * args.warmup_ratio)
+    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
+    def lr_lambda(step):
+        if step < warmup_steps:
+            return step / max(1, warmup_steps)
+        progress = (step - warmup_steps) / max(1, total_steps - warmup_steps)
+        return max(0.0, 0.5 * (1.0 + math.cos(math.pi * progress)))
+    scheduler = torch.optim.lr_scheduler.LambdaLR(opt, lr_lambda)
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -223,9 +239,14 @@ def main() -> None:
         batch_size=args.batch_size,
         shuffle=True,
         collate_fn=lambda b: collate(b, pad_id),
+        num_workers=0,
+        pin_memory=torch.cuda.is_available(),
     )
-    dl_val = DataLoader(val_ds, batch_size=1, shuffle=False, collate_fn=lambda b: collate(b, pad_id))
+    dl_val = DataLoader(val_ds, batch_size=8, shuffle=False, collate_fn=lambda b: collate(b, pad_id), num_workers=0)
 
+    best_f1 = 0.0
+    best_model_state = None
+    global_step = 0
     for ep in range(1, args.epochs + 1):
         model.train()
         for batch in tqdm(dl_train, desc=f"ep{ep}", leave=False):
@@ -238,48 +259,62 @@ def main() -> None:
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
+            scheduler.step()
+            global_step += 1
 
         model.eval()
         preds: list[set[tuple[int, int, str]]] = []
         golds: list[set[tuple[int, int, str]]] = []
+        sample_idx = 0
         with torch.no_grad():
-            for batch_idx, batch in enumerate(dl_val):
+            for batch in dl_val:
                 input_ids = batch["input_ids"].to(device)
                 attn = batch["attention_mask"].to(device)
                 out = model(input_ids=input_ids, attention_mask=attn)
-                logits = out.logits[0]
-                pred_ids = logits.argmax(dim=-1).tolist()
-                # get offsets from tokenizer for this sample
-                idx = min(batch_idx, len(val_s) - 1)
-                ctx = val_s[idx].get("context") or ""
-                enc = tokenizer(ctx, return_offsets_mapping=True, truncation=True, max_length=args.max_len)
-                offsets = [(int(a), int(b)) for a, b in enc["offset_mapping"]]
-                pred_labels = [id_to_label.get(pid, "O") for pid in pred_ids[: len(offsets)]]
-                pred_spans = extract_spans_from_bio(pred_labels, offsets)
-                gold_char = spans_to_bio_labels(ctx, val_s[idx].get("spans") or [])
-                gold_spans: set[tuple[int, int, str]] = set()
-                i = 0
-                while i < len(gold_char):
-                    if gold_char[i].startswith("B-"):
-                        lab = gold_char[i][2:]
-                        start = i
-                        j = i + 1
-                        while j < len(gold_char) and gold_char[j] == f"I-{lab}":
-                            j += 1
-                        end = j
-                        gold_spans.add((start, end, lab))
-                        i = j
-                    else:
-                        i += 1
-                preds.append(pred_spans)
-                golds.append(gold_spans)
+                # out.logits: [B, seq_len, num_labels] — iterate over each sample in batch
+                for bi in range(out.logits.size(0)):
+                    if sample_idx >= len(val_s):
+                        break
+                    logits_i = out.logits[bi]
+                    pred_ids = logits_i.argmax(dim=-1).tolist()
+                    ctx = val_s[sample_idx].get("context") or ""
+                    enc = tokenizer(ctx, return_offsets_mapping=True, truncation=True, max_length=args.max_len)
+                    offsets = [(int(a), int(b)) for a, b in enc["offset_mapping"]]
+                    pred_labels = [id_to_label.get(pid, "O") for pid in pred_ids[: len(offsets)]]
+                    pred_spans = extract_spans_from_bio(pred_labels, offsets)
+                    gold_char = spans_to_bio_labels(ctx, val_s[sample_idx].get("spans") or [])
+                    gold_spans: set[tuple[int, int, str]] = set()
+                    i = 0
+                    while i < len(gold_char):
+                        if gold_char[i].startswith("B-"):
+                            lab = gold_char[i][2:]
+                            start = i
+                            j = i + 1
+                            while j < len(gold_char) and gold_char[j] == f"I-{lab}":
+                                j += 1
+                            end = j
+                            gold_spans.add((start, end, lab))
+                            i = j
+                        else:
+                            i += 1
+                    preds.append(pred_spans)
+                    golds.append(gold_spans)
+                    sample_idx += 1
 
         prec, rec, f1 = micro_prf(preds, golds)
+        if f1 > best_f1:
+            best_f1 = f1
+            _m = model.module if hasattr(model, "module") else model
+            best_model_state = {k: v.cpu().clone() for k, v in _m.state_dict().items()}
+
+        cur_lr = scheduler.get_last_lr()[0]
         metrics = {
             "name": "seq_ner_roberta",
             "precision": prec,
             "recall": rec,
             "f1": f1,
+            "best_f1": best_f1,
+            "lr": cur_lr,
             "encoder": args.encoder,
             "data": str(data_path),
             "dataset_version": ds_ver,
@@ -287,13 +322,20 @@ def main() -> None:
             "created_at": int(time.time()),
         }
         (out_dir / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"[eval] ep={ep} P={prec:.4f} R={rec:.4f} F1={f1:.4f}")
+        mark = " ★" if f1 >= best_f1 else ""
+        print(f"[eval] ep={ep} lr={cur_lr:.2e} P={prec:.4f} R={rec:.4f} F1={f1:.4f}{mark}")
 
-    # Unwrap DataParallel before saving
+    # Restore best model weights and save，得到实验数据后释放大文件以省磁盘
     _model = model.module if hasattr(model, "module") else model
+    if best_model_state is not None:
+        _model.load_state_dict(best_model_state)
     _model.save_pretrained(out_dir)
     tokenizer.save_pretrained(out_dir)
-    print(f"[ok] saved to {out_dir}")
+    for name in ("pytorch_model.bin", "tokenizer.json"):
+        p = out_dir / name
+        if p.exists():
+            p.unlink()
+    print(f"[ok] best_f1={best_f1:.4f}  saved to {out_dir} (已释放模型权重，保留 metrics.json)")
 
 
 if __name__ == "__main__":

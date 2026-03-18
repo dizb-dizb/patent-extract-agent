@@ -46,14 +46,23 @@ def main() -> None:
     ap.add_argument("--n-eval", type=int, default=0, help="Fewshot only: eval episodes (0=use default 50)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--multi-gpu", action="store_true", help="Use DataParallel for multi-GPU")
-    ap.add_argument("--scl-weight", type=float, default=0.0, help="Supervised contrastive loss weight")
+    ap.add_argument("--freeze-encoder", action="store_true",
+                    help="Fewshot only: 冻结 encoder，仅训练 span_proj（未微调模型+原型网络）")
     ap.add_argument("--train-labels", type=str, default="", help="Meta-train labels (comma-separated)")
     ap.add_argument("--test-labels", type=str, default="", help="Meta-test labels (comma-separated)")
+    ap.add_argument("--output-suffix", type=str, default="",
+                    help="追加到 artifacts 目录名，如 _isolate 用于小样本类别隔离实验")
+    ap.add_argument("--max-train-samples", type=int, default=0,
+                    help="限制训练样本数 (0=不限制)，用于 10/100/1000 梯度实验")
     ap.add_argument("--encoder-type", type=str, default="transformer", choices=["transformer", "bilstm"],
                     help="transformer=BERT/RoBERTa; bilstm=randomly-init BiLSTM (B3/B5)")
     ap.add_argument("--bilstm-embed-dim", type=int, default=100)
     ap.add_argument("--bilstm-hidden", type=int, default=256)
     ap.add_argument("--bilstm-layers", type=int, default=2)
+    ap.add_argument("--max-len", type=int, default=0, help="Fewshot only: max token length (0=use 256)")
+    ap.add_argument("--batch-size", type=int, default=0, help="Supervised only: batch size (0=use default 4)")
+    ap.add_argument("--num-workers", type=int, default=0, help="Supervised only: DataLoader workers (4-8 拉满 GPU)")
+    ap.add_argument("--batch-episodes", type=int, default=0, help="Fewshot only: batch_episodes (0=use default 4)")
     args = ap.parse_args()
 
     if args.dataset == "unified":
@@ -83,8 +92,10 @@ def main() -> None:
 
     encoder = args.encoder or DATASET_ENCODERS.get(args.dataset, "bert-base-cased")
 
+    out_sfx = getattr(args, "output_suffix", "") or ""
+    max_samples = getattr(args, "max_train_samples", 0) or 0
     if args.mode == "bilstm_crf":
-        out_dir = ROOT / "artifacts" / "run_bilstm_crf" / args.dataset
+        out_dir = ROOT / "artifacts" / f"run_bilstm_crf{out_sfx}" / args.dataset
         cmd = [
             sys.executable,
             str(ROOT / "train_bilstm_crf.py"),
@@ -95,8 +106,11 @@ def main() -> None:
         ]
         if val_path.exists():
             cmd.extend(["--val", str(val_path)])
+        if max_samples > 0:
+            cmd.extend(["--max_train_samples", str(max_samples)])
     elif args.mode == "supervised":
-        out_dir = ROOT / "artifacts" / "run_span_ner" / args.dataset
+        aug_sfx = "_aug" if args.data_strategy == "augmented" else ""
+        out_dir = ROOT / "artifacts" / f"run_span_ner{aug_sfx}{out_sfx}" / args.dataset
         cmd = [
             sys.executable,
             str(ROOT / "train_span_ner.py"),
@@ -110,9 +124,15 @@ def main() -> None:
             cmd.extend(["--val", str(val_path)])
         if args.multi_gpu:
             cmd.append("--multi_gpu")
+        if max_samples > 0:
+            cmd.extend(["--max_train_samples", str(max_samples)])
+        if getattr(args, "batch_size", 0) > 0:
+            cmd.extend(["--batch_size", str(args.batch_size)])
+        if getattr(args, "num_workers", 0) > 0:
+            cmd.extend(["--num_workers", str(args.num_workers)])
     elif args.mode == "seq":
         roberta_sfx = "_roberta" if "roberta" in encoder.lower() else ""
-        out_dir = ROOT / "artifacts" / f"run_seq_ner{roberta_sfx}" / args.dataset
+        out_dir = ROOT / "artifacts" / f"run_seq_ner{roberta_sfx}{out_sfx}" / args.dataset
         cmd = [
             sys.executable,
             str(ROOT / "train_seq_ner.py"),
@@ -124,6 +144,8 @@ def main() -> None:
         ]
         if args.multi_gpu:
             cmd.append("--multi_gpu")
+        if max_samples > 0:
+            cmd.extend(["--max_train_samples", str(max_samples)])
     else:
         # fewshot: proto_span, supports both transformer and bilstm encoder
         enc_type = getattr(args, "encoder_type", "transformer")
@@ -133,7 +155,11 @@ def main() -> None:
             suffix = "_roberta"
         else:
             suffix = ""
-        out_dir = ROOT / "artifacts" / f"run_proto_span{suffix}" / args.dataset
+        if args.data_strategy == "augmented":
+            suffix += "_aug"
+        if getattr(args, "freeze_encoder", False):
+            suffix += "_frozen"
+        out_dir = ROOT / "artifacts" / f"run_proto_span{suffix}{out_sfx}" / args.dataset
         cmd = [
             sys.executable,
             str(ROOT / "train_fewshot_proto_span.py"),
@@ -157,12 +183,18 @@ def main() -> None:
             cmd.extend(["--val", str(val_path)])
         if args.multi_gpu:
             cmd.append("--multi_gpu")
-        if args.scl_weight > 0:
-            cmd.extend(["--scl_weight", str(args.scl_weight)])
+        if args.max_len > 0:
+            cmd.extend(["--max_len", str(args.max_len)])
+        if getattr(args, "freeze_encoder", False):
+            cmd.append("--freeze_encoder")
         if args.train_labels:
             cmd.extend(["--train_labels", args.train_labels])
         if args.test_labels:
             cmd.extend(["--test_labels", args.test_labels])
+        if max_samples > 0:
+            cmd.extend(["--max_train_samples", str(max_samples)])
+        if getattr(args, "batch_episodes", 0) > 0:
+            cmd.extend(["--batch_episodes", str(args.batch_episodes)])
 
     print(f"[run] {' '.join(cmd)}")
     ret = subprocess.run(cmd, cwd=str(ROOT))

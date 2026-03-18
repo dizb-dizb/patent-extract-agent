@@ -84,7 +84,6 @@
 | `scripts/run_baseline.py --dataset unified` | 在 unified 上训练 |
 | `scripts/run_baseline.py --data-strategy augmented` | Ours：使用 Agent 增强数据 |
 | `scripts/run_baseline.py --mode seq` | B2：BIO token 分类基线 |
-| `scripts/run_baseline.py --scl-weight 0.1` | 监督对比学习（度量层） |
 | `scripts/run_baseline.py --train-labels A,B --test-labels C,D` | Meta-Train/Meta-Test 类别隔离 |
 | `scripts/run_ablations.py --data-strategy augmented` | 消融含 Ours |
 | `scripts/run_continual.py` | 持续学习 + BWT 评测 |

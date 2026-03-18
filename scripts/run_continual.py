@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import shutil
 import sys
@@ -191,6 +192,16 @@ def main() -> None:
     ARTIFACTS.mkdir(parents=True, exist_ok=True)
     tokenizer = AutoTokenizer.from_pretrained(args.encoder, use_fast=True)
 
+    def make_scheduler(opt, epochs, max_episodes, warmup_ratio=0.1):
+        total_steps = epochs * max_episodes
+        warmup_steps = max(1, int(total_steps * warmup_ratio))
+        def lr_lambda(step):
+            if step < warmup_steps:
+                return step / warmup_steps
+            progress = (step - warmup_steps) / max(1, total_steps - warmup_steps)
+            return max(0.0, 0.5 * (1.0 + math.cos(math.pi * progress)))
+        return torch.optim.lr_scheduler.LambdaLR(opt, lr_lambda)
+
     # Task 1: train on chemdner
     print(f"[info] Task 1: training on {args.task1}")
     t1_samples = load_jsonl(t1_path)
@@ -202,7 +213,9 @@ def main() -> None:
         seed=args.seed,
     )
     model = PrototypicalSpanNER(args.encoder, n_classes=args.n_way).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=2e-5)
+    opt = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
+    scheduler = make_scheduler(opt, args.epochs_per_task, args.max_episodes)
+    step = 0
     for ep in range(1, args.epochs_per_task + 1):
         model.train()
         for _ in range(args.max_episodes):
@@ -213,6 +226,8 @@ def main() -> None:
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
                 opt.step()
+                scheduler.step()
+                step += 1
 
     f1_t1_after_t1 = eval_dataset(
         model, t1_path, tokenizer, 256, device, args.n_way, args.k_shot, args.n_eval
@@ -235,16 +250,20 @@ def main() -> None:
         max_episodes=args.max_episodes,
         seed=args.seed + 1,
     )
+    # Reset optimizer and scheduler for task 2 (fresh LR schedule, preserve model weights)
+    opt2 = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
+    scheduler2 = make_scheduler(opt2, args.epochs_per_task, args.max_episodes)
     for ep in range(1, args.epochs_per_task + 1):
         model.train()
         for _ in range(args.max_episodes):
             episode = ds_t2.sample_episode()
             loss, _ = process_episode(model, episode, tokenizer, 256, device)
             if loss.requires_grad:
-                opt.zero_grad()
+                opt2.zero_grad()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-                opt.step()
+                opt2.step()
+                scheduler2.step()
 
     f1_t1_after_t2 = eval_dataset(
         model, t1_path, tokenizer, 256, device, args.n_way, args.k_shot, args.n_eval

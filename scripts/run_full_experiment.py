@@ -46,6 +46,9 @@ MAX_EPISODES_PROTO = {"fewnerd": 1000, "genia": 800, "chemdner": 800}
 N_EVAL = 80
 EPOCHS_BWT = 3
 MAX_EPISODES_BWT = 300
+# 数据集特定：chemdner 仅 1 类实体，需 n_way=1；GENIA 生物医学文本需 max_len=256 避免截断
+N_WAY_PROTO = {"fewnerd": 5, "genia": 5, "chemdner": 1}
+MAX_LEN_PROTO = 256
 
 
 def run(cmd: list[str], desc: str) -> int:
@@ -162,13 +165,15 @@ def run_baseline(
         metrics_path = ROOT / "artifacts" / f"run_seq_ner{roberta_sfx}" / dataset / "metrics.json"
     elif mode == "fewshot":
         aug_sfx = "_aug" if data_strategy == "augmented" else ""
+        frozen_sfx = "_frozen" if extra and "--freeze-encoder" in extra else ""
         if encoder_type == "bilstm":
             base = f"run_proto_span_bilstm{aug_sfx}"
         else:
-            base = f"run_proto_span{roberta_sfx}{aug_sfx}"
+            base = f"run_proto_span{roberta_sfx}{aug_sfx}{frozen_sfx}"
         metrics_path = ROOT / "artifacts" / base / dataset / "metrics.json"
     else:
-        metrics_path = ROOT / "artifacts" / "run_span_ner" / dataset / "metrics.json"
+        aug_sfx = "_aug" if data_strategy == "augmented" else ""
+        metrics_path = ROOT / "artifacts" / f"run_span_ner{aug_sfx}" / dataset / "metrics.json"
 
     m = load_metrics(metrics_path)
     if m:
@@ -287,6 +292,9 @@ def main() -> None:
         ep_proto = EPOCHS_PROTO if use_convergence else args.epochs
         max_ep = MAX_EPISODES_PROTO.get(ds, 800) if use_convergence else 0
         n_ev = N_EVAL if use_convergence else 0
+        n_way_proto = N_WAY_PROTO.get(ds, 5)
+        extra_max_len = ["--max-len", str(MAX_LEN_PROTO)]
+        kw_proto = {**kw_base, "n_way": n_way_proto}  # fewshot 用数据集特定 n_way
 
         # B1: BiLSTM + CRF
         m = run_baseline(ds, "bilstm_crf", epochs=ep_b1, **kw_base)
@@ -304,41 +312,75 @@ def main() -> None:
             m["baseline"] = "B2"
             results.append(m)
 
+        # B-Span: BERT + Span classifier, no proto (证明原型网络优势的对照基线)
+        extra_bspan = ["--encoder", args.encoder]
+        if args.multi_gpu:
+            extra_bspan.append("--multi_gpu")
+        m = run_baseline(ds, "supervised", encoder_type="transformer",
+                         epochs=ep_b2, extra=extra_bspan, **kw_base)
+        if m:
+            m["baseline"] = "B-Span"
+            results.append(m)
+
         # B3: BiLSTM + Span (Proto), original
         m = run_baseline(ds, "fewshot", encoder_type="bilstm", epochs=ep_proto,
-                         max_episodes=max_ep, n_eval=n_ev, **kw_base)
+                         max_episodes=max_ep, n_eval=n_ev,
+                         extra=extra_max_len, **kw_proto)
         if m:
             m["baseline"] = "B3"
             results.append(m)
 
-        # B4: RoBERTa + Span (Proto), original
-        extra_b4 = ["--encoder", args.encoder]
+        # B4: BERT + Span (Proto), original
+        extra_b4 = ["--encoder", args.encoder] + extra_max_len
         if args.multi_gpu:
             extra_b4.append("--multi-gpu")
         m = run_baseline(ds, "fewshot", encoder_type="transformer", epochs=ep_proto,
                          max_episodes=max_ep, n_eval=n_ev,
-                         extra=extra_b4, **kw_base)
+                         extra=extra_b4, **kw_proto)
         if m:
             m["baseline"] = "B4"
+            results.append(m)
+
+        # B4f: BERT-Proto + encoder 冻结（未微调模型+原型网络对照）
+        extra_b4f = ["--encoder", args.encoder, "--freeze-encoder"] + extra_max_len
+        if args.multi_gpu:
+            extra_b4f.append("--multi-gpu")
+        m = run_baseline(ds, "fewshot", encoder_type="transformer", epochs=ep_proto,
+                         max_episodes=max_ep, n_eval=n_ev,
+                         extra=extra_b4f, **kw_proto)
+        if m:
+            m["baseline"] = "B4f"
             results.append(m)
 
         if not args.fast:
             # B5: BiLSTM + Span (Proto), augmented
             m = run_baseline(ds, "fewshot", data_strategy="augmented",
                              encoder_type="bilstm", epochs=ep_proto,
-                             max_episodes=max_ep, n_eval=n_ev, **kw_base)
+                             max_episodes=max_ep, n_eval=n_ev,
+                             extra=extra_max_len, **kw_proto)
             if m:
                 m["baseline"] = "B5"
                 results.append(m)
 
+            # B-Span+Aug: BERT Span 无原型 + 增强数据（对照：证明原型网络在增强数据下的优势）
+            extra_bspan_aug = ["--encoder", args.encoder]
+            if args.multi_gpu:
+                extra_bspan_aug.append("--multi-gpu")
+            m = run_baseline(ds, "supervised", data_strategy="augmented",
+                             encoder_type="transformer", epochs=ep_b2,
+                             extra=extra_bspan_aug, **kw_base)
+            if m:
+                m["baseline"] = "B-Span+Aug"
+                results.append(m)
+
             # Ours: BERT + Span (Proto), augmented
-            extra_ours = ["--encoder", args.encoder]
+            extra_ours = ["--encoder", args.encoder] + extra_max_len
             if args.multi_gpu:
                 extra_ours.append("--multi-gpu")
             m = run_baseline(ds, "fewshot", data_strategy="augmented",
                              encoder_type="transformer", epochs=ep_proto,
                              max_episodes=max_ep, n_eval=n_ev,
-                             extra=extra_ours, **kw_base)
+                             extra=extra_ours, **kw_proto)
             if m:
                 m["baseline"] = "Ours"
                 results.append(m)
@@ -356,25 +398,36 @@ def main() -> None:
                 results.append(m)
 
             # B4r: RoBERTa + Span (Proto), original
-            extra_b4r = ["--encoder", args.roberta_encoder]
+            extra_b4r = ["--encoder", args.roberta_encoder] + extra_max_len
             if args.multi_gpu:
                 extra_b4r.append("--multi-gpu")
             m = run_baseline(ds, "fewshot", encoder_type="transformer", epochs=ep_proto,
                              max_episodes=max_ep, n_eval=n_ev,
-                             extra=extra_b4r, **kw_base)
+                             extra=extra_b4r, **kw_proto)
             if m:
                 m["baseline"] = "B4r"
                 results.append(m)
 
+            # B4rf: RoBERTa-Proto + encoder 冻结（未微调模型+原型网络对照）
+            extra_b4rf = ["--encoder", args.roberta_encoder, "--freeze-encoder"] + extra_max_len
+            if args.multi_gpu:
+                extra_b4rf.append("--multi-gpu")
+            m = run_baseline(ds, "fewshot", encoder_type="transformer", epochs=ep_proto,
+                             max_episodes=max_ep, n_eval=n_ev,
+                             extra=extra_b4rf, **kw_proto)
+            if m:
+                m["baseline"] = "B4rf"
+                results.append(m)
+
             if not args.fast:
-                # Ours-r: RoBERTa + Span (Proto), augmented + SCL
-                extra_oursr = ["--encoder", args.roberta_encoder, "--scl_weight", "0.1"]
+                # Ours-r: RoBERTa + Span (Proto), augmented
+                extra_oursr = ["--encoder", args.roberta_encoder] + extra_max_len
                 if args.multi_gpu:
                     extra_oursr.append("--multi-gpu")
                 m = run_baseline(ds, "fewshot", data_strategy="augmented",
                                  encoder_type="transformer", epochs=ep_proto,
                                  max_episodes=max_ep, n_eval=n_ev,
-                                 extra=extra_oursr, **kw_base)
+                                 extra=extra_oursr, **kw_proto)
                 if m:
                     m["baseline"] = "Ours-r"
                     results.append(m)

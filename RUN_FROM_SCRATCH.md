@@ -109,7 +109,7 @@ python scripts/run_full_experiment.py --fast --skip-data --epochs 3
 | B3 | BiLSTM-Proto | original | artifacts/run_proto_span_bilstm/ |
 | B4 | RoBERTa-Proto | original | artifacts/run_proto_span/ |
 | B5 | BiLSTM-Proto | augmented | artifacts/run_proto_span_bilstm_aug/ |
-| Ours | RoBERTa-Proto+SCL | augmented | artifacts/run_proto_span_aug/ |
+| Ours | BERT-Proto+Aug | augmented | artifacts/run_proto_span_aug/ |
 
 **能力测试**：战役三 BWT → `artifacts/continual/`；战役四 OOD → `artifacts/ood_oneshot/`
 
@@ -118,5 +118,5 @@ python scripts/run_full_experiment.py --fast --skip-data --epochs 3
 ## 四、检查状态
 
 ```bash
-python scripts/check_experiment_status.py
+python _progress.py
 ```

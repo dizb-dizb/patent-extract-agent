@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import time
 from pathlib import Path
@@ -272,15 +273,18 @@ def main() -> None:
     ap.add_argument("--val", type=str, default="", help="Optional separate val file")
     ap.add_argument("--output_dir", type=str, default="artifacts/run_bilstm_crf/fewnerd")
     ap.add_argument("--max_len", type=int, default=128)
-    ap.add_argument("--epochs", type=int, default=5)
+    ap.add_argument("--epochs", type=int, default=30, help="Total training epochs")
+    ap.add_argument("--warmup_ratio", type=float, default=0.1, help="Fraction of steps used for LR warmup")
     ap.add_argument("--lr", type=float, default=1e-3)
-    ap.add_argument("--batch_size", type=int, default=16)
+    ap.add_argument("--batch_size", type=int, default=32)
     ap.add_argument("--embed_dim", type=int, default=100)
     ap.add_argument("--hidden_dim", type=int, default=256)
     ap.add_argument("--num_layers", type=int, default=2)
     ap.add_argument("--dropout", type=float, default=0.3)
     ap.add_argument("--train_ratio", type=float, default=0.9)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--max_train_samples", type=int, default=0,
+                    help="限制训练样本数 (0=不限制)，用于 10/100/1000 梯度实验")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -292,6 +296,10 @@ def main() -> None:
     samples = load_jsonl(data_path)
     if not samples:
         raise RuntimeError("empty dataset")
+    if args.max_train_samples > 0:
+        random.shuffle(samples)
+        samples = samples[: args.max_train_samples]
+        print(f"[data] 限制训练样本数: {len(samples)}")
 
     val_path = Path(args.val) if args.val else None
     if val_path and not val_path.is_absolute():
@@ -324,10 +332,18 @@ def main() -> None:
     ).to(device)
 
     opt = torch.optim.Adam(model.parameters(), lr=args.lr)
-    scheduler = torch.optim.lr_scheduler.StepLR(opt, step_size=2, gamma=0.5)
+    total_steps = args.epochs
+    warmup_steps = max(1, int(total_steps * args.warmup_ratio))
+    def lr_lambda(ep):
+        if ep < warmup_steps:
+            return ep / warmup_steps
+        progress = (ep - warmup_steps) / max(1, total_steps - warmup_steps)
+        return max(0.05, 0.5 * (1.0 + math.cos(math.pi * progress)))
+    scheduler = torch.optim.lr_scheduler.LambdaLR(opt, lr_lambda)
 
-    dl_train = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, collate_fn=collate_fn)
-    dl_val = DataLoader(val_ds, batch_size=1, shuffle=False, collate_fn=collate_fn)
+    dl_train = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, collate_fn=collate_fn,
+                          num_workers=0, pin_memory=torch.cuda.is_available())
+    dl_val = DataLoader(val_ds, batch_size=8, shuffle=False, collate_fn=collate_fn, num_workers=0)
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -375,6 +391,7 @@ def main() -> None:
             best_f1 = f1
             torch.save(model.state_dict(), out_dir / "model.pt")
 
+        cur_lr = scheduler.get_last_lr()[0]
         metrics = {
             "name": "bilstm_crf",
             "precision": prec,
@@ -382,6 +399,8 @@ def main() -> None:
             "f1": f1,
             "flat_f1": f1,
             "epoch": ep,
+            "best_f1": best_f1,
+            "lr": cur_lr,
             "data": str(data_path),
             "dataset_version": ds_ver,
             "created_at": int(time.time()),
@@ -389,9 +408,11 @@ def main() -> None:
         (out_dir / "metrics.json").write_text(
             json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8"
         )
-        print(f"[eval] ep={ep} loss={total_loss:.4f} P={prec:.4f} R={rec:.4f} F1={f1:.4f}")
+        mark = " ★" if f1 >= best_f1 else ""
+        print(f"[eval] ep={ep} loss={total_loss:.4f} lr={cur_lr:.2e} P={prec:.4f} R={rec:.4f} F1={f1:.4f}{mark}")
 
-    print(f"[ok] best_f1={best_f1:.4f}  saved to {out_dir}")
+    (out_dir / "model.pt").unlink(missing_ok=True)
+    print(f"[ok] best_f1={best_f1:.4f}  saved to {out_dir} (已释放 model.pt，保留 metrics.json)")
 
 
 if __name__ == "__main__":

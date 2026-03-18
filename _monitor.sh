@@ -76,12 +76,18 @@ proc_alive() {
     kill -0 "$pid" 2>/dev/null
 }
 
+span_ner_running() {
+    pgrep -f "train_span_ner" >/dev/null 2>&1
+}
+
 status_icon() {   # status_icon <log_name> <metrics_file>
     local name=$1 mfile=$2
     if proc_alive "$name"; then
         printf "${GRN}● RUN${R}"
     elif [ -f "$mfile" ]; then
         printf "${YLW}✓ DONE${R}"
+    elif [[ "$name" == BSpan_* || "$name" == BSpanAug_* ]] && span_ner_running; then
+        printf "${GRN}● RUN${R}"
     else
         printf "${DIM}○ WAIT${R}"
     fi
@@ -89,15 +95,17 @@ status_icon() {   # status_icon <log_name> <metrics_file>
 
 # 一行打印实验结果
 result_row() {
-    # $1=display_name $2=log_name $3=metrics_dir $4=n_epochs_expected
-    local dname=$1 lname=$2 mdir=$3 epx=${4:-3}
+    # $1=display_name $2=log_name $3=metrics_dir $4=n_epochs_expected $5=log_override(可选)
+    local dname=$1 lname=$2 mdir=$3 epx=${4:-3} log_override=${5:-}
     local mfile="$mdir/metrics.json"
+    local logf="$LOG/${lname}.log"
+    [ -n "$log_override" ] && logf="$LOG/${log_override}.log"
     local f1; f1=$(read_f1 "$mfile" f1)
     local ff; ff=$(read_f1 "$mfile" flat_f1)
     local ep; ep=$(read_ep "$mfile")
     local icon; icon=$(status_icon "$lname" "$mfile")
-    local prog; prog=$(progress_from_log "$LOG/${lname}.log")
-    local loss; loss=$(loss_from_log "$LOG/${lname}.log")
+    local prog; prog=$(progress_from_log "$logf")
+    local loss; loss=$(loss_from_log "$logf")
 
     printf "  %-22s  %-9s  ep:%-4s  F1:%-8s FlatF1:%-8s  %s\n" \
         "$dname" "$icon" "${ep}/${epx}" "$f1" "$ff" "$loss"
@@ -126,7 +134,7 @@ while true; do
     done
 
     # ── 进程统计 ────────────────────────────────────────────────────────────
-    NPROC=$(pgrep -c -f "train_bilstm_crf\|train_seq_ner\|train_fewshot_proto_span" 2>/dev/null || echo "0")
+    NPROC=$(pgrep -c -f "train_bilstm_crf\|train_seq_ner\|train_fewshot_proto_span\|train_span_ner" 2>/dev/null || echo "0")
     NPROC=$(echo "$NPROC" | head -1 | tr -cd '0-9')
     NPROC=${NPROC:-0}
     printf "\n${CYN}▶ 训练进程: ${R}"
@@ -142,11 +150,23 @@ while true; do
     result_row "B1 genia"    "B1_genia_real"     "$PROJ/artifacts/run_bilstm_crf/genia"    5
     result_row "B1 chemdner" "B1_chemdner_real"  "$PROJ/artifacts/run_bilstm_crf/chemdner" 5
 
-    # ── B2: RoBERTa-CRF ─────────────────────────────────────────────────────
-    printf "\n${CYN}▶ B2  RoBERTa-CRF (BIO 序列标注, multi-GPU)${R}\n"
-    result_row "B2 fewnerd"  "B2_fewnerd"       "$PROJ/artifacts/run_seq_ner/fewnerd"  3
+    # ── B2: BERT-CRF ────────────────────────────────────────────────────────
+    printf "\n${CYN}▶ B2  BERT-CRF (BIO序列标注, multi-GPU, bert-base-cased)${R}\n"
+    result_row "B2 fewnerd"  "B2_fewnerd"       "$PROJ/artifacts/run_seq_ner/fewnerd"  5
     result_row "B2 genia"    "B2_genia_real"     "$PROJ/artifacts/run_seq_ner/genia"    5
     result_row "B2 chemdner" "B2_chemdner_real"  "$PROJ/artifacts/run_seq_ner/chemdner" 5
+
+    # ── B2r: RoBERTa-CRF ────────────────────────────────────────────────────
+    printf "\n${CYN}▶ B2r RoBERTa-CRF (BIO序列标注, multi-GPU, roberta-base)${R}\n"
+    result_row "B2r fewnerd"  "B2r_fewnerd"       "$PROJ/artifacts/run_seq_ner_roberta/fewnerd"  5
+    result_row "B2r genia"    "B2r_genia"         "$PROJ/artifacts/run_seq_ner_roberta/genia"    5
+    result_row "B2r chemdner" "B2r_chemdner"      "$PROJ/artifacts/run_seq_ner_roberta/chemdner" 5
+
+    # ── B-Span: BERT Span 分类器（无原型网络，有监督全量对照）────────────────
+    printf "\n${CYN}▶ B-Span  BERT Span分类器（无原型网络，有监督全量训练）${R}\n"
+    result_row "B-Span fewnerd"  "BSpan_fewnerd"  "$PROJ/artifacts/run_span_ner/fewnerd"  5 "supplementary"
+    result_row "B-Span genia"    "BSpan_genia"    "$PROJ/artifacts/run_span_ner/genia"    5 "supplementary"
+    result_row "B-Span chemdner" "BSpan_chemdner" "$PROJ/artifacts/run_span_ner/chemdner" 5 "supplementary"
 
     # ── B3: BiLSTM-Proto ────────────────────────────────────────────────────
     printf "\n${CYN}▶ B3  BiLSTM Proto-Span (original data)${R}\n"
@@ -154,11 +174,29 @@ while true; do
     result_row "B3 genia"    "B3_genia_real"     "$PROJ/artifacts/run_proto_span_bilstm/genia"    5
     result_row "B3 chemdner" "B3_chemdner_real"  "$PROJ/artifacts/run_proto_span_bilstm/chemdner" 5
 
-    # ── B4: RoBERTa-Proto ───────────────────────────────────────────────────
-    printf "\n${CYN}▶ B4  RoBERTa Proto-Span (original data, multi-GPU)${R}\n"
-    result_row "B4 fewnerd"  "B4_fewnerd"       "$PROJ/artifacts/run_proto_span/fewnerd"  3
-    result_row "B4 genia"    "B4_genia_real"     "$PROJ/artifacts/run_proto_span/genia"    5
-    result_row "B4 chemdner" "B4_chemdner_real"  "$PROJ/artifacts/run_proto_span/chemdner" 5
+    # ── B4: BERT-Proto ──────────────────────────────────────────────────────
+    printf "\n${CYN}▶ B4  BERT Proto-Span (original data, multi-GPU, bert-base-cased)${R}\n"
+    result_row "B4 fewnerd"  "B4_fewnerd"       "$PROJ/artifacts/run_proto_span/fewnerd"  8
+    result_row "B4 genia"    "B4_genia_real"     "$PROJ/artifacts/run_proto_span/genia"    8
+    result_row "B4 chemdner" "B4_chemdner_real"  "$PROJ/artifacts/run_proto_span/chemdner" 8
+
+    # ── B4r: RoBERTa-Proto ──────────────────────────────────────────────────
+    printf "\n${CYN}▶ B4r RoBERTa Proto-Span (original data, multi-GPU, roberta-base)${R}\n"
+    result_row "B4r fewnerd"  "B4r_fewnerd"       "$PROJ/artifacts/run_proto_span_roberta/fewnerd"  8
+    result_row "B4r genia"    "B4r_genia"         "$PROJ/artifacts/run_proto_span_roberta/genia"    8
+    result_row "B4r chemdner" "B4r_chemdner"      "$PROJ/artifacts/run_proto_span_roberta/chemdner" 8
+
+    # ── B4f: BERT-Proto + encoder 冻结（未微调+原型网络）──────────────────────
+    printf "\n${CYN}▶ B4f  BERT Proto-Span (encoder 冻结, 未微调模型+原型)${R}\n"
+    result_row "B4f fewnerd"  "B4f_fewnerd"       "$PROJ/artifacts/run_proto_span_frozen/fewnerd"  8
+    result_row "B4f genia"    "B4f_genia"         "$PROJ/artifacts/run_proto_span_frozen/genia"    8
+    result_row "B4f chemdner" "B4f_chemdner"      "$PROJ/artifacts/run_proto_span_frozen/chemdner" 8
+
+    # ── B4rf: RoBERTa-Proto + encoder 冻结（未微调+原型网络）───────────────────
+    printf "\n${CYN}▶ B4rf RoBERTa Proto-Span (encoder 冻结, 未微调模型+原型)${R}\n"
+    result_row "B4rf fewnerd"  "B4rf_fewnerd"     "$PROJ/artifacts/run_proto_span_roberta_frozen/fewnerd"  8
+    result_row "B4rf genia"    "B4rf_genia"       "$PROJ/artifacts/run_proto_span_roberta_frozen/genia"    8
+    result_row "B4rf chemdner" "B4rf_chemdner"    "$PROJ/artifacts/run_proto_span_roberta_frozen/chemdner" 8
 
     # ── B5: BiLSTM-Proto + augmented ────────────────────────────────────────
     printf "\n${CYN}▶ B5  BiLSTM Proto-Span + 增强数据 (反向对照)${R}\n"
@@ -166,11 +204,23 @@ while true; do
     result_row "B5 genia"    "B5_genia"     "$PROJ/artifacts/run_proto_span_bilstm_aug/genia"    3
     result_row "B5 chemdner" "B5_chemdner"  "$PROJ/artifacts/run_proto_span_bilstm_aug/chemdner" 3
 
-    # ── Ours: RoBERTa-Proto + augmented + SCL ───────────────────────────────
-    printf "\n${CYN}▶ Ours  RoBERTa + 增强数据 + SCL (核心方法, multi-GPU)${R}\n"
-    result_row "Ours fewnerd"  "Ours_fewnerd"   "$PROJ/artifacts/run_proto_span_aug/fewnerd"  3
-    result_row "Ours genia"    "Ours_genia"     "$PROJ/artifacts/run_proto_span_aug/genia"    3
-    result_row "Ours chemdner" "Ours_chemdner"  "$PROJ/artifacts/run_proto_span_aug/chemdner" 3
+    # ── B-Span+Aug: BERT Span 无原型 + 增强数据（对照：证明原型网络优势）────
+    printf "\n${CYN}▶ B-Span+Aug  BERT Span(无原型) + 增强数据${R}\n"
+    result_row "B-Span+Aug fewnerd"  "BSpanAug_fewnerd"  "$PROJ/artifacts/run_span_ner_aug/fewnerd"  5
+    result_row "B-Span+Aug genia"    "BSpanAug_genia"    "$PROJ/artifacts/run_span_ner_aug/genia"    5
+    result_row "B-Span+Aug chemdner" "BSpanAug_chemdner" "$PROJ/artifacts/run_span_ner_aug/chemdner" 5
+
+    # ── Ours: BERT-Proto + augmented ─────────────────────────────────────────
+    printf "\n${CYN}▶ Ours  BERT-Proto + 增强数据 (核心方法-BERT, multi-GPU)${R}\n"
+    result_row "Ours fewnerd"  "Ours_fewnerd"   "$PROJ/artifacts/run_proto_span_aug/fewnerd"  8
+    result_row "Ours genia"    "Ours_genia"     "$PROJ/artifacts/run_proto_span_aug/genia"    8
+    result_row "Ours chemdner" "Ours_chemdner"  "$PROJ/artifacts/run_proto_span_aug/chemdner" 8
+
+    # ── Ours-r: RoBERTa-Proto + augmented ─────────────────────────────────────
+    printf "\n${CYN}▶ Ours-r  RoBERTa-Proto + 增强数据 (核心方法-RoBERTa, multi-GPU)${R}\n"
+    result_row "Ours-r fewnerd"  "Oursr_fewnerd"   "$PROJ/artifacts/run_proto_span_roberta_aug/fewnerd"  8
+    result_row "Ours-r genia"    "Oursr_genia"     "$PROJ/artifacts/run_proto_span_roberta_aug/genia"    8
+    result_row "Ours-r chemdner" "Oursr_chemdner"  "$PROJ/artifacts/run_proto_span_roberta_aug/chemdner" 8
 
     # ── 战役三: BWT ──────────────────────────────────────────────────────────
     printf "\n${CYN}▶ 战役三  BWT 持续学习（遗忘率）${R}\n"
@@ -213,10 +263,17 @@ print(f'  {k}-shot  fewnerd → {td}:  P={p:.4f}  R={r:.4f}  F1={f:.4f}')
     for PAIR in \
         "B1(BiLSTM-CRF):run_bilstm_crf" \
         "B2(BERT-CRF):run_seq_ner" \
+        "B2r(RoBERTa-CRF):run_seq_ner_roberta" \
+        "B-Span(BERT-Span,NoProto):run_span_ner" \
         "B3(BiLSTM-Proto):run_proto_span_bilstm" \
         "B4(BERT-Proto):run_proto_span" \
+        "B4r(RoBERTa-Proto):run_proto_span_roberta" \
+        "B4f(BERT-Proto,frozen):run_proto_span_frozen" \
+        "B4rf(RoBERTa-Proto,frozen):run_proto_span_roberta_frozen" \
         "B5(BiLSTM+Aug):run_proto_span_bilstm_aug" \
-        "Ours(BERT+Aug+SCL):run_proto_span_aug"; do
+        "B-Span+Aug(BERT-Span,NoProto+Aug):run_span_ner_aug" \
+        "Ours(BERT-Proto+Aug):run_proto_span_aug" \
+        "Ours-r(RoBERTa-Proto+Aug):run_proto_span_roberta_aug"; do
         LABEL="${PAIR%%:*}"
         DIR_BASE="${PAIR##*:}"
         FN=$(read_f1 "$PROJ/artifacts/$DIR_BASE/fewnerd/metrics.json" f1)

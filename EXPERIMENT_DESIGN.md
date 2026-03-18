@@ -28,19 +28,35 @@
 
 **实验目的**：证明「大模型底座 + Span 跨度解码 + Agent 图谱规则增强」这一组合在小样本场景下的必要性。
 
-| 代号 | 模型底座 | 解码架构 | 数据策略 | 验证意图与预期表现 |
-|------|----------|----------|----------|--------------------|
-| **B1** | BiLSTM | CRF (BIO 序列) | 仅原始极小样本 | 最弱基线。证明传统模型在脱离海量标注且面对嵌套结构时的彻底失效 |
-| **B2** | BERT-base (英文) | CRF (BIO 序列) | 仅原始极小样本 | 基础基线。证明引入预训练大模型后特征提取增强，但 BIO 机制仍是识别嵌套的理论瓶颈 |
-| **B2r** | RoBERTa-base (英文) | CRF (BIO 序列) | 仅原始极小样本 | B2 的 RoBERTa 对比版本，验证更充分预训练对 BIO 解码的提升幅度 |
-| **B3** | BiLSTM | Span (原型网络) | 仅原始极小样本 | 证明更换跨度解码后具备嵌套识别能力，但 BiLSTM 的表征能力无法支撑精准的空间距离度量 |
-| **B4** | BERT-base (英文) | Span (原型网络) | 仅原始极小样本 | 强大对比基线。验证现代预训练模型 + 度量学习的基准实力 |
-| **B4r** | RoBERTa-base (英文) | Span (原型网络) | 仅原始极小样本 | B4 的 RoBERTa 对比版本，进一步验证编码器质量对原型网络的影响 |
-| **B5** | BiLSTM | Span (原型网络) | + Agent 规则增强 | 反向论证。证明传统模型由于缺乏全局注意力，强行喂入 Agent 规则块会导致噪声干扰，性能不升反降 |
-| **Ours** | BERT-base (英文) | Span (原型网络) | + Agent 规则增强 | 核心方法（BERT 底座）。预训练编码器 + Span 解码 + Agent 规则增强 |
-| **Ours-r** | RoBERTa-base (英文) | Span (原型网络) | + Agent 规则增强 | 核心方法（RoBERTa 底座）。预期显著优于 B4r，验证 RoBERTa + Span + 增强的最优组合 |
+### 主实验（全数据集，无原型网络/无 SCL）
 
-> **编码器说明**：三个基准数据集（Few-NERD、GENIA、CHEMDNER）均为英文数据集，使用英文预训练模型（`bert-base-cased` / `roberta-base`）。原实验设计中的 `RoBERTa-WWM` 为中文全词掩码模型，不适用于英文基准，已更正。
+| 代号 | 模型底座 | 解码架构 | 数据策略 | 验证意图 |
+|------|----------|----------|----------|----------|
+| **B1** | BiLSTM | CRF (BIO 序列) | 仅原始 | 最弱基线 |
+| **B2** | BERT-base | CRF (BIO 序列) | 仅原始 | BIO 基线 |
+| **B2r** | RoBERTa-base | CRF (BIO 序列) | 仅原始 | B2 的 RoBERTa 版本 |
+| **B-Span** | BERT-base | Span 分类器（无原型） | 仅原始 | 有监督 Span 对照 |
+| **B-Span+Aug** | BERT-base | Span 分类器（无原型） | + Agent 增强 | 增强数据 + 无原型 |
+
+### 梯度+隔离实验（n=10/100/1000 样本 + meta-train/meta-test 类别隔离）
+
+原型网络相关实验全部在梯度+隔离统一脚本 `run_gradient_isolate_unified.py` 中执行：
+
+| 代号 | 模型底座 | 原型 | 增强 | 冻结 | 说明 |
+|------|----------|------|------|------|------|
+| **B4** | BERT-base | 有 | 无 | 无 | 强基线 |
+| **B4r** | RoBERTa-base | 有 | 无 | 无 | B4 对比 |
+| **B4f** | BERT-base | 有 | 无 | 有 | 未微调对照 |
+| **B4rf** | RoBERTa-base | 有 | 无 | 有 | 未微调对照 |
+| **B5** | BiLSTM | 有 | 有 | 无 | 反向论证 |
+| **B-Span** | BERT-base | 无 | 无 | — | 仅梯度（无 isolate） |
+| **B-Span+Aug** | BERT-base | 无 | 有 | — | 仅梯度（无 isolate） |
+| **Ours** | BERT-base | 有 | 有 | 无 | 核心方法 |
+| **Ours-r** | RoBERTa-base | 有 | 有 | 无 | 核心方法 |
+
+> **编码器说明**：三个基准数据集（Few-NERD、GENIA、CHEMDNER）均为英文数据集，使用英文预训练模型（`bert-base-cased` / `roberta-base`）。
+>
+> **SCL 已移除**：监督对比学习（Supervised Contrastive Loss）已从代码中完全移除，所有实验均不使用 SCL。
 
 ---
 
@@ -63,14 +79,61 @@
 | B4 | train_fewshot_proto_span.py | bert-base-cased | data/benchmarks/{ds}/train.jsonl | run_proto_span/{ds} |
 | B4r | train_fewshot_proto_span.py | roberta-base | data/benchmarks/{ds}/train.jsonl | run_proto_span_roberta/{ds} |
 | B5 | train_fewshot_proto_span.py (encoder=bilstm) | — | data/dataset/split/{ds}_train_augmented.jsonl | run_proto_span_bilstm_aug/{ds} |
+| B-Span | train_span_ner.py | bert-base-cased | data/benchmarks/{ds}/train.jsonl | run_span_ner/{ds} |
+| B-Span+Aug | train_span_ner.py | bert-base-cased | data/dataset/split/{ds}_train_augmented.jsonl | run_span_ner_aug/{ds} |
 | Ours | train_fewshot_proto_span.py | bert-base-cased | data/dataset/split/{ds}_train_augmented.jsonl | run_proto_span_aug/{ds} |
 | Ours-r | train_fewshot_proto_span.py | roberta-base | data/dataset/split/{ds}_train_augmented.jsonl | run_proto_span_roberta_aug/{ds} |
 
-## 五、扩展能力（已实现）
+## 五、数据增强 + 有无原型网络对比（核心消融）
+
+**实验重点**：在梯度+隔离统一实验中对比「有原型网络 vs 无原型网络」。
+
+| 对比 | 模型 | 训练范式 | 说明 |
+|------|------|----------|------|
+| 无原型 | B-Span / B-Span+Aug | 有监督全量（train_span_ner） | Span 表示 + 线性分类头，标准交叉熵 |
+| 有原型 | B4 / Ours / Ours-r | episodic N-way K-shot（train_fewshot_proto_span） | Span 表示 + 原型头（支持集均值），距离度量分类 |
+
+**数据梯度 + 类别隔离统一实验**：`scripts/run_gradient_isolate_unified.py` 在 n=10/100/1000 样本 + meta-train/meta-test 类别隔离条件下，统一运行所有原型网络与对照实验。输出至 `artifacts/run_*_n{10,100,1000}_isolate/`。
+
+**无隔离小样本对照（仅 n=10、n=100）**：对 fewnerd、genia 在相同 n 条训练样本下，**额外**跑一轮原型网络实验且**不传** `--train-labels`/`--test-labels`（评测与训练共享实体类型池，非跨类泛化）。结果目录为 `artifacts/run_*_n10/`、`run_*_n100/` 下对应数据集子目录，可与 `_n10_isolate`、`_n100_isolate` 对照。chemdner 仅 1 类，本身无隔离，仍仅用 `_n{n}`。
+
+> **训练方式**：梯度/隔离实验均在未加载已训练 NER 模型的前提下进行——使用 base 预训练编码器（bert-base-cased / roberta-base）或随机初始化 BiLSTM，在 n=10/100/1000 样本上从头训练，而非先全量训练再在小数据上微调。因此少样本场景下的 F1 显著低于全量实验，这是预期行为。
+
+> 全数据集场景下不再单独运行原型网络主实验，原型网络的价值通过少样本梯度实验验证。
+
+---
+
+## 五.1 实验中断原因与预防（AutoDL）
+
+梯度+隔离统一实验在远程 GPU 上长时间运行，可能**突然中断**的常见原因与应对：
+
+| 原因 | 说明 | 预防/应对 |
+|------|------|-----------|
+| **实例关机/欠费** | AutoDL 余额不足、按量计费到期或手动关机 | 保持余额、用「无卡模式」或开机后尽快续费；用 `python run_gradient_isolate_on_autodl.py` 重新启动 |
+| **OOM（显存不足）** | 某次实验 batch 或模型过大导致进程被系统 kill | 减小 `--batch_size`、`--max_episodes`，或单卡只跑部分数据集 |
+| **脚本异常退出** | `run_gradient_isolate_unified.py` 或子进程报错未捕获 | 查看 `logs/run_gradient_isolate.log` 末尾；修复后重新运行，脚本会从未完成的矩阵项继续（需手动从断点重跑或重跑全量） |
+| **SSH 断开导致误杀** | 若在 SSH 前台直接跑（未用 nohup），关终端会杀进程 | 一律用 `nohup ... &` 或 `run_gradient_isolate_on_autodl.py` 在后台启动 |
+| **网络/连接超时** | 本地用 paramiko 启动时，若等待后台命令输出过久会 TimeoutError | 已改为后台启动后立即返回；若仍超时可在 AutoDL 终端内手动执行 `nohup bash scripts/autodl_run_gradient_isolate.sh >> logs/run_gradient_isolate.log 2>&1 &` |
+
+**续跑**：中断后在本机执行 `python run_gradient_isolate_on_autodl.py` 会先 pkill 旧进程再重新启动整轮；如需从断点续跑需自行改脚本或只跑未完成的数据集/n。
+
+**数据与模型参数放入数据盘**：  
+在 AutoDL 上若存在数据盘 `/root/autodl-tmp`，通过 `upload_and_run_autodl.py` 或 `run_gradient_isolate_on_autodl.py` 启动时，会自动将 `data/`、`artifacts/`、`logs/` 以及预训练模型目录 `/root/models` 迁移到 `/root/autodl-tmp/patent-extract-agent/`（或对应子目录），并在工作目录/根目录建立软链接，读写仍走原路径，避免系统盘占满。也可在远程执行 `bash scripts/autodl_run_gradient_isolate.sh` 或 `bash scripts/autodl_run_all_until_done.sh`，脚本开头会做同样挂载。
+
+**持续运行直到实验完成**：  
+使用 `python upload_and_run_autodl.py --mode all`（默认）会执行 `scripts/autodl_run_all_until_done.sh`：先挂载数据盘（含 models）、释放已有权重、再依次运行「剩余主实验」→「梯度+隔离统一实验」，单次 nohup 内跑完所有实验，保持一直运行直到全部完成。
+
+**参数是否释放**：  
+是，有两层：  
+1. **得到实验数据后自动释放**：各训练脚本在写入 `metrics.json` 后会自动删除当次运行的 `model.pt` / `pytorch_model.bin` / `tokenizer.json`，只保留指标与配置，形成「跑完即释放」的固定流程。  
+2. **启动前批量释放**：通过 `upload_and_run_autodl.py` 或 `run_gradient_isolate_on_autodl.py` 启动前会执行 `scripts/release_artifact_models.py`，清理历史实验的大文件。手动执行：`python scripts/release_artifact_models.py --artifacts-dir <workdir>/artifacts`。
+
+---
+
+## 六、扩展能力（已实现）
 
 | 能力 | 实现 | 用法 |
 |------|------|------|
-| 监督对比学习 (SCL) | train_fewshot_proto_span --scl_weight 0.1 | 难负样本推远，决策边界更清晰 |
 | Meta-Train/Meta-Test 类别隔离 | --train_labels A,B,C --test_labels D,E,F | 训练集与测试集类别无交集 |
 | Flat F1 / Nested F1 | metrics.json 含 flat_f1, nested_micro_f1 | 降维打击与嵌套极限双指标 |
 | BWT 持续学习 | scripts/run_continual.py | 温习机制防遗忘 |

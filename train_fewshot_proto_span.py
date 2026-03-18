@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import time
 from pathlib import Path
@@ -42,30 +43,12 @@ def _tokenize(tokenizer, text: str, max_len: int):
     )
 
 
-def _scl_loss(emb: torch.Tensor, labels: torch.Tensor, temperature: float) -> torch.Tensor:
-    """Supervised contrastive loss: pull same-class together, push different-class apart."""
-    if emb.size(0) < 2:
-        return torch.tensor(0.0, device=emb.device)
-    emb_n = torch.nn.functional.normalize(emb, dim=-1)
-    sim = torch.mm(emb_n, emb_n.t()) / temperature
-    mask = labels.unsqueeze(0) == labels.unsqueeze(1)
-    mask = mask.float()
-    exp_sim = torch.exp(sim)
-    log_prob = sim - torch.log(exp_sim.sum(dim=1, keepdim=True) + 1e-8)
-    mask_diag = mask - torch.eye(emb.size(0), device=emb.device)
-    pos_count = mask_diag.sum(dim=1).clamp(min=1)
-    loss = -(mask_diag * log_prob).sum(dim=1) / pos_count
-    return loss.mean()
-
-
 def process_episode(
     model: PrototypicalSpanNER,
     episode,
     tokenizer,
     max_len: int,
     device: torch.device,
-    scl_weight: float = 0.0,
-    scl_temperature: float = 0.07,
 ) -> tuple[torch.Tensor, int]:
     """Encode episode, compute loss. Returns (loss, num_query)."""
     ctx_list = episode.support_contexts
@@ -150,14 +133,15 @@ def process_episode(
     # clamp labels to valid range (logits has n_classes+1 columns incl. NONE)
     query_labels_t = query_labels_t.clamp(0, logits.size(-1) - 1)
     loss = torch.nn.functional.cross_entropy(logits, query_labels_t)
-    if scl_weight > 0 and query_emb.size(0) >= 2:
-        scl = _scl_loss(query_emb, query_labels_t, scl_temperature)
-        loss = loss + scl_weight * scl
     return loss, len(query_labels)
 
 
 def _flatten_spans_per_ctx(spans: set[tuple[int, int, int, int]]) -> set[tuple[int, int, int, int]]:
-    """Keep only longest span per overlapping group (Flat F1)."""
+    """Keep only longest span per overlapping group (Flat F1).
+
+    Two spans (a,b) and (c,d) overlap iff max(a,c) < min(b,d).
+    We greedily keep the longest span and discard anything that overlaps with it.
+    """
     by_ctx: dict[int, list[tuple[int, int, int]]] = {}
     for ctx_idx, cs, ce, lab in spans:
         if ctx_idx not in by_ctx:
@@ -168,7 +152,7 @@ def _flatten_spans_per_ctx(spans: set[tuple[int, int, int, int]]) -> set[tuple[i
         items_sorted = sorted(items, key=lambda x: (x[1] - x[0]), reverse=True)
         kept: list[tuple[int, int, int]] = []
         for cs, ce, lab in items_sorted:
-            if any(cs < ke < ce or cs < kd < ce or (ke <= cs and ce <= kd) for ke, kd, _ in kept):
+            if any(max(cs, ks) < min(ce, ke) for ks, ke, _ in kept):
                 continue
             kept.append((cs, ce, lab))
         for cs, ce, lab in kept:
@@ -289,7 +273,8 @@ def main() -> None:
     ap.add_argument("--output_dir", type=str, default="artifacts/run_proto_span")
     ap.add_argument("--n_way", type=int, default=5)
     ap.add_argument("--k_shot", type=int, default=5)
-    ap.add_argument("--epochs", type=int, default=2)
+    ap.add_argument("--epochs", type=int, default=30, help="Total training epochs")
+    ap.add_argument("--warmup_ratio", type=float, default=0.1, help="Fraction of total episodes for LR warmup")
     ap.add_argument("--lr", type=float, default=2e-5)
     ap.add_argument("--batch_episodes", type=int, default=4)
     ap.add_argument("--max_episodes", type=int, default=500)
@@ -299,16 +284,18 @@ def main() -> None:
     ap.add_argument("--train_ratio", type=float, default=0.9)
     ap.add_argument("--n_eval", type=int, default=50)
     ap.add_argument("--multi_gpu", action="store_true", help="Use DataParallel for multi-GPU")
-    ap.add_argument("--scl_weight", type=float, default=0.0, help="Supervised contrastive loss weight (0=disabled)")
-    ap.add_argument("--scl_temperature", type=float, default=0.07)
     ap.add_argument("--train_labels", type=str, default="", help="Comma-separated meta-train labels (strict class split)")
     ap.add_argument("--test_labels", type=str, default="", help="Comma-separated meta-test labels (unseen at train)")
+    ap.add_argument("--max_train_samples", type=int, default=0,
+                    help="限制训练样本数 (0=不限制)，用于 10/100/1000 梯度实验")
     # BiLSTM encoder options (B3/B5)
     ap.add_argument("--encoder_type", type=str, default="transformer", choices=["transformer", "bilstm"],
                     help="transformer=BERT/RoBERTa (default); bilstm=randomly-init BiLSTM (B3/B5)")
     ap.add_argument("--bilstm_embed_dim", type=int, default=100)
     ap.add_argument("--bilstm_hidden", type=int, default=256)
     ap.add_argument("--bilstm_layers", type=int, default=2)
+    ap.add_argument("--freeze_encoder", action="store_true",
+                    help="冻结 encoder（预训练权重不微调），仅训练 span_proj，用于原型网络+未训练模型对照")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -320,6 +307,10 @@ def main() -> None:
     samples = load_jsonl(data_path)
     if not samples:
         raise RuntimeError("empty dataset")
+    if args.max_train_samples > 0:
+        random.shuffle(samples)
+        samples = samples[: args.max_train_samples]
+        print(f"[data] 限制训练样本数: {len(samples)}")
 
     val_path = Path(args.val) if args.val else None
     if val_path and not val_path.is_absolute():
@@ -401,15 +392,31 @@ def main() -> None:
         bilstm_hidden=args.bilstm_hidden,
         bilstm_layers=args.bilstm_layers,
     ).to(device)
+    if getattr(args, "freeze_encoder", False) and args.encoder_type == "transformer":
+        for p in model.encoder.parameters():
+            p.requires_grad = False
+        print("[freeze] 已冻结 encoder，仅训练 span_proj")
     if args.multi_gpu and torch.cuda.device_count() > 1:
         model = torch.nn.DataParallel(model)
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    params = [p for p in model.parameters() if p.requires_grad]
+    opt = torch.optim.AdamW(params, lr=args.lr, weight_decay=0.01)
+    total_steps = args.epochs * args.max_episodes
+    warmup_steps = int(total_steps * args.warmup_ratio)
+    def lr_lambda(step):
+        if step < warmup_steps:
+            return step / max(1, warmup_steps)
+        progress = (step - warmup_steps) / max(1, total_steps - warmup_steps)
+        return max(0.0, 0.5 * (1.0 + math.cos(math.pi * progress)))
+    scheduler = torch.optim.lr_scheduler.LambdaLR(opt, lr_lambda)
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     ds_ver = dataset_version(data_path)
     (out_dir / "config.json").write_text(json.dumps(vars(args), ensure_ascii=False, indent=2), encoding="utf-8")
 
+    best_f1 = 0.0
+    best_state = None
+    global_step = 0
     for ep in range(1, args.epochs + 1):
         model.train()
         total_loss = 0.0
@@ -419,7 +426,6 @@ def main() -> None:
             episode = ds_train.sample_episode(use_test_labels=False)
             loss, nq = process_episode(
                 model, episode, tokenizer, args.max_len, device,
-                scl_weight=args.scl_weight, scl_temperature=args.scl_temperature,
             )
             if nq == 0:
                 continue
@@ -429,19 +435,30 @@ def main() -> None:
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
-            pbar.set_postfix(loss=loss.item())
+            scheduler.step()
+            global_step += 1
+            pbar.set_postfix(loss=f"{loss.item():.4f}", lr=f"{scheduler.get_last_lr()[0]:.2e}")
 
         prec, rec, f1, flat_f1 = eval_episodes(
             model, ds_val, tokenizer, args.max_len, device, args.n_eval,
             use_test_labels=bool(test_labels_list),
         )
+        cur_lr = scheduler.get_last_lr()[0]
+        if f1 > best_f1:
+            best_f1 = f1
+            _m = model.module if hasattr(model, "module") else model
+            best_state = {k: v.cpu().clone() for k, v in _m.state_dict().items()}
+            torch.save(_m.state_dict(), out_dir / "model.pt")
+
         metrics = {
             "name": "proto_span_fewshot",
             "precision": prec,
             "recall": rec,
             "f1": f1,
+            "best_f1": best_f1,
             "nested_micro_f1": f1,
             "flat_f1": flat_f1,
+            "lr": cur_lr,
             "encoder": args.encoder,
             "encoder_type": args.encoder_type,
             "data": str(data_path),
@@ -452,10 +469,14 @@ def main() -> None:
             "created_at": int(time.time()),
         }
         (out_dir / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"[eval] ep={ep} P={prec:.4f} R={rec:.4f} F1={f1:.4f} FlatF1={flat_f1:.4f}")
+        mark = " ★" if f1 >= best_f1 else ""
+        print(f"[eval] ep={ep} lr={cur_lr:.2e} P={prec:.4f} R={rec:.4f} F1={f1:.4f} FlatF1={flat_f1:.4f}{mark}")
 
-    torch.save(model.state_dict(), out_dir / "model.pt")
-    print(f"[ok] saved to {out_dir}")
+    model_pt = out_dir / "model.pt"
+    if best_state is None:
+        torch.save((model.module if hasattr(model, "module") else model).state_dict(), model_pt)
+    model_pt.unlink(missing_ok=True)
+    print(f"[ok] best_f1={best_f1:.4f}  saved to {out_dir} (已释放 model.pt，保留 metrics.json)")
 
 
 if __name__ == "__main__":
