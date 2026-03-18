@@ -328,13 +328,8 @@ def main() -> None:
     if val_path and not val_path.is_absolute():
         val_path = root / val_path
 
-    # --- 类别隔离 + 梯度 n：n=训练句量，评测=全量中 meta-test 类型独立句池（与原型 episode 流程一致）---
-    if (
-        train_labels_list
-        and test_labels_list
-        and args.max_train_samples > 0
-        and not (val_path and val_path.exists())
-    ):
+    # --- 类别隔离 + 梯度 n：n=仅 meta-train 句量；评测= meta-test 类型句池（train+可选 val，与 --val 传入兼容）---
+    if train_labels_list and test_labels_list and args.max_train_samples > 0:
         tl = set(train_labels_list)
         te = set(test_labels_list)
         pool_tr = [s for s in samples if _labels_in_sample(s) & tl]
@@ -355,7 +350,11 @@ def main() -> None:
             f"仅含类型 {sorted(tl)[:5]}{'...' if len(tl) > 5 else ''}"
         )
 
-        pool_te = [s for s in samples if _labels_in_sample(s) & te]
+        pool_source_te = list(samples)
+        if val_path and val_path.exists():
+            pool_source_te.extend(load_jsonl(val_path))
+            print("[isolate] 评测池合并 train + 外部 val 中含 meta-test 类型的句子")
+        pool_te = [s for s in pool_source_te if _labels_in_sample(s) & te]
         ctx_key = lambda s: (s.get("context") or "")[:800]
         tr_ctx = {ctx_key(s) for s in train_s}
         val_s = [s for s in pool_te if ctx_key(s) not in tr_ctx]
