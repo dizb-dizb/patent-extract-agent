@@ -7,14 +7,16 @@ import platform
 import subprocess
 import sys
 
+# 勿用 run_gradient_isolate 笼统匹配：会误杀 bash autodl_run_gradient_isolate.sh
 PATTERNS = [
     "train_bilstm_crf",
     "train_seq_ner",
     "train_fewshot_proto_span",
     "train_span_ner",
     "run_full_experiment",
-    "run_remaining",
-    "run_gradient_isolate",
+    "run_remaining_experiments",
+    "run_gradient_isolate_unified.py",
+    "run_bspan_aug_n10_n100.py",
 ]
 
 

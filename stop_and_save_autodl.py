@@ -75,7 +75,7 @@ def main():
 
     # 1. 终止训练进程
     print("\n[1] 终止训练进程...")
-    run("pkill -f 'train_|run_full|run_remaining|run_gradient_isolate|autodl_run' 2>/dev/null || true")
+    run("pkill -f 'train_bilstm_crf|train_seq_ner|train_fewshot_proto_span|train_span_ner|run_full_experiment|run_remaining_experiments|run_gradient_isolate_unified.py|run_bspan_aug_n10_n100.py' 2>/dev/null || true")
     run("sleep 2")
     procs = run("ps aux | grep -E 'train_|run_gradient_isolate|run_remaining' | grep -v grep")
     if procs:

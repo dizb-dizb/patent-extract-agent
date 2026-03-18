@@ -33,10 +33,10 @@ echo "  AutoDL 梯度+隔离统一实验  $(date '+%Y-%m-%d %H:%M:%S')"
 echo "  ROOT: $ROOT"
 echo "=================================================="
 
-# 1. 终止旧训练进程（注意：不能匹配自身脚本名）
+# 1. 终止旧训练进程（禁止 pkill 匹配本脚本名 autodl_run_gradient_isolate.sh）
 echo "[step 1] 终止旧训练进程..."
 pkill -f 'train_bilstm_crf|train_seq_ner|train_fewshot_proto_span|train_span_ner' 2>/dev/null || true
-pkill -f 'run_full_experiment|run_remaining_experiments|run_data_gradient_experiment' 2>/dev/null || true
+pkill -f 'run_full_experiment|run_remaining_experiments|run_gradient_isolate_unified.py|run_bspan_aug_n10_n100.py' 2>/dev/null || true
 python scripts/kill_training_processes.py 2>/dev/null || true
 sleep 3
 echo "  已清理"

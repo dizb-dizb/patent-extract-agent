@@ -32,6 +32,7 @@ UPLOADS = [
     "scripts/autodl_run_supplementary.sh",
     "scripts/autodl_run_gradient_isolate.sh",
     "scripts/autodl_run_all_until_done.sh",
+    "scripts/run_bspan_aug_n10_n100.py",
     "scripts/run_fix_main_experiments.py",
     "scripts/autodl_run_fix.sh",
     "train_fewshot_proto_span.py",
@@ -66,8 +67,8 @@ def main() -> None:
     ap.add_argument("--no-run", action="store_true", help="仅上传，不运行")
     ap.add_argument("--foreground", action="store_true", help="前台运行（不 nohup）")
     ap.add_argument("--mode", type=str, default="all",
-                    choices=["remaining", "gradient", "isolate", "gradient_isolate", "all"],
-                    help="remaining=剩余实验; gradient_isolate=梯度+隔离; all=剩余→梯度+隔离 持续运行直到完成")
+                    choices=["remaining", "gradient", "isolate", "gradient_isolate", "all", "bspan_aug_n10_100"],
+                    help="bspan_aug_n10_100=仅重跑 B-Span+Aug n=10/100（增强数据）")
     args = ap.parse_args()
 
     load_env(ROOT / args.env)
@@ -121,7 +122,7 @@ def main() -> None:
 
     # 2. 终止旧进程
     print("\n[step] 终止旧训练进程...")
-    run("pkill -f 'train_bilstm_crf|train_seq_ner|train_fewshot_proto_span|train_span_ner|run_full|run_remaining|run_gradient_isolate' 2>/dev/null || true")
+    run("pkill -f 'train_bilstm_crf|train_seq_ner|train_fewshot_proto_span|train_span_ner|run_full_experiment|run_remaining_experiments|run_gradient_isolate_unified.py|run_bspan_aug_n10_n100.py' 2>/dev/null || true")
     run("sleep 3")
     print("  已清理")
 
@@ -159,6 +160,9 @@ def main() -> None:
     if args.mode == "all":
         script_cmd = "bash scripts/autodl_run_all_until_done.sh"
         log_file = "logs/run_all_until_done.log"
+    elif args.mode == "bspan_aug_n10_100":
+        script_cmd = "python scripts/run_bspan_aug_n10_n100.py --multi-gpu"
+        log_file = "logs/run_bspan_aug_n10_n100.log"
     elif args.mode == "remaining":
         script_cmd = "python scripts/run_remaining_experiments.py --multi-gpu"
         log_file = "logs/run_remaining.log"

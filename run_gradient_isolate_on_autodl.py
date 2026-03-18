@@ -51,7 +51,7 @@ def main():
 
     # 1. 终止旧进程
     print("\n[1] 终止旧进程...")
-    run("pkill -f 'train_|run_full|run_remaining|run_data_gradient|run_gradient_isolate' 2>/dev/null || true")
+    run("pkill -f 'train_bilstm_crf|train_seq_ner|train_fewshot_proto_span|train_span_ner|run_gradient_isolate_unified.py' 2>/dev/null || true")
     run("sleep 3")
     print("  已清理")
 
