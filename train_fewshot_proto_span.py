@@ -287,7 +287,13 @@ def main() -> None:
     ap.add_argument("--train_labels", type=str, default="", help="Comma-separated meta-train labels (strict class split)")
     ap.add_argument("--test_labels", type=str, default="", help="Comma-separated meta-test labels (unseen at train)")
     ap.add_argument("--max_train_samples", type=int, default=0,
-                    help="限制训练样本数 (0=不限制)，用于 10/100/1000 梯度实验")
+                    help="限制训练样本数 (0=不限制)。隔离实验下为 meta-train 类型句子上限，评测用独立 meta-test 句池")
+    ap.add_argument(
+        "--eval-pool-max",
+        type=int,
+        default=8000,
+        help="隔离实验：meta-test 评测句池最大条数（从全量中含 test_labels 的句子抽取）",
+    )
     # BiLSTM encoder options (B3/B5)
     ap.add_argument("--encoder_type", type=str, default="transformer", choices=["transformer", "bilstm"],
                     help="transformer=BERT/RoBERTa (default); bilstm=randomly-init BiLSTM (B3/B5)")
@@ -307,25 +313,80 @@ def main() -> None:
     samples = load_jsonl(data_path)
     if not samples:
         raise RuntimeError("empty dataset")
-    if args.max_train_samples > 0:
-        random.shuffle(samples)
-        samples = samples[: args.max_train_samples]
-        print(f"[data] 限制训练样本数: {len(samples)}")
+
+    train_labels_list = [x.strip() for x in args.train_labels.split(",") if x.strip()] or None
+    test_labels_list = [x.strip() for x in args.test_labels.split(",") if x.strip()] or None
+
+    def _labels_in_sample(s: dict) -> set[str]:
+        out: set[str] = set()
+        for sp in s.get("spans") or []:
+            if isinstance(sp, dict):
+                out.add(str(sp.get("label") or "term").strip() or "term")
+        return out
 
     val_path = Path(args.val) if args.val else None
     if val_path and not val_path.is_absolute():
         val_path = root / val_path
-    if val_path and val_path.exists():
+
+    # --- 类别隔离 + 梯度 n：n=训练句量，评测=全量中 meta-test 类型独立句池（与原型 episode 流程一致）---
+    if (
+        train_labels_list
+        and test_labels_list
+        and args.max_train_samples > 0
+        and not (val_path and val_path.exists())
+    ):
+        tl = set(train_labels_list)
+        te = set(test_labels_list)
+        pool_tr = [s for s in samples if _labels_in_sample(s) & tl]
+        strict_tr = [s for s in pool_tr if not (_labels_in_sample(s) & te)]
+        if len(strict_tr) >= args.max_train_samples:
+            pool_tr = strict_tr
+            print("[isolate] meta-train 句池：优先选用不含 meta-test 类型标注的句子（减少标注泄漏）")
+        random.shuffle(pool_tr)
+        train_s = pool_tr[: args.max_train_samples]
+        if not train_s and pool_tr:
+            train_s = pool_tr[: min(len(pool_tr), args.max_train_samples)]
+        if not train_s:
+            random.shuffle(samples)
+            train_s = samples[: min(args.max_train_samples, len(samples))]
+            print(f"[warn] 无含 meta-train 类型的句子，回退为随机 {len(train_s)} 句")
+        print(
+            f"[isolate] meta-train: {len(train_s)} 句 (目标上限 n={args.max_train_samples})，"
+            f"仅含类型 {sorted(tl)[:5]}{'...' if len(tl) > 5 else ''}"
+        )
+
+        pool_te = [s for s in samples if _labels_in_sample(s) & te]
+        ctx_key = lambda s: (s.get("context") or "")[:800]
+        tr_ctx = {ctx_key(s) for s in train_s}
+        val_s = [s for s in pool_te if ctx_key(s) not in tr_ctx]
+        random.shuffle(val_s)
+        val_s = val_s[: args.eval_pool_max]
+        if len(val_s) < 50:
+            val_s = (pool_te[: args.eval_pool_max] if pool_te else [])[: args.eval_pool_max]
+        if not val_s and pool_te:
+            val_s = pool_te[: args.eval_pool_max]
+            print("[warn] meta-test 池与训练去重后过少，使用含 test 类型全池子集")
+        print(
+            f"[isolate] meta-test 评测池: {len(val_s)} 句（含 test_labels，与训练句不重复上下文），"
+            f"类型示例 {sorted(te)[:5]}{'...' if len(te) > 5 else ''}"
+        )
+    elif val_path and val_path.exists():
         val_s = load_jsonl(val_path)
-        train_s = samples
+        if args.max_train_samples > 0:
+            random.shuffle(samples)
+            train_s = samples[: args.max_train_samples]
+            print(f"[data] 外部 val + 训练限 n={len(train_s)}")
+        else:
+            train_s = samples
     else:
+        if args.max_train_samples > 0:
+            random.shuffle(samples)
+            samples = samples[: args.max_train_samples]
+            print(f"[data] 限制训练样本数: {len(samples)}")
         random.shuffle(samples)
         n_train = int(len(samples) * args.train_ratio)
         train_s = samples[:n_train]
         val_s = samples[n_train:] if n_train < len(samples) else samples[-max(1, len(samples) // 10) :]
-
-    train_labels_list = [x.strip() for x in args.train_labels.split(",") if x.strip()] or None
-    test_labels_list = [x.strip() for x in args.test_labels.split(",") if x.strip()] or None
 
     ds_train = EpisodicSpanDataset(
         train_s,

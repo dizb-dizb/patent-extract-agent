@@ -14,6 +14,11 @@
 
 **数据降维处理**：为保证传统模型的公平对比，构建一套「降维打平（Flattened）」的纯 BIO 格式副本，仅保留最长跨度（Outermost Span）。
 
+**增强数据：按比例分层、类型全覆盖**（`augment_from_evidence.py --stratified`）：  
+- 按训练集中**各实体类型的 span 频次**分配增强条数（总量 ≈ 原句数 × `--aug-ratio`，且每种类型至少 `--min-per-label` 条），避免少数类型被 evidence 增强「饿死」。  
+- 优先用 evidence snippet 生成增强；某类型**没有可用 snippet** 时，用含该类型的**原训练句镜像**兜底（`_aug_meta.source=original_mirror`），保证论文/实验中可声明「每种类型均在增强管线中有体现」。  
+- 批量重生成三数据集：`python augment_from_evidence.py --input-dir data/dataset/split --output-dir data/dataset/split --stratified`
+
 ### 2. 评测指标 (Metrics)
 
 | 指标 | 说明 |
@@ -54,6 +59,10 @@
 | **Ours** | BERT-base | 有 | 有 | 无 | 核心方法 |
 | **Ours-r** | RoBERTa-base | 有 | 有 | 无 | 核心方法 |
 
+**「Ours」指什么**：**原型网络（Prototypical Span NER）+ BERT-base + Agent 分层增强训练数据**（`train_fewshot_proto_span.py`，数据为 `{ds}_train_augmented.jsonl`）。与 **B-Span+Aug** 的区别：Ours 用 **episodic N-way K-shot + 原型头**；B-Span+Aug 用 **有监督 Span 多类分类（无原型）**。**Ours-r** 将编码器换为 RoBERTa-base，其余与 Ours 一致。
+
+**增强数据更新后仅重跑 B-Span+Aug 的 n=10、n=100**：`python scripts/run_bspan_aug_n10_n100.py --multi-gpu`；AutoDL：`python upload_and_run_autodl.py --mode bspan_aug_n10_100`（需先在远端用 `--stratified` 重生成 `*_train_augmented.jsonl`）。
+
 > **编码器说明**：三个基准数据集（Few-NERD、GENIA、CHEMDNER）均为英文数据集，使用英文预训练模型（`bert-base-cased` / `roberta-base`）。
 >
 > **SCL 已移除**：监督对比学习（Supervised Contrastive Loss）已从代码中完全移除，所有实验均不使用 SCL。
@@ -93,11 +102,19 @@
 | 无原型 | B-Span / B-Span+Aug | 有监督全量（train_span_ner） | Span 表示 + 线性分类头，标准交叉熵 |
 | 有原型 | B4 / Ours / Ours-r | episodic N-way K-shot（train_fewshot_proto_span） | Span 表示 + 原型头（支持集均值），距离度量分类 |
 
-**数据梯度 + 类别隔离统一实验**：`scripts/run_gradient_isolate_unified.py` 在 n=10/100/1000 样本 + meta-train/meta-test 类别隔离条件下，统一运行所有原型网络与对照实验。输出至 `artifacts/run_*_n{10,100,1000}_isolate/`。
+**数据梯度 + 类别隔离（与原型流程对齐）**：
+
+| 环节 | 含义 |
+|------|------|
+| **n=10/100/1000** | 仅约束 **meta-train**：从**全量** `train.jsonl`（或增强集）中抽取 **至多 n 条「含 meta-train 类型标注」的句子** 作为训练句池；若存在足够句子，优先选**不含 meta-test 类型标注**的句，减少标注泄漏。 |
+| **评测** | **meta-test（新类型）**：从全量数据中另建 **评测句池**（含 `test_labels` 的句子，与训练句上下文去重，默认最多 8000 条），在此池上组 **N-way K-shot episode**，`use_test_labels=True`。 |
+| **原型距离** | 与实现一致：support span 嵌入 → 按类 **均值** 为原型（`compute_prototypes`）→ query 与原型 **余弦相似度 / 负欧氏距离**（`compute_logits`）→ argmax 分类 + NONE 槽。训练仅在 meta-train 类 episode 上更新编码器；验证仅在 meta-test 类 episode 上计 F1。 |
+
+脚本：`run_gradient_isolate_unified.py`；实现：`train_fewshot_proto_span.py`（传 `--train-labels` / `--test-labels` 且 `--max_train_samples`>0 时自动采用上表协议）。输出：`artifacts/run_*_n{10,100,1000}_isolate/`。
 
 **无隔离小样本对照（仅 n=10、n=100）**：对 fewnerd、genia 在相同 n 条训练样本下，**额外**跑一轮原型网络实验且**不传** `--train-labels`/`--test-labels`（评测与训练共享实体类型池，非跨类泛化）。结果目录为 `artifacts/run_*_n10/`、`run_*_n100/` 下对应数据集子目录，可与 `_n10_isolate`、`_n100_isolate` 对照。chemdner 仅 1 类，本身无隔离，仍仅用 `_n{n}`。
 
-> **训练方式**：梯度/隔离实验均在未加载已训练 NER 模型的前提下进行——使用 base 预训练编码器（bert-base-cased / roberta-base）或随机初始化 BiLSTM，在 n=10/100/1000 样本上从头训练，而非先全量训练再在小数据上微调。因此少样本场景下的 F1 显著低于全量实验，这是预期行为。
+> **训练方式**：同上，且 **n 仅限制 meta-train 句数**；评测始终在 **新类型（test_labels）大句池** 上进行，与原型网络「train 类 / test 类 episodic 分离」一致。少样本 n 下 F1 仍可能低于全量，但不再因「验证子集无新类型 span」而系统性为 0。
 
 > 全数据集场景下不再单独运行原型网络主实验，原型网络的价值通过少样本梯度实验验证。
 
