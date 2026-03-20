@@ -14,11 +14,16 @@ import argparse
 import hashlib
 import json
 import random
+import sys
 from pathlib import Path
 
 import torch
 from tqdm import tqdm
 from transformers import AutoTokenizer
+
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from fewshot.episode_dataset import EpisodicSpanDataset, load_jsonl
 from fewshot.model import char_span_to_token_span
@@ -214,7 +219,6 @@ def main() -> None:
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    ROOT = Path(__file__).resolve().parent.parent
     data_path = ROOT / "data" / "benchmarks" / args.dataset / ("test.jsonl" if args.split == "test" else "val.jsonl")
     if not data_path.exists():
         raise FileNotFoundError(f"missing eval split: {data_path}")
