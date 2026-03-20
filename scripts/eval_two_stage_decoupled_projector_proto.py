@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 from pathlib import Path
@@ -19,12 +20,17 @@ import torch
 from tqdm import tqdm
 from transformers import AutoTokenizer
 
-from dataset_version import dataset_version
 from fewshot.episode_dataset import EpisodicSpanDataset, load_jsonl
 from fewshot.model import char_span_to_token_span
 from fewshot.projector_proto import ProjectorSpanProto
 
 SPECIAL_OFFSETS = {(0, 0)}
+
+
+def _dataset_version(path: Path) -> str:
+    """Short content hash for reproducibility (no external dataset_version.py)."""
+    text = path.read_text(encoding="utf-8")
+    return hashlib.sha256(text.encode("utf-8", errors="ignore")).hexdigest()[:16]
 
 
 def _tokenize(tokenizer, text: str, max_len: int):
@@ -277,7 +283,7 @@ def main() -> None:
         "n_way": args.n_way,
         "k_shot": args.k_shot,
         "n_eval_episodes": args.n_eval,
-        "dataset_version": dataset_version(data_path),
+        "dataset_version": _dataset_version(data_path),
     }
 
     (out_dir / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
